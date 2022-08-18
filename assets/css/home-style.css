@@ -1,0 +1,20 @@
+.text-muted{
+    font-size: 16pt !important;
+}
+.modal-body{
+    display: flex;
+    flex-direction: row;
+}
+.data{
+    padding: 3px;
+}
+.deskboard-card{
+    border-radius: 20px;
+    border: none;
+}
+.col-white{
+    color: white !important;
+}
+.link{
+    text-decoration: none !important;
+}
