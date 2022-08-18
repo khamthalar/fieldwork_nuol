@@ -1,13 +1,4 @@
 <?php
-    // $server_name = "laoskyway.com";
-    // $user_login = "laoskywa_quiz";
-    // $userpass = "tik55210711";
-    // $database_name = "laoskywa_quiz";
-    // $server_name = "laoskywaytravel.com";
-    // $user_login = "skywaytravel_01";
-    // $userpass = "tik55210711";
-    // $database_name = "skywaytravel_QUIZ_DB";
-
     $server_name = "localhost";
     $user_login = "root";
     $userpass = "";
