@@ -1,6 +1,4 @@
 <?php
-// session_start(); 
-// require "config.php";
 $token = json_decode(file_get_contents('assets/json/app.json'), true);
 include_once 'controller/main_controller.php';
 $user_key = getMachineID();
@@ -24,7 +22,6 @@ $user_key = getMachineID();
 
 
     //check if user already logged in
-    // $token_key = $token["$user_key"];
     if (isset($token["$user_key"])) {
         if (!empty($_SESSION[$token["$user_key"]])) {
             header("location:template?page=home");
