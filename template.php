@@ -24,7 +24,7 @@ if (isset($token["$user_key"])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EDL Quiz System</title>
+  <title>NUOL</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link href="module/fontawesome-5.15.4/css/all.css" rel="stylesheet">
   <script src="module/fontawesome-5.15.4/js/all.js"></script>
@@ -97,7 +97,7 @@ if (isset($token["$user_key"])) {
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. Quiz System V 1.0</span>
+            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. NUOL SYSTEM V1.0</span>
           </div>
         </footer>
         <!-- partial -->
