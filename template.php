@@ -7,7 +7,6 @@ $token = json_decode(file_get_contents('assets/json/app.json'), true);
 $limit_row = 10;
 // check user logged in
 if (isset($token["$user_key"])) {
-  // echo "<script>console.log('test0');</script>";
   if (empty($_SESSION[$token["$user_key"]])) {
     header("location:login");
   } else {
