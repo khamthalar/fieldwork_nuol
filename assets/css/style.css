@@ -11,6 +11,45 @@
     url("../fonts/phetsarathOT/PhetsarathOT.woff") format("woff"),
     url("../fonts/phetsarathOT/PhetsarathOT.woff2") format("woff2");
 }
+@font-face {
+    font-family: 'Noto Sans Bold';
+    src: url('NotoSansLao-Bold.eot');
+    src: local('Noto Sans Lao Bold'), local('NotoSansLao-Bold'),
+        url('../fonts/NotoSansLao_Bold/NotoSansLao-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NotoSansLao_Bold/NotoSansLao-Bold.woff2') format('woff2'),
+        url('../fonts/NotoSansLao_Bold/NotoSansLao-Bold.woff') format('woff'),
+        url('../fonts/NotoSansLao_Bold/NotoSansLao-Bold.ttf') format('truetype'),
+        url('../fonts/NotoSansLao_Bold/NotoSansLao-Bold.svg#NotoSansLao-Bold') format('svg');
+}
+@font-face {
+    font-family: 'Noto Sans Extra Bold';
+    src: url('NotoSansLao-ExtraBold.eot');
+    src: local('Noto Sans Lao ExtraBold'), local('NotoSansLao-ExtraBold'),
+        url('../fonts/NotoSansLao_Extra_Bold/NotoSansLao-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NotoSansLao_Extra_Bold/NotoSansLao-ExtraBold.woff2') format('woff2'),
+        url('../fonts/NotoSansLao_Extra_Bold/NotoSansLao-ExtraBold.woff') format('woff'),
+        url('../fonts/NotoSansLao_Extra_Bold/NotoSansLao-ExtraBold.ttf') format('truetype'),
+        url('../fonts/NotoSansLao_Extra_Bold/NotoSansLao-ExtraBold.svg#NotoSansLao-ExtraBold') format('svg');
+}
+@font-face {
+    font-family: 'Noto Sans Lao Regular';
+    src: url('NotoSansLao-Regular.eot');
+    src: local('Noto Sans Lao Regular'), local('NotoSansLao-Regular'),
+        url('../fonts/NotoSansLao_Regular/NotoSansLao-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NotoSansLao_Regular/NotoSansLao-Regular.woff2') format('woff2'),
+        url('../fonts/NotoSansLao_Regular/NotoSansLao-Regular.woff') format('woff'),
+        url('../fonts/NotoSansLao_Regular/NotoSansLao-Regular.ttf') format('truetype'),
+        url('../fonts/NotoSansLao_Regular/NotoSansLao-Regular.svg#NotoSansLao-Regular') format('svg');
+}
+.notosans{
+    font-family: 'Noto Sans Lao Regular' !important;
+}
+.notosans-b{
+    font-family: 'Noto Sans Bold' !important;
+}
+.notosans-eb{
+    font-family: 'Noto Sans Extra Bold' !important;
+}
 .f11{
     font-size: 11pt !important;
 }

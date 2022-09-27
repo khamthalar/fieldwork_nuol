@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="assets/css/home-style.css">
 <div class="header-page">
         <div class="page-title">
-            <h5 class="phetsarath home-link">ໜ້າຫຼັກ</h5>
+            <h5 class="notosans home-link">ໜ້າຫຼັກ</h5>
         </div>
     </div>
     <div class="page-wrapper">

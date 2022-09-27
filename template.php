@@ -94,7 +94,7 @@ $limit_row = 10;
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. NUOL SYSTEM V1.0</span>
+            <span class="text-center text-sm-left d-block d-sm-inline-block notosans">Copyright © 2022. NUOL SYSTEM V1.0</span>
           </div>
         </footer>
         <!-- partial -->
