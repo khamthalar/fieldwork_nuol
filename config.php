@@ -2,7 +2,7 @@
     $server_name = "localhost";
     $user_login = "root";
     $userpass = "";
-    $database_name = "quiz_db";
+    $database_name = "COM_DB";
     try {
         $dbcon = new PDO(
             "mysql:host=$server_name;dbname=$database_name", $user_login, $userpass, 

@@ -1,8 +1,5 @@
 <?php
-$token = json_decode(file_get_contents('assets/json/app.json'), true);
 include_once 'controller/main_controller.php';
-$user_key = getMachineID();
-// echo $token['user_token_key'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,12 +19,8 @@ $user_key = getMachineID();
 
 
     //check if user already logged in
-    if (isset($token["$user_key"])) {
-        if (!empty($_SESSION[$token["$user_key"]])) {
-            header("location:template?page=home");
-        }
-    }elseif(isset($_SESSION["user_login"])){
-        header("location:main");
+    if (!empty($_SESSION["user_admin_login"])) {
+        header("location:template?page=home");
     }
     //check error data from action login
     if (!empty($_SESSION['login_data'])) {
@@ -48,12 +41,12 @@ $user_key = getMachineID();
 
     ?>
     <form action="controller/login_controller.php?func=login" class="frm-login" method="POST">
-        <div class="lb-caption phetsarath">ພາກວິຊາ ວະສະວະກໍາ ຄອມພິວເຕີ</div>
         <div class="sys-ico">
             <svg viewBox="0 0 238.9 340.9" width="180">
                 <use xlink:href="#nuol_ico"></use>
             </svg>
         </div>
+        <div class="lb-caption phetsarath">ພາກວິຊາ ວິສະວະກໍາ ຄອມພິວເຕີ</div>
         <div class="frm-inp">
             <input class="inp txt-username phetsarath none-outline" type="text" name="username" placeholder="username" value="<?= @$username ?>" required>
             <input class="inp txt-password phetsarath none-outline" type="password" name="password" placeholder="password" id="password" value="<?= @$password ?>" required>

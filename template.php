@@ -1,20 +1,18 @@
 <?php
 require_once "controller/main_controller.php";
 date_default_timezone_set("Asia/Vientiane");
-$user_key = getMachineID();
-$token = json_decode(file_get_contents('assets/json/app.json'), true);
-// limit of table row number
 $limit_row = 10;
-// check user logged in
-if (isset($token["$user_key"])) {
-  if (empty($_SESSION[$token["$user_key"]])) {
+  if (empty($_SESSION["user_admin_login"])) {
     header("location:login");
   } else {
-    $user_data = $_SESSION[$token["$user_key"]];
+    $user_data = $_SESSION["user_admin_login"];
+    $permission = $user_data["permission"];
+    ?>
+    <script>
+      console.log(<?=json_encode($user_data)?>);
+    </script>
+    <?php
   }
-}else{
-  header("location:login");
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

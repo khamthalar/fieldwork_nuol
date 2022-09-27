@@ -13,7 +13,7 @@
             require "../config.php";
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $sql = "select * from users where status = 1 and username = ?";
+            $sql = "select * from tb_user where user_status = 1 and username = ?";
             $query = $dbcon->prepare($sql);
             $query->execute(array($username));
             if($query->rowCount()==0){
@@ -27,22 +27,9 @@
             }else{
                 while ($row = $query->fetch(PDO::FETCH_ASSOC)){
                     if(password_verify($password,$row['password'])){
-                        if($row['user_type']==1){
-                            $token_key = "user_".md5(time());
-                            $login_success = true;
-                            $file = "../assets/json/app.json";
-                            $token = json_decode(file_get_contents($file),true);
-                            $token = array_merge($token,array(getMachineID()=>$token_key));
-                            // file_put_contents($file, json_encode(array('user_token_key'=>$token_key),true));
-                            file_put_contents($file, json_encode($token,true));
-                            $_SESSION[$token_key] = $row;
-                        }else{
-                            $login_success = true;
-                            $user_type = 2;
-                            $_SESSION['user_login'] = $row;
-                            // echo "<script>console.log('test');window.location.href = '/main'</script>";
-                            // header("location:../main");
-                        }
+                        $login_success = true;
+                        $row["permission"]=get_permission($row["user_group_id"],$dbcon);
+                        $_SESSION["user_admin_login"] = $row;
                     }
                 }
                 if(!$login_success){
@@ -62,6 +49,43 @@
                 }
             }
             
+        }
+    }
+    function get_permission($user_group_id,$dbcon){
+        $sql = "SELECT CONCAT('{\"user_group_id\":$user_group_id',',\"user_group_des\":\"',ug.group_des,'\",\"permission\":',
+            (SELECT CONCAT('[',GROUP_CONCAT('{', permission_data, '}' SEPARATOR ','),']') AS module FROM
+            (SELECT CONCAT(
+                '\"module_group_id\":\"',module_group_id,
+                '\",\"module_group_des\":\"',module_group_des,
+                '\",\"module\":',module
+            ) AS permission_data  FROM (
+            SELECT module_group_id,module_group_des, CONCAT('[',GROUP_CONCAT('{', module_json, '}' SEPARATOR ','),']') AS module FROM
+                               (
+                               SELECT m.module_group_id,mg.module_group_des,
+                               CONCAT
+                               (
+                                   '\"module_id\":\"',m.module_id,
+                                   '\",\"module_code\":\"',m.module_code,
+                                   '\",\"module_des\":\"',m.module_des,
+                                   '\",\"allow\":',
+                                   (SELECT COUNT(*) FROM tb_group_permission gp WHERE gp.module_id = m.module_id AND gp.user_group_id = $user_group_id)
+                               ) AS module_json
+                               FROM tb_module m INNER JOIN tb_module_group mg ON m.module_group_id = mg.module_group_id WHERE m.module_status = 1
+                               ) AS more_json GROUP BY module_group_id
+             ) AS json ) AS permission),'}') AS permission_json_str FROM tb_user_group ug WHERE ug.user_group_id = $user_group_id";
+        $query = $dbcon->prepare($sql);
+        $query->execute();
+        if($query){
+            $permission = json_decode($query->fetch(PDO::FETCH_ASSOC)["permission_json_str"]);
+            $permissions = array();
+            foreach($permission->permission as $data){
+                foreach($data->module as $module){
+                    $permissions[$module->module_code]=$module->allow;
+                }
+            }
+            return $permissions;
+        }else{
+            return [];
         }
     }
 ?>

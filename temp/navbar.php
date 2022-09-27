@@ -10,8 +10,7 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
           <?php
-            $user_key = getMachineID();
-            if(!empty($_SESSION[$token["$user_key"]])){
+            if(!empty($_SESSION["user_admin_login"])){
               echo $user_data['fullname'];
             }
           ?>
