@@ -82,12 +82,6 @@ $limit_row = 10;
           }else{
             include_once "pages/$content_page.php";
           }
-          // if($content_page!="new_user"){
-          //     echo "<script>sessionStorage.setItem('new_user_class', 'hidden');</script>";
-          // }
-          // if($content_page!="report"){
-          //     echo "<script>sessionStorage.removeItem('tab');</script>";
-          // }
           ?>
         </div>
         <!-- content-wrapper ends -->
