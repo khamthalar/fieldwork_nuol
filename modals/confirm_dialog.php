@@ -13,7 +13,7 @@
             <form method="POST" action="">
                 <div class="modal-body">
                     <div class="lb">
-                        <h5 class="phetsarath" id="title"></h5>
+                        <h5 class="notosans" id="title"></h5>
                     </div>
                     <input type="hidden" name="id" id="id">
                 </div>

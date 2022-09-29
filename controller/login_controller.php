@@ -29,7 +29,7 @@
                     if(password_verify($password,$row['password'])){
                         $login_success = true;
                         $row["permission"]=get_permission($row["user_group_id"],$dbcon);
-                        $_SESSION["user_admin_login"] = $row;
+                        $_SESSION["user_login"] = $row;
                     }
                 }
                 if(!$login_success){

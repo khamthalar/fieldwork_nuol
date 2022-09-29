@@ -16,7 +16,7 @@ if (isset($_GET['class_id'])) {
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
-    <h5 class="phetsarath"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> <a href="template?page=classroom" class="home-link">ຫ້ອງເສັງ</a>
+    <h5 class="notosans"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> <a href="template?page=classroom" class="home-link">ຫ້ອງເສັງ</a>
     <i class="fas fa-chevron-right"></i> <a href="template?page=class_member<?=@$class_id_param.@$class_des_param?>" class="home-link">ນັກສອບເສັງ</a>
     <i class="fas fa-chevron-right"></i> ເລືອກນັກສອບເສັງ</h5>
   </div>
@@ -35,10 +35,10 @@ if (isset($_GET['class_id'])) {
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
           <div class="card-body">
-            <h4 class="card-title phetsarath">ເລືອກນັກສອບເສັງ</h4>
+            <h4 class="card-title notosans">ເລືອກນັກສອບເສັງ</h4>
             <div class="top-content">
               <div  class="top-act">
-                <select class="form-select phetsarath" aria-label="Default select">
+                <select class="form-select notosans" aria-label="Default select">
                     <option selected>---ສະແດງທັງໝົດ---</option>
                     <?php
                         $departments = load_department()->fetchAll(PDO::FETCH_ASSOC);
@@ -47,8 +47,8 @@ if (isset($_GET['class_id'])) {
                         }
                     ?>
                 </select>
-                <input class="txt-search phetsarath f12" id="txt-search" type="text" name="txt_search" placeholder="Search">
-                <button type="button" class="btn-search btn btn-secondary phetsarath">ຄົ້ນຫາ</button>
+                <input class="txt-search notosans f12" id="txt-search" type="text" name="txt_search" placeholder="Search">
+                <button type="button" class="btn-search btn btn-secondary notosans">ຄົ້ນຫາ</button>
             </div>
 
             <div class="paginate">
@@ -68,8 +68,8 @@ if (isset($_GET['class_id'])) {
                         &nbsp;<input onClick="toggle(this)" class="form-check-input" type="checkbox" value="" id="check-all">
                         </div>
                     </th>
-                    <th class="phetsarath">ນັກສອບເສັງ</th>
-                    <th class="phetsarath">ພະແນກ</th>
+                    <th class="notosans">ນັກສອບເສັງ</th>
+                    <th class="notosans">ພະແນກ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -84,12 +84,12 @@ if (isset($_GET['class_id'])) {
                         <td class="col-id center">
                             &nbsp;<input name="cb_member[]" class="form-check-input cb_member" type="checkbox" value="<?= $menbers[$i]['id'] ?>" id="cb<?= $menbers[$i]['id'] ?>">
                         </td>
-                        <td class="phetsarath">
+                        <td class="notosans">
                             <label class="form-check-label lb-fullname" for="cb<?= $menbers[$i]['id'] ?>">
                                 <?=$menbers[$i]['fullname']?>
                             </label>
                         </td>
-                        <td class="phetsarath">
+                        <td class="notosans">
                             <label class="form-check-label lb-department" for="cb<?= $menbers[$i]['id'] ?>">
                                 <?=$menbers[$i]['dep_name']?>
                             </label>
@@ -101,7 +101,7 @@ if (isset($_GET['class_id'])) {
 
             </div>
             <div class="submit-btn">
-                <button onclick="save()" type="submit" name="save_ans_choice" class="btn btn-primary btn-icon-text phetsarath none-outline none-select">
+                <button onclick="save()" type="submit" name="save_ans_choice" class="btn btn-primary btn-icon-text notosans none-outline none-select">
                         ບັນທຶກ
                   <i class="fas fa-save btn-icon-append"></i>                                                                             
                 </button>
@@ -128,7 +128,7 @@ if (isset($_GET['class_id'])) {
             }
         });
         if(member_checked.length == 0){
-            Swal.fire({icon:'info',html:'<span class=phetsarath>ກະລຸນາເລືອກນັກສອບເສັງ!</span>'});
+            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາເລືອກນັກສອບເສັງ!</span>'});
         }else{
             var param = {
                 class_id:'<?=$class_id?>',

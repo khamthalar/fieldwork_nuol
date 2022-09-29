@@ -6,7 +6,7 @@ require_once "controller/class_member_controller.php";
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
-    <h5 class="phetsarath"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> <a href="template?page=classroom" class="home-link">ຫ້ອງເສັງ</a>
+    <h5 class="notosans"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> <a href="template?page=classroom" class="home-link">ຫ້ອງເສັງ</a>
     <i class="fas fa-chevron-right"></i> ນັກສອບເສັງ</h5>
   </div>
 </div>
@@ -38,14 +38,14 @@ require_once "controller/class_member_controller.php";
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
           <div class="card-body">
-            <h4 class="card-title phetsarath">ຂໍ້ມູນນັກສອບເສັງ ຫ້ອງ (<?=isset($_GET['class_des'])?$_GET['class_des']:''?>)</h4>
+            <h4 class="card-title notosans">ຂໍ້ມູນນັກສອບເສັງ ຫ້ອງ (<?=isset($_GET['class_des'])?$_GET['class_des']:''?>)</h4>
             <div class="top-content">
               <div  class="top-act">
-                <button onclick="window.location.href='template?page=classroom&sub_page=select_member<?=@$class_id_param.@$class_des_param?>'" type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline phetsarath">
+                <button onclick="window.location.href='template?page=classroom&sub_page=select_member<?=@$class_id_param.@$class_des_param?>'" type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline notosans">
                     <i class="ti-import"></i>
                 </button>
-                <input class="txt-search phetsarath f12" id="txt-search" type="text" name="txt_search" placeholder="Search" value="<?=@$_GET['filter']?>">
-                <button onclick="search()" type="button" class="btn-search btn btn-secondary phetsarath">ຄົ້ນຫາ</button>
+                <input class="txt-search notosans f12" id="txt-search" type="text" name="txt_search" placeholder="Search" value="<?=@$_GET['filter']?>">
+                <button onclick="search()" type="button" class="btn-search btn btn-secondary notosans">ຄົ້ນຫາ</button>
             </div>
 
             <div class="paginate">
@@ -60,9 +60,9 @@ require_once "controller/class_member_controller.php";
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="col-id phetsarath" width="60">ລະຫັດ</th>
-                    <th class="phetsarath">ນັກສອບເສັງ</th>
-                    <th class="phetsarath">ພະແນກ</th>
+                    <th class="col-id notosans" width="60">ລະຫັດ</th>
+                    <th class="notosans">ນັກສອບເສັງ</th>
+                    <th class="notosans">ພະແນກ</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -76,8 +76,8 @@ require_once "controller/class_member_controller.php";
                   ?>
                     <tr>
                       <td class="col-id"><?=$data[$i]['id']?></td>
-                      <td class="phetsarath"><?=$data[$i]['fullname']?></td>
-                      <td class="phetsarath"><?=$data[$i]['dep_name']?></td>
+                      <td class="notosans"><?=$data[$i]['fullname']?></td>
+                      <td class="notosans"><?=$data[$i]['dep_name']?></td>
                       <td>
                         <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline" data-id="<?=$data[$i]['id']?>" data-bs-toggle="modal" data-bs-target="#confirm_dialog" data-bs-backdrop="static">
                           <i class="fas fa-trash-alt"></i>

@@ -5,7 +5,7 @@ require_once "controller/classroom_controller.php";
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
-    <h5 class="phetsarath"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> ຫ້ອງເສັງ</h5>
+    <h5 class="notosans"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> ຫ້ອງເສັງ</h5>
   </div>
 </div>
 <div class="page-wrapper">
@@ -27,10 +27,10 @@ require_once "controller/classroom_controller.php";
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
           <div class="card-body">
-            <h4 class="card-title phetsarath">ຂໍ້ມູນຫ້ອງສອບເສັງ</h4>
+            <h4 class="card-title notosans">ຂໍ້ມູນຫ້ອງສອບເສັງ</h4>
             <div class="top-content">
               <div>
-                <button type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline phetsarath" data-toggle="modal" data-target="#addclass" data-backdrop="static">
+                <button type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline notosans" data-toggle="modal" data-target="#addclass" data-backdrop="static">
                   <i class="ti-plus btn-icon-prepend"></i> ເພີ່ມໃໝ່
                 </button>
               </div>
@@ -48,8 +48,8 @@ require_once "controller/classroom_controller.php";
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="col-id phetsarath" width="60">ລະຫັດ</th>
-                    <th class="phetsarath">ຫ້ອງເສັງ</th>
+                    <th class="col-id notosans" width="60">ລະຫັດ</th>
+                    <th class="notosans">ຫ້ອງເສັງ</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -63,7 +63,7 @@ require_once "controller/classroom_controller.php";
                   ?>
                     <tr>
                       <td class="col-id"><?=$data[$i]['id']?></td>
-                      <td class="phetsarath"><?=$data[$i]['class_des']?></td>
+                      <td class="notosans"><?=$data[$i]['class_des']?></td>
                       <td>
                         <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline" data-id="<?=$data[$i]['id']?>" data-class_des="<?=$data[$i]['class_des']?>" data-bs-toggle="modal" data-bs-target="#editclass" data-bs-backdrop="static">
                           <i class="fas fa-pencil-alt"></i>

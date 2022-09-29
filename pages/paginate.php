@@ -9,7 +9,7 @@ if ($row_num > $limit_row) {
         }
     }
 ?>
-    <span class="phetsarath">ໜ້າ <?= $current_page; ?> ຈາກ <?= $last_page ?></span>
+    <span class="notosans">ໜ້າ <?= $current_page; ?> ຈາກ <?= $last_page ?></span>
     <nav aria-label="Page navigation class_page">
         <ul class="pagination">
            

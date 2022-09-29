@@ -19,7 +19,7 @@ include_once 'controller/main_controller.php';
 
 
     //check if user already logged in
-    if (!empty($_SESSION["user_admin_login"])) {
+    if (!empty($_SESSION["user_login"])) {
         header("location:template?page=home");
     }
     //check error data from action login
@@ -31,7 +31,7 @@ include_once 'controller/main_controller.php';
         //show error message if get error from action login
         if ($is_error) {
     ?>
-            <div class="login-alert alert alert-danger alert-dismissible fade show phetsarath" role="alert">
+            <div class="login-alert alert alert-danger alert-dismissible fade show notosans" role="alert">
                 <?= $message ?>
                 <button type="button" class="btn-close none-select none-outline" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -46,17 +46,17 @@ include_once 'controller/main_controller.php';
                 <use xlink:href="#nuol_ico"></use>
             </svg>
         </div>
-        <div class="lb-caption phetsarath">ພາກວິຊາ ວິສະວະກໍາ ຄອມພິວເຕີ</div>
+        <div class="lb-caption notosans">ພາກວິຊາ ວິສະວະກໍາ ຄອມພິວເຕີ</div>
         <div class="frm-inp">
-            <input class="inp txt-username phetsarath none-outline" type="text" name="username" placeholder="username" value="<?= @$username ?>" required>
-            <input class="inp txt-password phetsarath none-outline" type="password" name="password" placeholder="password" id="password" value="<?= @$password ?>" required>
+            <input class="inp txt-username notosans none-outline" type="text" name="username" placeholder="username" value="<?= @$username ?>" required>
+            <input class="inp txt-password notosans none-outline" type="password" name="password" placeholder="password" id="password" value="<?= @$password ?>" required>
         </div>
         <div class="chb">
             <input type="checkbox" id="chb1" name="show_pw" onclick='handleClick(this);'>
-            <label for="chb1" class="phetsarath"> ສະແດງລະຫັດຜ່ານ</label>
+            <label for="chb1" class="notosans"> ສະແດງລະຫັດຜ່ານ</label>
         </div>
         <div class="frm-btn">
-            <button class="btn-login phetsarath none-outline" name="login">ເຂົ້າສູ່ລະບົບ</button>
+            <button class="btn-login notosans none-outline" name="login">ເຂົ້າສູ່ລະບົບ</button>
         </div>
     </form>
 </body>

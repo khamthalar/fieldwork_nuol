@@ -2,10 +2,10 @@
 require_once "controller/main_controller.php";
 date_default_timezone_set("Asia/Vientiane");
 $limit_row = 10;
-  if (empty($_SESSION["user_admin_login"])) {
+  if (empty($_SESSION["user_login"])) {
     header("location:login");
   } else {
-    $user_data = $_SESSION["user_admin_login"];
+    $user_data = $_SESSION["user_login"];
     $permission = $user_data["permission"];
     ?>
     <script>

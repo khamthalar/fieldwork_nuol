@@ -16,7 +16,7 @@ if(isset($_GET['emp_id'])){
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
-    <h5 class="phetsarath">
+    <h5 class="notosans">
         <a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> 
         <i class="fas fa-chevron-right"></i> 
         <a href="template?page=employee<?=$dep_id_param?>" class="home-link">ຂໍ້ມູນພະນັກງານ</a> 
@@ -35,13 +35,13 @@ if(isset($_GET['emp_id'])){
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title phetsarath">ແກ້ໄຂຂໍ້ມູນພະນັກງານ</h4>
+                  <h4 class="card-title notosans">ແກ້ໄຂຂໍ້ມູນພະນັກງານ</h4>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group row">
-                          <label class="col-form-label phetsarath f12">ຊື່ ແລະ ນາມສະກຸນ*</label>
+                          <label class="col-form-label notosans f12">ຊື່ ແລະ ນາມສະກຸນ*</label>
                           <div class="col-sm-12">
-                            <input id="fullname" type="text" class="inp form-control phetsarath f12" value="<?=$emp_data['fullname']?>" />
+                            <input id="fullname" type="text" class="inp form-control notosans f12" value="<?=$emp_data['fullname']?>" />
                           </div>
                         </div>
                       </div>
@@ -49,9 +49,9 @@ if(isset($_GET['emp_id'])){
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label phetsarath f12">ເພດ</label>
+                          <label class="col-sm-3 col-form-label notosans f12">ເພດ</label>
                           <div class="col-sm-9">
-                            <select id="gender" class="inp form-control phetsarath f12">
+                            <select id="gender" class="inp form-control notosans f12">
                               <option value="male" <?=($emp_data['gender']=='male')?"selected":''?> >ຊາຍ</option>
                               <option value="female" <?=($emp_data['gender']=='female')?"selected":''?>>ຍິງ</option>
                               <option value="other" <?=($emp_data['gender']=='other')?"selected":''?> >ອື່ນໆ</option>
@@ -61,12 +61,12 @@ if(isset($_GET['emp_id'])){
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label phetsarath f12">ວັນເດືອນປີເກີດ</label>
+                            <label class="col-sm-3 col-form-label notosans f12">ວັນເດືອນປີເກີດ</label>
                             <div class="col-sm-9">
                                 <label class="lb">
                                     <input type="date" id="date_of_birth" name="date_of_birth" <?=($emp_data['date_of_birth']=="")?"":"value='".$emp_data['date_of_birth']."'"?> onchange="date_changed(this.value)">
                                     <button class="btn-calendar" id="calendar_text">
-                                        <div id="date-of-birth-lb" class="phetsarath f12"><?=($emp_data['date_of_birth']=="")?"ວັນເດືອນປີເກີດ":date("d/m/Y", strtotime($emp_data['date_of_birth']))?></div>
+                                        <div id="date-of-birth-lb" class="notosans f12"><?=($emp_data['date_of_birth']=="")?"ວັນເດືອນປີເກີດ":date("d/m/Y", strtotime($emp_data['date_of_birth']))?></div>
                                         <div class="calender-ico"><img src="assets/svg/calendar.svg" width="20"></div>
                                     </button>
                                 </label>
@@ -77,9 +77,9 @@ if(isset($_GET['emp_id'])){
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label phetsarath f12">ພະແນກ</label>
+                          <label class="col-sm-3 col-form-label notosans f12">ພະແນກ</label>
                             <div class="col-sm-9">
-                                <select id="dep" class="inp form-control phetsarath f12">
+                                <select id="dep" class="inp form-control notosans f12">
                                     <?php 
                                         $departments = load_department()->fetchAll(PDO::FETCH_ASSOC);
                                         foreach($departments as $depart){
@@ -95,9 +95,9 @@ if(isset($_GET['emp_id'])){
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label phetsarath f12">ເບີໂທ</label>
+                            <label class="col-sm-3 col-form-label notosans f12">ເບີໂທ</label>
                             <div class="col-sm-9">
-                                <input id="tel" type="text" class="inp form-control inp phetsarath f12" value="<?=$emp_data['tel']?>" />
+                                <input id="tel" type="text" class="inp form-control inp notosans f12" value="<?=$emp_data['tel']?>" />
                             </div>
                             </div>
                       </div>
@@ -105,16 +105,16 @@ if(isset($_GET['emp_id'])){
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group row">
-                            <label class="col-sm-3 phetsarath f12" for="txt-address">ທີ່ຢູ່</label>
+                            <label class="col-sm-3 notosans f12" for="txt-address">ທີ່ຢູ່</label>
                             <div class="col-sm-9">
-                                <textarea id="address" class="inp form-control phetsarath f12" id="txt-address" rows="5"><?=$emp_data['address']?></textarea>
+                                <textarea id="address" class="inp form-control notosans f12" id="txt-address" rows="5"><?=$emp_data['address']?></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 phetsarath f12"></label>
+                            <label class="col-sm-3 notosans f12"></label>
                                 <div class="col-sm-5">
                                 <div class="form-check">
-                                <label class="form-check-label phetsarath f12">
+                                <label class="form-check-label notosans f12">
                                     <input type="radio" class="form-check-input" name="user_type" id="student" value="2" <?=($emp_data['user_type']==2)?"checked":""?> >
                                     ນັກສອບເສັງ
                                 </label>
@@ -122,7 +122,7 @@ if(isset($_GET['emp_id'])){
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-check">
-                                    <label class="form-check-label phetsarath f12">
+                                    <label class="form-check-label notosans f12">
                                         <input type="radio" class="form-check-input" name="user_type" id="admin" value="1" <?=($emp_data['user_type']==1)?"checked":""?>>
                                         ອາຈານ
                                     </label>
@@ -132,19 +132,19 @@ if(isset($_GET['emp_id'])){
                       </div>
                       <div class="col-md-6">
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label phetsarath f12">ຊື່ເຂົ້າໃຊ້ລະບົບ*</label>
+                          <label class="col-sm-3 col-form-label notosans f12">ຊື່ເຂົ້າໃຊ້ລະບົບ*</label>
                           <div class="col-sm-9">
-                            <input id="username" type="text" class="form-control phetsarath f12" value="<?=$emp_data['username']?>"/>
+                            <input id="username" type="text" class="form-control notosans f12" value="<?=$emp_data['username']?>"/>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label phetsarath f12">ລະຫັດຜ່ານ*</label>
+                          <label class="col-sm-3 col-form-label notosans f12">ລະຫັດຜ່ານ*</label>
                           <div class="col-sm-9">
                             <input value="edlquiz" id="password" type="password" class="form-control" />
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-sm-3 col-form-label phetsarath f12">ຢືນຢັນລະຫັດຜ່ານ*</label>
+                          <label class="col-sm-3 col-form-label notosans f12">ຢືນຢັນລະຫັດຜ່ານ*</label>
                           <div class="col-sm-9">
                             <input value="edlquiz"  id="confirm_password" type="password" class="form-control" />
                           </div>
@@ -153,11 +153,11 @@ if(isset($_GET['emp_id'])){
                     </div>
                     <div class="row submit">
                         <div class="col-md-12 center">
-                            <button onclick="save()" type="submit" name="save_ans_choice" class="cus-btn btn btn-primary btn-icon-text phetsarath none-outline none-select">
+                            <button onclick="save()" type="submit" name="save_ans_choice" class="cus-btn btn btn-primary btn-icon-text notosans none-outline none-select">
                             ບັນທຶກ
                             <i class="fas fa-save btn-icon-append"></i>                                                                             
                             </button>
-                            <button onclick="window.location.href='template?page=employee<?=$dep_id_param?>'" type="submit" name="save_ans_choice" class="cus-btn btn btn-danger btn-icon-text phetsarath none-outline none-select">
+                            <button onclick="window.location.href='template?page=employee<?=$dep_id_param?>'" type="submit" name="save_ans_choice" class="cus-btn btn btn-danger btn-icon-text notosans none-outline none-select">
                             ຍົກເລີກ
                             <i class="fas fa-solid fa-trash btn-icon-append"></i>
                             </button>
@@ -181,12 +181,12 @@ if(isset($_GET['emp_id'])){
         var _date_of_birth = $('#date_of_birth').val();
         var _tel = $("#tel").val();
         if(_fullname==""){
-            Swal.fire({icon:'info',html:'<span class=phetsarath>ກະລຸນາປ້ອນ ຊື່ ແລະ ນາມສະກຸນ !</span>'});
+            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາປ້ອນ ຊື່ ແລະ ນາມສະກຸນ !</span>'});
         }else if(_username==""){
-            Swal.fire({icon:'info',html:'<span class=phetsarath>ກະລຸນາປ້ອນ ຊື່ເຂົ້າໃຊ້ລະບົບ !</span>'});
+            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາປ້ອນ ຊື່ເຂົ້າໃຊ້ລະບົບ !</span>'});
         }else{
             if(_password != confirm_password){
-                Swal.fire({icon:'info',html:'<span class=phetsarath>ລະຫັດຜ່ານບໍ່ກົງກັນ !</span>'});
+                Swal.fire({icon:'info',html:'<span class=notosans>ລະຫັດຜ່ານບໍ່ກົງກັນ !</span>'});
             }else{
                 var param = {
                     emp_id:<?=$emp_id?>,

@@ -10,7 +10,7 @@
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown notosans">
           <?php
-            if(!empty($_SESSION["user_admin_login"])){
+            if(!empty($_SESSION["user_login"])){
               echo $user_data['fullname'];
             }
           ?>

@@ -1,4 +1,4 @@
-<div class="modal fade" id="editclass" tabindex="-1" role="dialog" aria-labelledby="editclass">
+<div class="modal fade" id="add_user_group" tabindex="-1" role="dialog" aria-labelledby="add_user_group">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
             <div class="modal-header" 
@@ -7,20 +7,18 @@
                     color:white; 
                     border-top-left-radius: .1rem;
                     border-top-right-radius: .1rem;">
-                <h4 class="modal-title notosans" id="addclass">ແກ້ໄຂຂໍ້ມູນຫ້ອງເສັງ</h4>
+                <h4 class="modal-title notosans" id="addclass">ເພີ່ມຂໍ້ມູນກຸ່ມຜູ້ໃຊ້ງານລະບົບ</h4>
                 <button type="button" class="close none-outline" data-bs-dismiss="modal" aria-label="Close"><span class="modal-close-lb" aria-hidden="true">&times;</span></button>
             </div>
             <form method="POST" action="">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="class_des" class="notosans">ກະລຸນາປ້ອນລາຍລະອຽດຫ້ອງເສັງ</label>
-                        <input type="text" name="id" id="class_id" hidden>
-                        <input type="text" class="form-control notosans center none-select none-outline" id="class_des" name="class_des" required>
+                        <label for="subj_name" class="notosans">ກະລຸນາປ້ອນຊື່ກຸ່ມຜູ້ໃຊ້ງານລະບົບ</label>
+                        <input type="text" class="form-control notosans center none-select none-outline" id="group_des" name="group_des" required>
                     </div>
-                    
                 </div>
                 <div class="modal-footer" style="justify-content:center;">
-                    <button type="submit" name="update_class" class="cus-btn btn btn-primary btn-icon-text notosans none-outline none-select">
+                    <button type="submit" name="add_user_group" class="cus-btn btn btn-primary btn-icon-text notosans none-outline none-select">
                         ບັນທຶກ
                         <i class="fas fa-save btn-icon-append"></i>                                                                             
                     </button>
@@ -34,9 +32,9 @@
     </div>
 </div>
 <script>
-        $(document).ready(function(){ 
-            $('#editclass').modal({
-                backdrop:'static'
-            });
+    $(document).ready(function(){ 
+        $('#add_user_group').modal({
+            backdrop:'static'
         });
+    });
 </script>

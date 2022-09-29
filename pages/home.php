@@ -22,7 +22,7 @@
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="deskboard-card card card-dark-blue">
                             <div class="card-body">
-                                <h4 class="card-title phetsarath col-white">ຫ້ອງເສັງ</h4>
+                                <h4 class="card-title notosans col-white">ຫ້ອງເສັງ</h4>
                                 <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                     <span class="display-5 text-info">
                                         <img src="assets/svg/classroom.svg" width="70">
@@ -35,7 +35,7 @@
                     <div class="col-md-6 mb-4 stretch-card transparent">
                         <div class="deskboard-card card card-tale pointer" onclick="location.href = 'template?page=subject';">
                             <div class="card-body">
-                                <h4 class="card-title phetsarath col-white">ວິຊາເສັງ</h4>
+                                <h4 class="card-title notosans col-white">ວິຊາເສັງ</h4>
                                 <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                     <span class="display-5 text-info">
                                         <img src="assets/svg/file.svg" width="70">
@@ -50,7 +50,7 @@
                     <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                         <div class="deskboard-card card card-light-blue">
                             <div class="card-body">
-                                <h4 class="card-title phetsarath col-white">ຫົວຂໍ້ສອບ</h4>
+                                <h4 class="card-title notosans col-white">ຫົວຂໍ້ສອບ</h4>
                                 <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                     <span class="display-5 text-purple">
                                         <img src="assets/svg/quiz.svg" width="70">
@@ -63,7 +63,7 @@
                     <div class="col-md-6 stretch-card transparent">
                         <div class="deskboard-card card card-light-danger">
                             <div class="card-body">
-                                <h4 class="card-title phetsarath col-white">ຄໍາຖາມ</h4>
+                                <h4 class="card-title notosans col-white">ຄໍາຖາມ</h4>
                                 <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                     <span class="display-5 text-purple">
                                         <img src="assets/svg/qa.svg" width="70">
@@ -89,8 +89,8 @@
                             <div class="row">
                                 <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                                     <div class="ml-xl-4 mt-3">
-                                        <p class="card-title phetsarath f16">ລາຍງານ</p>
-                                        <h3 class="font-weight-500 mb-xl-4 text-primary phetsarath">ຜູ້ໃຊ້ງານລະບົບທັງໝົດ</h3>
+                                        <p class="card-title notosans f16">ລາຍງານ</p>
+                                        <h3 class="font-weight-500 mb-xl-4 text-primary notosans">ຜູ້ໃຊ້ງານລະບົບທັງໝົດ</h3>
                                         <h1 class="text-primary"><i class="fas fa-users"></i> <?="data->users_num"?></h1>
                                     </div>
                                 </div>

@@ -6,7 +6,7 @@ require_once "controller/employee_controller.php";
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
-    <h5 class="phetsarath"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> ຂໍ້ມູນພະນັກງານ</h5>
+    <h5 class="notosans"><a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> <i class="fas fa-chevron-right"></i> ຂໍ້ມູນພະນັກງານ</h5>
   </div>
 </div>
 <div class="page-wrapper">
@@ -26,13 +26,13 @@ require_once "controller/employee_controller.php";
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
           <div class="card-body">
-            <h4 class="card-title phetsarath">ຂໍ້ມູນພະນັກງານ</h4>
+            <h4 class="card-title notosans">ຂໍ້ມູນພະນັກງານ</h4>
             <div class="top-content">
               <div class="top-act">
-                <button onclick="window.location.href='template?page=employee&sub_page=new_employee<?=($dep_id==0)?'':'&dep_id='.$dep_id?>'" type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline phetsarath">
+                <button onclick="window.location.href='template?page=employee&sub_page=new_employee<?=($dep_id==0)?'':'&dep_id='.$dep_id?>'" type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline notosans">
                   <i class="ti-plus btn-icon-prepend"></i> ເພີ່ມໃໝ່
                 </button>
-                <select onchange="cb_depart_changed(this.value)" class="form-select phetsarath" aria-label="Default select">
+                <select onchange="cb_depart_changed(this.value)" class="form-select notosans" aria-label="Default select">
                     <option value="0" <?=($dep_id==0)?"selected":""?> >---ສະແດງທັງໝົດ---</option>
                     <?php
                       $departments = load_department()->fetchAll(PDO::FETCH_ASSOC);
@@ -58,11 +58,11 @@ require_once "controller/employee_controller.php";
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="col-id phetsarath" width="30"></th>
-                    <th class="phetsarath">ຊື່ພະນັກງານ</th>
-                    <th class="phetsarath" width="50">ອາຍຸ (ປີ)</th>
-                    <th class="phetsarath">ເບິໂທ</th>
-                    <th class="phetsarath">ພະແນກ</th>
+                    <th class="col-id notosans" width="30"></th>
+                    <th class="notosans">ຊື່ພະນັກງານ</th>
+                    <th class="notosans" width="50">ອາຍຸ (ປີ)</th>
+                    <th class="notosans">ເບິໂທ</th>
+                    <th class="notosans">ພະແນກ</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -87,7 +87,7 @@ require_once "controller/employee_controller.php";
                             ?>
                           <!-- <?=$data[$i]['id']?> -->
                         </td>
-                        <td class="phetsarath">
+                        <td class="notosans">
                             <label style="width: 20px; font-size: larger;">
                                 <?=($data[$i]['user_type']==2)?'<i class="fas fa-solid fa-graduation-cap"></i>':''?>
                             </label>
@@ -95,7 +95,7 @@ require_once "controller/employee_controller.php";
                         </td>
                         <td style="text-align: center;"><?=$data[$i]['age']?></td>
                         <td><?=$data[$i]['tel']?></td>
-                        <td class="phetsarath"><?=$data[$i]['dep_name']?></td>
+                        <td class="notosans"><?=$data[$i]['dep_name']?></td>
                         <td>
                         <button onclick="window.location.href='template?page=employee&sub_page=update_employee<?=($dep_id==0)?'':'&dep_id='.$dep_id?>&emp_id=<?=$data[$i]['id']?>'" type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
                           <i class="fas fa-pencil-alt"></i>

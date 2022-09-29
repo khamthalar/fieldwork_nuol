@@ -12,7 +12,7 @@
             </div>
             <div class="modal-body">
                 <div class="lb">
-                    <h5 class="phetsarath">ເຈົ້າຕ້ອງການອອກຈາກລະບົບແມ່ນບໍ່?</h5>
+                    <h5 class="notosans">ເຈົ້າຕ້ອງການອອກຈາກລະບົບແມ່ນບໍ່?</h5>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content:center;">
