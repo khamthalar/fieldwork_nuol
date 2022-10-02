@@ -73,7 +73,6 @@ $limit_row = 10;
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
-          <!-- @include($page,['page_num'=>$page_num]) -->
           <?php
           $content_page = $_GET['page'];
           if(isset($_GET['sub_page'])){
@@ -84,8 +83,6 @@ $limit_row = 10;
           }
           ?>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-center text-sm-left d-block d-sm-inline-block notosans">Copyright © 2022. NUOL SYSTEM V1.0</span>

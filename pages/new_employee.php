@@ -76,7 +76,6 @@ $dep_id_param = isset($_GET['dep_id'])?"&dep_id=".$_GET['dep_id']:"";
                                           ?>
                                           <option value='<?=$depart['dep_id']?>' <?=($dep_id==$depart['dep_id'])?'selected':''?> ><?=$depart['dep_name']?></option>
                                           <?php
-                                            // echo "<option value='".$depart['dep_id']."'>".$depart['dep_name']."</option>";
                                         }
                                     ?>
                                 </select>

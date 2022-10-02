@@ -61,6 +61,26 @@
             }
         }
     }
+    function update_pwd($user_id,$password){
+        require "config.php";
+        $password = password_hash($password,PASSWORD_DEFAULT);
+        $sql = "UPDATE tb_user SET password=? WHERE user_id = ?";
+        $query = $dbcon->prepare($sql);
+        $query->execute(array($password,$user_id));
+        if($query){
+            ?>
+                <script>
+                    Swal.fire('<span class=phetsarath>ບັນທຶກສໍາເລັດ!</span>', '', 'success')
+                </script>
+            <?php
+        }else{
+            ?>
+                <script>
+                    Swal.fire('<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>', '', 'error')
+                </script>
+            <?php 
+        }
+    }
     function load_department(){
         require "config.php";
         include_once("controller/app_module.php");
@@ -89,28 +109,53 @@
             <?php    
         }
     }
-    function load_employee($dep_id){
+    function load_employee(){
         require "config.php";
-        if($dep_id==0){
-            $sql = "SELECT u.id,fullname,gender,date_of_birth,TRUNCATE((DATEDIFF(NOW(),date_of_birth)/365),0) 'age',tel,address,u.dep_id,d.dep_name,username,user_type
-            FROM users u INNER JOIN departments d ON u.dep_id = d.dep_id WHERE u.status = 1 ORDER BY u.dep_id";
-            $query = $dbcon->prepare($sql);
-            $query->execute();
-            return $query;
-        }else{
-            $sql = "SELECT u.id,fullname,gender,date_of_birth,TRUNCATE((DATEDIFF(NOW(),date_of_birth)/365),0) 'age',tel,address,u.dep_id,d.dep_name,username,user_type
-            FROM users u INNER JOIN departments d ON u.dep_id = d.dep_id WHERE u.status = 1 AND u.dep_id = ? ORDER BY u.dep_id";
-            $query = $dbcon->prepare($sql);
-            $query->execute(array($dep_id));
-            return $query;
-        }
+        // if($dep_id==0){
+        $sql = "SELECT * FROM tb_user WHERE user_status = 1";
+        $query = $dbcon->prepare($sql);
+        $query->execute();
+        return $query;
+        // }else{
+        //     $sql = "SELECT u.id,fullname,gender,date_of_birth,TRUNCATE((DATEDIFF(NOW(),date_of_birth)/365),0) 'age',tel,address,u.dep_id,d.dep_name,username,user_type
+        //     FROM users u INNER JOIN departments d ON u.dep_id = d.dep_id WHERE u.status = 1 AND u.dep_id = ? ORDER BY u.dep_id";
+        //     $query = $dbcon->prepare($sql);
+        //     $query->execute(array($dep_id));
+        //     return $query;
+        // }
         
+    }
+    function set_user_group($user_id,$user_group_id){
+        require "config.php";
+        $sql = "UPDATE tb_user SET user_group_id = ? WHERE user_id = ?";
+        $query = $dbcon->prepare($sql);
+        $query->execute(array($user_group_id,$user_id));
+        if($query){
+            ?>
+                <script>
+                    Swal.fire('<span class=phetsarath>ບັນທຶກສໍາເລັດ!</span>', '', 'success')
+                </script>
+            <?php
+        }else{
+            ?>
+                <script>
+                    Swal.fire('<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>', '', 'error')
+                </script>
+            <?php 
+        }
     }
     function get_emp_by_id($emp_id){
         require "config.php";
         $sql = "SELECT * FROM users WHERE id = ?";
         $query = $dbcon->prepare($sql);
         $query->execute(array($emp_id));
+        return $query;
+    }
+    function get_user_group(){
+        require "config.php";
+        $sql = "SELECT*FROM tb_user_group WHERE user_group_status=1";
+        $query = $dbcon->prepare($sql);
+        $query->execute();
         return $query;
     }
 ?>

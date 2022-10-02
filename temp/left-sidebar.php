@@ -14,7 +14,7 @@
         </a>
         <div class="collapse" id="department">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link notosans f12" href="#">ພະນັກງານ</a></li>
+            <li class="nav-item"> <a class="nav-link notosans f12" href="template?page=employee">ພະນັກງານ</a></li>
             <li class="nav-item"> <a class="nav-link notosans f12" href="template?page=user_group">ກຸ່ມຜູ້ໃຊ້ງານລະບົບ</a></li>
             <li class="nav-item"> <a class="nav-link notosans f12" href="#">ຫຼັກສູດ</a></li>
             <li class="nav-item"> <a class="nav-link notosans f12" href="#">ຫ້ອງຮຽນ</a></li>
