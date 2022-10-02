@@ -79,7 +79,6 @@ require_once "controller/employee_controller.php";
                                     echo('<i class="fas fa-solid fa-venus-mars"></i>');
                                 }
                             ?>
-                          <!-- <?=$data[$i]['id']?> -->
                         </td>
                         <td class="notosans">
                             <?=$data[$i]['fullname']?>

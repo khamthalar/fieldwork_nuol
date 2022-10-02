@@ -1,7 +1,5 @@
 <?php
 require_once "controller/employee_controller.php";
-$dep_id = isset($_GET['dep_id'])?$_GET['dep_id']:0;
-$dep_id_param = isset($_GET['dep_id'])?"&dep_id=".$_GET['dep_id']:"";
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/new_employee_style.css">
@@ -9,203 +7,169 @@ $dep_id_param = isset($_GET['dep_id'])?"&dep_id=".$_GET['dep_id']:"";
 <div class="header-page">
   <div class="page-title">
     <h5 class="notosans">
-        <a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> 
-        <i class="fas fa-chevron-right"></i> 
-        <a href="template?page=employee<?=$dep_id_param?>" class="home-link">ຂໍ້ມູນພະນັກງານ</a> 
-        <i class="fas fa-chevron-right"></i> 
-        ເພີ່ມຂໍ້ມູນພະນັກງານ</h5>
+      <a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a>
+      <i class="fas fa-chevron-right"></i>
+      <a href="template?page=employee" class="home-link">ຂໍ້ມູນພະນັກງານ</a>
+      <i class="fas fa-chevron-right"></i>
+      ເພີ່ມຂໍ້ມູນພະນັກງານ
+    </h5>
   </div>
 </div>
 <div class="page-wrapper">
   <div class="content-wrapper">
     <?php
-      $user_id = @$user_data['id'];
+    $user_id = @$user_data['user_id'];
+    $user_group = get_user_group()->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="row">
-        <div class="col-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title notosans">ເພີ່ມຂໍ້ມູນພະນັກງານ</h4>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group row">
-                          <label class="col-form-label notosans f12">ຊື່ ແລະ ນາມສະກຸນ*</label>
-                          <div class="col-sm-12">
-                            <input id="fullname" type="text" class="inp form-control notosans f12" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label notosans f12">ເພດ</label>
-                          <div class="col-sm-9">
-                            <select id="gender" class="inp form-control notosans f12">
-                              <option value="male">ຊາຍ</option>
-                              <option value="female">ຍິງ</option>
-                              <option value="other">ອື່ນໆ</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label notosans f12">ວັນເດືອນປີເກີດ</label>
-                            <div class="col-sm-9">
-                                <label class="lb">
-                                    <input type="date" id="date_of_birth" name="date_of_birth" onchange="date_changed(this.value)">
-                                    <button class="btn-calendar" id="calendar_text">
-                                        <div id="date-of-birth-lb" class="notosans f12">ວັນເດືອນປີເກີດ</div>
-                                        <div class="calender-ico"><img src="assets/svg/calendar.svg" width="20"></div>
-                                    </button>
-                                </label>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label notosans f12">ພະແນກ</label>
-                            <div class="col-sm-9">
-                                <select id="dep" class="inp form-control notosans f12">
-                                    <?php 
-                                        $departments = load_department()->fetchAll(PDO::FETCH_ASSOC);
-                                        foreach($departments as $depart){
-                                          ?>
-                                          <option value='<?=$depart['dep_id']?>' <?=($dep_id==$depart['dep_id'])?'selected':''?> ><?=$depart['dep_name']?></option>
-                                          <?php
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label notosans f12">ເບີໂທ</label>
-                            <div class="col-sm-9">
-                                <input id="tel" type="text" class="inp form-control inp notosans f12" />
-                            </div>
-                            </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-sm-3 notosans f12" for="txt-address">ທີ່ຢູ່</label>
-                            <div class="col-sm-9">
-                                <textarea id="address" class="inp form-control notosans f12" id="txt-address" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 notosans f12"></label>
-                                <div class="col-sm-5">
-                                <div class="form-check">
-                                <label class="form-check-label notosans f12">
-                                    <input type="radio" class="form-check-input" name="user_type" id="student" value="2" checked>
-                                    ນັກສອບເສັງ
-                                </label>
-                                </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                    <label class="form-check-label notosans f12">
-                                        <input type="radio" class="form-check-input" name="user_type" id="admin" value="1">
-                                        ອາຈານ
-                                    </label>
-                                    </div>
-                                </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label notosans f12">ຊື່ເຂົ້າໃຊ້ລະບົບ*</label>
-                          <div class="col-sm-9">
-                            <input id="username" type="text" class="form-control notosans f12" />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label notosans f12">ລະຫັດຜ່ານ*</label>
-                          <div class="col-sm-9">
-                            <input id="password" type="password" class="form-control" />
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label notosans f12">ຢືນຢັນລະຫັດຜ່ານ*</label>
-                          <div class="col-sm-9">
-                            <input id="confirm_password" type="password" class="form-control" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row submit">
-                        <div class="col-md-12 center">
-                            <button onclick="save()" type="submit" name="save_ans_choice" class="cus-btn btn btn-primary btn-icon-text notosans none-outline none-select">
-                            ບັນທຶກ
-                            <i class="fas fa-save btn-icon-append"></i>                                                                             
-                            </button>
-                            <button onclick="window.location.href='template?page=employee<?=$dep_id_param?>'" type="submit" name="save_ans_choice" class="cus-btn btn btn-danger btn-icon-text notosans none-outline none-select">
-                            ຍົກເລີກ
-                            <i class="fas fa-solid fa-trash btn-icon-append"></i>
-                            </button>
-                        </div>
-                    </div>
+      <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title notosans">ເພີ່ມຂໍ້ມູນພະນັກງານ</h4>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label class="col-form-label notosans f12">ຊື່ ແລະ ນາມສະກຸນ*</label>
+                  <div class="col-sm-12">
+                    <input id="fullname" type="text" class="inp form-control notosans f12" />
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
-<script>
-    function save(){
-        var _fullname = $('#fullname').val();
-        var _gender = $('#gender').val();
-        var _dep_id = $('#dep').val();
-        var _username = $('#username').val();
-        var _password = $('#password').val();
-        var confirm_password = $('#confirm_password').val();
-        var _address = $('#address').val();
-        var _user_type = document.querySelector('input[name="user_type"]:checked').value;
-        var _date_of_birth = $('#date_of_birth').val();
-        var _tel = $("#tel").val();
-        if(_fullname==""){
-            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາປ້ອນ ຊື່ ແລະ ນາມສະກຸນ !</span>'});
-        }else if(_username==""){
-            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາປ້ອນ ຊື່ເຂົ້າໃຊ້ລະບົບ !</span>'});
-        }else if(_password=="" || confirm_password==""){
-            Swal.fire({icon:'info',html:'<span class=notosans>ກະລຸນາປ້ອນ ລະຫັດຜ່ານ !</span>'});
-        }else{
-            if(_password != confirm_password){
-                Swal.fire({icon:'info',html:'<span class=notosans>ລະຫັດຜ່ານບໍ່ກົງກັນ !</span>'});
-            }else{
-                var param = {
-                    fullname:_fullname,
-                    gender:_gender,
-                    dep_id:_dep_id,
-                    username:_username,
-                    password:_password,
-                    address:_address,
-                    tel:_tel,
-                    user_type:_user_type,
-                    date_of_birth:_date_of_birth
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ເພດ</label>
+                  <div class="col-sm-9">
+                    <select id="gender" class="inp form-control notosans f12">
+                      <option value="1">ຊາຍ</option>
+                      <option value="2">ຍິງ</option>
+                      <option value="3">ອື່ນໆ</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ເບີໂທ</label>
+                  <div class="col-sm-9">
+                    <input id="tel" type="text" class="inp form-control inp notosans f12" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ກຸ່ມຜູ້ໃຊ້</label>
+                  <div class="col-sm-9">
+                    <select id="user_group" class="inp form-control notosans f12">
+                      <?php
+                      foreach ($user_group as $item) {
+                      ?>
+                        <option value='<?= $item['user_group_id'] ?>'><?= $item['group_des'] ?></option>
+                      <?php
+                      }
+                      ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ຊື່ເຂົ້າໃຊ້ລະບົບ*</label>
+                  <div class="col-sm-9">
+                    <input id="username" type="text" class="form-control notosans f12" />
+                  </div>
+                </div>
+              </div>
 
-                };
-                var http = new XMLHttpRequest();
-                http.open("POST", 'controller/employee_controller.php', true);
-                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                http.onreadystatechange = function() {
-                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                        eval(this.responseText);
-                    }
-                }
-                var _param = encode(JSON.stringify(param));
-                http.send("new_employee=" + _param);
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ລະຫັດຜ່ານ*</label>
+                  <div class="col-sm-9">
+                    <input id="password" type="password" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label notosans f12">ຢືນຢັນລະຫັດຜ່ານ*</label>
+                  <div class="col-sm-9">
+                    <input id="confirm_password" type="password" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row submit">
+              <div class="col-md-12 center">
+                <button onclick="save()" type="submit" name="save_ans_choice" class="cus-btn btn btn-primary btn-icon-text notosans none-outline none-select">
+                  ບັນທຶກ
+                  <i class="fas fa-save btn-icon-append"></i>
+                </button>
+                <button onclick="window.location.href='template?page=employee'" type="submit" name="save_ans_choice" class="cus-btn btn btn-danger btn-icon-text notosans none-outline none-select">
+                  ຍົກເລີກ
+                  <i class="fas fa-solid fa-trash btn-icon-append"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function save() {
+      var _fullname = $('#fullname').val();
+      var _gender = $('#gender').val();
+      var _user_group_id = $('#user_group').val();
+      var _username = $('#username').val();
+      var _password = $('#password').val();
+      var confirm_password = $('#confirm_password').val();
+      var _phone_number = $("#tel").val();
+      if (_fullname == "") {
+        Swal.fire({
+          icon: 'info',
+          html: '<span class=notosans>ກະລຸນາປ້ອນ ຊື່ ແລະ ນາມສະກຸນ !</span>'
+        });
+      } else if (_username == "") {
+        Swal.fire({
+          icon: 'info',
+          html: '<span class=notosans>ກະລຸນາປ້ອນ ຊື່ເຂົ້າໃຊ້ລະບົບ !</span>'
+        });
+      } else if (_password == "" || confirm_password == "") {
+        Swal.fire({
+          icon: 'info',
+          html: '<span class=notosans>ກະລຸນາປ້ອນ ລະຫັດຜ່ານ !</span>'
+        });
+      } else {
+        if (_password != confirm_password) {
+          Swal.fire({
+            icon: 'info',
+            html: '<span class=notosans>ລະຫັດຜ່ານບໍ່ກົງກັນ !</span>'
+          });
+        } else {
+          var param = {
+            fullname: _fullname,
+            gender: _gender,
+            user_group_id: _user_group_id,
+            username: _username,
+            password: _password,
+            phone_number: _phone_number
+          };
+          var http = new XMLHttpRequest();
+          http.open("POST", 'controller/employee_controller.php', true);
+          http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+          http.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+              eval(this.responseText);
             }
+          }
+          var _param = encode(JSON.stringify(param));
+          http.send("new_employee=" + _param);
         }
+      }
     }
-    function date_changed(data){
-        var _date = new Date(data);
-        document.getElementById("date-of-birth-lb").innerHTML=_date.getDate().toString().padStart(2, "0")+"/"+(_date.getMonth() + 1).toString().padStart(2, "0")+"/"+_date.getFullYear();
-    }
-</script>
+  </script>

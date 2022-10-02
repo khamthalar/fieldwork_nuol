@@ -79,7 +79,7 @@
                           if($user_group[$i]['read_only']==0 && $permission['manage_user_group'] ){ 
                             
                         ?>
-                          <div style="width: 39.5px; float:left; height:36.25px; margin-right:5px; padding-top:5px;">
+                          <div style="width: 39.5px; float:left; height:36.25px; margin-right:5px;">
                             <?php if($permission['manage_permission'] && ($user_group[$i]['user_group_id']!=$user_group_id)){ ?>
                               <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
                               onclick="window.location.href='template?page=user_group&sub_page=group_permission&user_group_id=<?=$user_group[$i]['user_group_id']?>'">
