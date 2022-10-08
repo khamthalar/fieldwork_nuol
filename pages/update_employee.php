@@ -144,14 +144,11 @@ if (isset($_GET['emp_id'])) {
     function save() {
       var _fullname = $('#fullname').val();
       var _gender = $('#gender').val();
-      var _dep_id = $('#dep').val();
+      var _user_group_id = $('#user_group').val();
       var _username = $('#username').val();
       var _password = $('#password').val();
       var confirm_password = $('#confirm_password').val();
-      var _address = $('#address').val();
-      var _user_type = document.querySelector('input[name="user_type"]:checked').value;
-      var _date_of_birth = $('#date_of_birth').val();
-      var _tel = $("#tel").val();
+      var _phone_number = $("#tel").val();
       if (_fullname == "") {
         Swal.fire({
           icon: 'info',
@@ -161,6 +158,11 @@ if (isset($_GET['emp_id'])) {
         Swal.fire({
           icon: 'info',
           html: '<span class=notosans>ກະລຸນາປ້ອນ ຊື່ເຂົ້າໃຊ້ລະບົບ !</span>'
+        });
+      } else if (_password == "" || confirm_password == "") {
+        Swal.fire({
+          icon: 'info',
+          html: '<span class=notosans>ກະລຸນາປ້ອນ ລະຫັດຜ່ານ !</span>'
         });
       } else {
         if (_password != confirm_password) {
@@ -173,32 +175,24 @@ if (isset($_GET['emp_id'])) {
             emp_id: <?= $emp_id ?>,
             fullname: _fullname,
             gender: _gender,
-            dep_id: _dep_id,
+            user_group_id: _user_group_id,
             username: _username,
             password: _password,
-            address: _address,
-            tel: _tel,
-            user_type: _user_type,
-            date_of_birth: _date_of_birth,
-            dep_id_param: '<?= $dep_id_param ?>'
-
+            phone_number: _phone_number
           };
+          console.log(param);
           var http = new XMLHttpRequest();
           http.open("POST", 'controller/employee_controller.php', true);
           http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
           http.onreadystatechange = function() {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
               eval(this.responseText);
+              // console.log(this.responseText);
             }
           }
           var _param = encode(JSON.stringify(param));
           http.send("update_employee=" + _param);
         }
       }
-    }
-
-    function date_changed(data) {
-      var _date = new Date(data);
-      document.getElementById("date-of-birth-lb").innerHTML = _date.getDate().toString().padStart(2, "0") + "/" + (_date.getMonth() + 1).toString().padStart(2, "0") + "/" + _date.getFullYear();
     }
   </script>

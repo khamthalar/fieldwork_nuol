@@ -38,7 +38,6 @@ include_once 'controller/main_controller.php';
     <?php
         }
     }
-
     ?>
     <form action="controller/login_controller.php?func=login" class="frm-login" method="POST">
         <div class="sys-ico">

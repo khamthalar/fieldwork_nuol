@@ -35,36 +35,46 @@
         include_once("app_module.php");
         date_default_timezone_set("Asia/Vientiane");
         $emp_data = json_decode(decode($_POST['update_employee']));
-        $id = input_data($emp_data->emp_id);
+        $emp_id = $emp_data->emp_id;
         $fullname = input_data($emp_data->fullname);
         $gender = input_data($emp_data->gender);
-        $dep_id = input_data($emp_data->dep_id);
-        $dep_id_param = input_data($emp_data->dep_id_param);
+        $user_group_id = input_data($emp_data->user_group_id);
         $username = $emp_data->username;
+        // $password = password_hash($emp_data->password,PASSWORD_DEFAULT);
+        $phone_number = ($emp_data->phone_number=="")?null:input_data($emp_data->phone_number);
+
+
         $password = $emp_data->password;
         $password_hash = password_hash($emp_data->password,PASSWORD_DEFAULT);
-        $address = ($emp_data->address=="")?null:input_data($emp_data->address);
-        $tel = ($emp_data->tel=="")?null:input_data($emp_data->tel);
-        $user_type = input_data($emp_data->user_type);
-        $date_of_birth = ($emp_data->date_of_birth=="")?null:input_data($emp_data->date_of_birth);
-        if($password==""||$password=="edlquiz"){
-            $sql = "UPDATE tb_user SET fullname=?,gender=?,date_of_birth=?,address=?,tel=?,dep_id=?,username=?,user_type=? WHERE id=?";
-            $query = $dbcon->prepare($sql);
-            $query->execute(array($fullname,$gender,$date_of_birth,$address,$tel,$dep_id,$username,$user_type,$id));
-            if($query){
-                echo "Swal.fire({icon:'success',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນສໍາເລັດ!</span>',allowOutsideClick: false}).then((result) => {if (result.isConfirmed) {window.location.href='template?page=employee$dep_id_param'}});";
+        $sql = "SELECT CASE WHEN (SELECT COUNT(*) FROM tb_user WHERE fullname=? AND user_id!=?)=1 THEN 'ຊື່ພະນັກງານຊໍ້າກັນ' 
+        WHEN (SELECT COUNT(*) FROM tb_user WHERE username=? AND user_id!=?)=1 THEN 'ຊື່ເຂົ້າໃຊ້ລະບົບຊໍ້າກັນ' 
+        ELSE FALSE END AS result";
+        $return_data = $dbcon->prepare($sql);
+        $return_data->execute(array($fullname,$emp_id,$username,$emp_id));
+        $result = $return_data->fetch(PDO::FETCH_ASSOC)['result'];
+
+        if(!$result){
+            if($password==""||$password=="nuolpwd"){
+                $sql = "UPDATE tb_user SET fullname=?,gender=?,phone_number=?,username=?,user_group_id=? WHERE user_id=?";
+                $query = $dbcon->prepare($sql);
+                $query->execute(array($fullname,$gender,$phone_number,$username,$user_group_id,$emp_id));
+                if($query){
+                    echo "Swal.fire({icon:'success',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນສໍາເລັດ!</span>',allowOutsideClick: false}).then((result) => {if (result.isConfirmed) {window.location.href='template?page=employee'}});";
+                }else{
+                    echo "Swal.fire({icon:'error',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>'})";
+                }
             }else{
-                echo "Swal.fire({icon:'error',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>'})";
+                $sql = "UPDATE tb_user SET fullname=?,gender=?,phone_number=?,username=?,user_group_id=?,password=? WHERE user_id=?";
+                $query = $dbcon->prepare($sql);
+                $query->execute(array($fullname,$gender,$phone_number,$username,$user_group_id,$password_hash,$emp_id));
+                if($query){
+                    echo "Swal.fire({icon:'success',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນສໍາເລັດ!</span>',allowOutsideClick: false}).then((result) => {if (result.isConfirmed) {window.location.href='template?page=employee'}});";
+                }else{
+                    echo "Swal.fire({icon:'error',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>'})";
+                }
             }
         }else{
-            $sql = "UPDATE tb_user SET fullname=?,gender=?,date_of_birth=?,address=?,tel=?,dep_id=?,username=?,password=?,user_type=? WHERE id=?";
-            $query = $dbcon->prepare($sql);
-            $query->execute(array($fullname,$gender,$date_of_birth,$address,$tel,$dep_id,$username,$password_hash,$user_type,$id));
-            if($query){
-                echo "Swal.fire({icon:'success',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນສໍາເລັດ!</span>',allowOutsideClick: false}).then((result) => {if (result.isConfirmed) {window.location.href='template?page=employee$dep_id_param'}});";
-            }else{
-                echo "Swal.fire({icon:'error',html:'<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>'})";
-            }
+            echo "Swal.fire({icon:'error',html:'<span class=phetsarath>".$result."!</span>'})";
         }
     }
     function update_pwd($user_id,$password){
@@ -117,18 +127,10 @@
     }
     function load_employee(){
         require "config.php";
-        // if($dep_id==0){
         $sql = "SELECT * FROM tb_user WHERE user_status = 1";
         $query = $dbcon->prepare($sql);
         $query->execute();
         return $query;
-        // }else{
-        //     $sql = "SELECT u.id,fullname,gender,date_of_birth,TRUNCATE((DATEDIFF(NOW(),date_of_birth)/365),0) 'age',tel,address,u.dep_id,d.dep_name,username,user_type
-        //     FROM tb_user u INNER JOIN departments d ON u.dep_id = d.dep_id WHERE u.status = 1 AND u.dep_id = ? ORDER BY u.dep_id";
-        //     $query = $dbcon->prepare($sql);
-        //     $query->execute(array($dep_id));
-        //     return $query;
-        // }
         
     }
     function set_user_group($user_id,$user_group_id){
