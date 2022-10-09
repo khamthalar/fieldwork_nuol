@@ -82,7 +82,14 @@
                         <td class="notosans <?=$data[$i]['course_status']?'':'disable-text'?>"><?=$data[$i]['course_des']?>-<?=$data[$i]['scheme_des']?></td>
                         <td class="notosans center <?=$data[$i]['course_status']?'':'disable-text'?>"><?=$data[$i]['duration_year']?> ປີ</td>
                         <td>
-                          <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline" <?=$data[$i]['course_status']?'':'disabled'?> >
+                          <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline" <?=$data[$i]['course_status']?'':'disabled'?> 
+                          data-bs-toggle="modal" 
+                          data-course_is = "<?=$data[$i]['course_id']?>";
+                          data-class_pattern = "<?=$data[$i]['class_pattern']?>";
+                          data-scheme_id = "<?=$data[$i]['scheme_id']?>"
+                          data-course_des = "<?=$data[$i]['course_des']?>"
+                          data-bs-target="#update_course" 
+                          data-bs-backdrop="static">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button type="button" class="btn <?=$data[$i]['course_status']?'btn-danger':'btn-success'?> btn-icon-text btn-rounded none-select none-outline" 
@@ -107,6 +114,7 @@
 <?php 
   include_once("modals/confirm_dialog.php");
   include_once("modals/add_course_modal.php");
+  include_once("modals/update_course_modal.php");
 ?>
 <script>
   var confirm_dialog = document.getElementById('confirm_dialog');
@@ -122,6 +130,24 @@
     }else{
       document.getElementById('title').innerHTML = "ທ່ານຕ້ອງການກູ້ຄືນຂໍ້ມູນແມ່ນບໍ່";
       document.getElementById('btn_yes').setAttribute("name","restore_course");
+    }
+  });
+  var update_modal = document.getElementById('update_course');
+  update_modal.addEventListener('show.bs.modal',function(event){
+    var course_data = $(event.relatedTarget);
+    var course_des = course_data.data('course_des');
+    var scheme_id = course_data.data('scheme_id');
+    var course_id = course_data.data('course_id');
+    var class_pattern = course_data.data('class_pattern');
+    document.getElementById('course_des_update').value = course_des;
+    document.getElementById('class_pattern_update').value = class_pattern;
+    document.getElementById('course_id_update').value = course_id;
+    var scheme = document.getElementsByName('scheme_id_udate');
+    for(let sch of scheme){
+      sch.disabled = true;
+      if(sch.value==scheme_id){
+        sch.checked = true;
+      }
     }
   });
   function filter_selected(value){
