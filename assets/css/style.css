@@ -50,6 +50,9 @@
 .notosans-eb{
     font-family: 'Noto Sans Extra Bold' !important;
 }
+.disable-text{
+    text-decoration: line-through !important;
+}
 .f11{
     font-size: 11pt !important;
 }

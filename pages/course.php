@@ -12,9 +12,13 @@
 <div class="page-wrapper">
   <div class="content-wrapper">
     <?php
+      $show_all=isset($_GET['show_all'])?true:false;
       $user_id = @$user_data['user_id'];
-      if(isset($_POST['del_emp'])){
-        del_emp($_POST['id']);
+      if(isset($_POST['del_course'])){
+        change_status($_POST['id'],0);
+      }
+      if(isset($_POST['restore_course'])){
+        change_status($_POST['id'],1);
       }
       if(isset($_POST['add_course'])){
         add_course($_POST['course_des'],$_POST['class_pattern'],$_POST['scheme']);
@@ -25,7 +29,8 @@
           update_pwd($_POST['u_id'],$password);
         }
       }
-      $course_data = load_course();
+      $filter = $show_all?'':' AND c.course_status = 1';
+      $course_data = load_course($filter);
       $data = $course_data->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="row">
@@ -39,6 +44,10 @@
                 data-bs-toggle="modal" data-bs-target="#add_course" data-bs-backdrop="static">
                   <i class="ti-plus btn-icon-prepend"></i> ເພີ່ມໃໝ່
                 </button>
+                <select onChange="filter_selected(this.value)" class="form-select notosans" aria-label="Default select" id="cb_filter">
+                  <option value="active">ສະແດງສະເພາະທີ່ໃຊ້ງານ</option>
+                  <option value="all" <?=$show_all?'selected':''?>>ສະແດງທັງໝົດ</option>
+                </select>
               </div>
 
               <div class="paginate">
@@ -56,7 +65,7 @@
                   <tr>
                     <th class="col-id notosans" width="30">ລ/ດ</th>
                     <th class="notosans">ຫຼັກສູດ</th>
-                    <th class="notosans">ໄລຍະເວລາຮຽນ</th>
+                    <th class="notosans center">ໄລຍະເວລາຮຽນ</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -69,15 +78,18 @@
                     }
                   ?>
                     <tr>
-                        <td class="col-id"><?=$i+1?></td>
-                        <td class="notosans"><?=$data[$i]['course_des']?>-<?=$data[$i]['scheme_des']?></td>
-                        <td class="notosans"><?=$data[$i]['duration_year']?> ປີ</td>
+                        <td class="col-id <?=$data[$i]['course_status']?'':'disable-text'?>"><?=$i+1?></td>
+                        <td class="notosans <?=$data[$i]['course_status']?'':'disable-text'?>"><?=$data[$i]['course_des']?>-<?=$data[$i]['scheme_des']?></td>
+                        <td class="notosans center <?=$data[$i]['course_status']?'':'disable-text'?>"><?=$data[$i]['duration_year']?> ປີ</td>
                         <td>
-                          <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
+                          <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline" <?=$data[$i]['course_status']?'':'disabled'?> >
                             <i class="fas fa-pencil-alt"></i>
                           </button>
-                          <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline" data-id="<?=$data[$i]['user_id']?>" data-bs-toggle="modal" data-bs-target="#confirm_dialog" data-bs-backdrop="static">
-                            <i class="fas fa-trash-alt"></i>
+                          <button type="button" class="btn <?=$data[$i]['course_status']?'btn-danger':'btn-success'?> btn-icon-text btn-rounded none-select none-outline" 
+                          data-id="<?=$data[$i]['course_id']?>" 
+                          data-act="<?=$data[$i]['course_status']?'del':'restore'?>"
+                          data-bs-toggle="modal" data-bs-target="#confirm_dialog" data-bs-backdrop="static">
+                          <?=$data[$i]['course_status']?'<i class="fas fa-trash-alt"></i>':'<i class="ti-reload"></i>'?> 
                           </button>
                         </td>
                     </tr>
@@ -96,3 +108,27 @@
   include_once("modals/confirm_dialog.php");
   include_once("modals/add_course_modal.php");
 ?>
+<script>
+  var confirm_dialog = document.getElementById('confirm_dialog');
+  confirm_dialog.addEventListener('show.bs.modal',function(event){
+    var course_data = $(event.relatedTarget);
+    var course_id = course_data.data('id');
+    var act = course_data.data('act');
+    var modal = $(this);
+    modal.find('.modal-body #id').val(course_id);
+    if(act=="del"){
+      document.getElementById('title').innerHTML = "ທ່ານຕ້ອງການລຶບຂໍ້ມູນແມ່ນບໍ່";
+      document.getElementById('btn_yes').setAttribute("name","del_course");
+    }else{
+      document.getElementById('title').innerHTML = "ທ່ານຕ້ອງການກູ້ຄືນຂໍ້ມູນແມ່ນບໍ່";
+      document.getElementById('btn_yes').setAttribute("name","restore_course");
+    }
+  });
+  function filter_selected(value){
+    if(value=="all"){
+      window.location.href="template?page=course&show_all=true";
+    }else{
+      window.location.href="template?page=course";
+    }
+  }
+</script>
