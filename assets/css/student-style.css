@@ -1,0 +1,91 @@
+
+.container{
+	padding:0;
+	/* margin:10px; */
+	margin: auto;
+	border-radius:5px;
+}
+.report-box{
+	max-width: 100% !important;
+}
+h1{
+	line-height: 1 !important;
+}
+
+header {
+		position: relative;
+}
+
+
+.hide {
+		display: none;
+}
+
+.tab-content {
+	padding:25px;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    border-bottom: 0px !important;
+}
+.ico{
+	line-height: 70px !important;
+}
+.header{
+    border-bottom: 1px solid #e0e0e0;
+}
+#material-tabs {
+		position: relative;
+		display: block;
+        padding:0;
+        width: fit-content;
+}
+
+#material-tabs>a {
+		position: relative;
+	    display:inline-block;
+		text-decoration: none !important;
+		padding: 22px;
+		text-transform: uppercase;
+		font-size: 14px;
+		font-weight: 600;
+		color: #424f5a;
+		text-align: center;
+}
+
+#material-tabs>a.active {
+		font-weight: 700;
+		outline:none;
+}
+
+#material-tabs>a:not(.active):hover {
+		background-color: inherit;
+		color: #7c848a;
+}
+
+@media only screen and (max-width: 520px) {
+		.nav-tabs#material-tabs>li>a {
+				font-size: 11px;
+		}
+}
+
+.yellow-bar {
+		position: absolute;
+		z-index: 10;
+		bottom: 0;
+		height: 3px;
+		background: #458CFF;
+		display: block;
+		left: 0;
+		transition: left .2s ease;
+		-webkit-transition: left .2s ease;
+}
+
+#tab1-tab.active ~ span.yellow-bar {
+		left: 0;
+		width: 120px;
+}
+
+#tab2-tab.active ~ span.yellow-bar {
+		left:130px;
+		width: 120px;
+}

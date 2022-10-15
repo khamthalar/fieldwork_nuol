@@ -1,0 +1,12 @@
+.school_year_item{
+    display: grid;
+    grid-template-columns: 100px 20px 100px;
+    align-items: center;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1
+}
+.year-inp{
+    width: 100px;
+}

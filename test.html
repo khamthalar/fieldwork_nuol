@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="module/sheetJS/xlsx.full.min.js"></script>
+<script>
+  var ExcelToJSON = function() {
+
+    this.parseExcel = function(file) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {type: 'binary'}); 
+        var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data1 = XLSX.utils.sheet_to_json(worksheet,{
+            header:1,
+            defval:""
+        });
+        console.log(data1);
+      };
+
+      reader.onerror = function(ex) {
+        console.log(ex);
+      };
+
+      reader.readAsBinaryString(file);
+    };
+  };
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files;
+    var xl2json = new ExcelToJSON();
+    xl2json.parseExcel(files[0]);
+  }
+</script>
+
+<form enctype="multipart/form-data">
+  <input id="upload" type=file name="files[]">
+</form>
+
+<textarea class="form-control" rows=35 cols=120 id="xlx_json"></textarea>
+
+<script>
+  document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+.filter{
+    display: grid;
+    grid-template-columns: 136px auto 1fr;
+    align-items: center;
+    column-gap: 4px;
+    row-gap: 4px;
+}
+.action{
+    padding-bottom: 4px;
+}
+#cb_course{
+    width: fit-content;
+}
+.btn-defualt{
+    padding: 10px !important;
+    border-radius: 5px !important;
+    width: fit-content !important;
+    min-width: 120px;
+    text-align: center;
+}
