@@ -55,7 +55,7 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="deskboard-card card card-dark-blue">
                         <div class="card-body">
-                            <h4 class="card-title notosans col-white">ຫ້ອງເສັງ</h4>
+                            <h4 class="card-title notosans col-white">ຫ້ອງຮຽນ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-info">
                                     <img src="assets/svg/classroom.svg" width="70">
@@ -68,7 +68,7 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                     <div class="deskboard-card card card-tale pointer" onclick="location.href = 'template?page=subject';">
                         <div class="card-body">
-                            <h4 class="card-title notosans col-white">ວິຊາເສັງ</h4>
+                            <h4 class="card-title notosans col-white">ຫຼັກສູດ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-info">
                                     <img src="assets/svg/file.svg" width="70">
@@ -83,10 +83,10 @@
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                     <div class="deskboard-card card card-light-blue">
                         <div class="card-body">
-                            <h4 class="card-title notosans col-white">ຫົວຂໍ້ສອບ</h4>
+                            <h4 class="card-title notosans col-white">ນັກສຶກສາ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-purple">
-                                    <img src="assets/svg/quiz.svg" width="70">
+                                    <img src="assets/svg/student.svg" width="90">
                                 </span>
                                 <a class="link display-5 ml-auto col-white"><?= "data->quiz_num" ?></a>
                             </div>
@@ -96,7 +96,7 @@
                 <div class="col-md-6 stretch-card transparent">
                     <div class="deskboard-card card card-light-danger">
                         <div class="card-body">
-                            <h4 class="card-title notosans col-white">ຄໍາຖາມ</h4>
+                            <h4 class="card-title notosans col-white">ຜູ້ໃຊ້ງານລະບົບ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-purple">
                                     <img src="assets/svg/qa.svg" width="70">
@@ -113,7 +113,7 @@
 
 
 
-
+<!-- 
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="deskboard-card card position-relative">
@@ -145,5 +145,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

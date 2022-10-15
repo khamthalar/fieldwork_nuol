@@ -1,0 +1,21 @@
+.btn-file{
+    padding: 10px !important;
+    border-radius: 5px !important;
+    width: fit-content !important;
+    min-width: 120px;
+    text-align: center;
+}
+.file-upload{
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 5px;
+	align-items: center;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+table, th, td {
+    border: 1px solid;
+}

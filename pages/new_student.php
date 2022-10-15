@@ -1,5 +1,5 @@
 <?php
-require_once "controller/classroom_controller.php";
+require_once "controller/new_student_controller.php";
 $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <link rel="stylesheet" href="assets/css/new_student_style.css">
@@ -10,7 +10,8 @@ $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
     <button onclick="DownloadFile('Student_From_Data.xlsx')" type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
         <i class="ti-import btn-icon-prepend"></i> ດາວໂຫຼດແບບຟອມ
     </button>
-    <button type="button" class="btn-defualt btn btn-success btn-icon-text none-select none-outline notosans">
+    <button onclick="window.location.href='template?page=student&sub_page=new_student_excel_upload'" 
+        type="button" class="btn-defualt btn btn-success btn-icon-text none-select none-outline notosans">
         <i class="fas fa-sharp fa-solid fa-file-excel btn-icon-prepend"></i> ອັບໂຫຼດ Excel
     </button>
 </section>
