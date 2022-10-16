@@ -1,5 +1,11 @@
 <?php
     require_once "controller/new_student_controller.php";
+    if(isset($_GET['course_id'])){
+      $course_id = $_GET['course_id'];
+    }else{
+      echo "<script>window.location.href='template?page=student'</script>";
+    }
+    $course_data = get_course_data($course_id)->fetch(PDO::FETCH_ASSOC);
 ?>
 <link rel="stylesheet" href="assets/css/student-style.css">
 <link rel="stylesheet" href="assets/css/student-excel-upload-style.css">
@@ -20,7 +26,7 @@
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
             <div class="card-body">
-                <h4 class="card-title notosans">ອັບໂຫຼດຂໍ້ມູນນັກສຶກສາ,
+                <h4 class="card-title notosans">ອັບໂຫຼດຂໍ້ມູນນັກສຶກສາ <?="(".$course_data["course_des"]."-".$course_data["scheme_des"].")"?>,
                     ສົກຮຽນ: <?= date("Y") . "-" . (date("Y") + 1) ?>
                 </h4>
                 <section class="file-upload">
@@ -45,7 +51,7 @@
                         </tbody>
                     </table>
                     <div class="center pt-2">
-                        <button type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans">
+                        <button id="btn-upload" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans" hidden>
                             <i class="ti-export btn-icon-prepend"></i> ອັບໂຫຼດ
                         </button>
                     </div>
@@ -59,5 +65,9 @@
 <?php 
   include_once("modals/confirm_dialog.php");
 ?>
+<script>
+  var st_data = [];
+  var btn_upload = document.getElementById('btn-upload');
+</script>
 <script src="module/sheetJS/xlsx.full.min.js"></script>
 <script src="assets/js/custom_js/new_student_excel_upload.js"></script>

@@ -7,3 +7,9 @@ function DownloadFile(fileName) {
     a.click();
     document.body.removeChild(a);
 };
+function goto_excel_upload(){
+    window.location.href='template?page=student&sub_page=new_student_excel_upload&course_id='+course_id;
+}
+function course_selected(value){
+    window.location.href = 'template?page=student&course_id2='+value;
+}

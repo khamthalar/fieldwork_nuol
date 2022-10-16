@@ -8,4 +8,12 @@
         $query->execute();
         return $query;
     }
+    function get_course_data($course_id){
+        require "config.php";
+        $sql = "SELECT c.course_des,s.scheme_des,s.duration_year,s.scheme_id FROM tb_course c INNER JOIN tb_scheme s 
+        ON c.scheme_id = s.scheme_id WHERE course_id = ?;";
+        $query = $dbcon->prepare($sql);
+        $query->execute(array($course_id));
+        return $query;
+    }
 ?>

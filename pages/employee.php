@@ -73,7 +73,7 @@ require_once "controller/employee_controller.php";
                             <?php
                                 if($data[$i]['gender']=="1"){
                                     echo('<i class="fas fa-solid fa-mars" style="color:dodgerblue"></i>');
-                                }elseif($data[$i]['gender']=="female"){
+                                }elseif($data[$i]['gender']=="2"){
                                     echo('<i class="fas fa-solid fa-venus" style="color:mediumvioletred"></i>');
                                 }else{
                                     echo('<i class="fas fa-solid fa-venus-mars"></i>');
