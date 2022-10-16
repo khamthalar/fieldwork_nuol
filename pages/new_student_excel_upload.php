@@ -44,14 +44,14 @@
                                 <th class="notosans f12 center" colspan="2">ລະຫັດນັກສຶກສາ</th>
                                 <th class="notosans f12 center">ເພດ</th>
                                 <th class="notosans f12" colspan="2">ຊື່ ແລະ ນາມສະກຸນ</th>
-                                <th class="notosans f12">ໝາຍເຫດ</th>
+                                <th class="notosans f12" id="th-remark" colspan="2">ໝາຍເຫດ</th>
                             </tr>
                         </thead>
                         <tbody id="tb_body">
                         </tbody>
                     </table>
                     <div class="center pt-2">
-                        <button id="btn-upload" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans" hidden>
+                        <button onclick="upload_student()" id="btn-upload" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans" hidden>
                             <i class="ti-export btn-icon-prepend"></i> ອັບໂຫຼດ
                         </button>
                     </div>
@@ -66,8 +66,11 @@
   include_once("modals/confirm_dialog.php");
 ?>
 <script>
+  var _username = '<?=$user_data['username']?>';
   var st_data = [];
   var btn_upload = document.getElementById('btn-upload');
+  var _course_id = '<?=$course_id?>';
+  var _duration_year = '<?=$course_data['duration_year']?>';
 </script>
 <script src="module/sheetJS/xlsx.full.min.js"></script>
 <script src="assets/js/custom_js/new_student_excel_upload.js"></script>

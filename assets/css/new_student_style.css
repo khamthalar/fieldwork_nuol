@@ -5,6 +5,12 @@
     column-gap: 4px;
     row-gap: 4px;
 }
+.paginate{
+    text-align: right;
+}
+.pagination{
+    justify-content: flex-end !important;
+}
 .action{
     padding-bottom: 4px;
 }
