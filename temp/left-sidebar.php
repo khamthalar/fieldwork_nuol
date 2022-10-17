@@ -23,8 +23,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          <!-- <i class="icon-layout menu-icon"></i> -->
+        <a class="nav-link" href="template?page=register">
           <i class="ti-pencil-alt menu-icon"></i>
           <span class="menu-title notosans f12">ແຈ້ງລົງທະບຽນ</span>
         </a>
