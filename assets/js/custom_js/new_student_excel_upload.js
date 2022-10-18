@@ -145,13 +145,6 @@ function upload_student() {
     http.onreadystatechange = function () {
         if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
             st_data = JSON.parse( this.responseText );
-            // if ( res.success ) {
-            //     var exam_data = JSON.stringify( res.exam_data );
-            //     var exam_data_encoded = CryptoJS.AES.encrypt( exam_data, "exam" ).toString();
-            //     sessionStorage.setItem( "update_ans", exam_data_encoded );
-            // } else {
-            //     error = true;
-            // }
             Swal.resumeTimer();
         }
     }

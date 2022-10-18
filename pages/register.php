@@ -1,5 +1,14 @@
 <?php
-  require_once "controller/register_controller.php";
+require_once "controller/register_controller.php";
+if(isset($_POST["search"])){
+  $id =explode(",", $_POST["cb_course"]);
+  $rg_filter["course_id"]=$id[0];
+  $rg_filter["year_no"]=$_POST["year_no"];
+  $rg_filter["classroom_id"]=$_POST["cb_class"];
+  $rg_filter["register_status"]=$_POST["status"];
+  $rg_filter["search_text"]=$_POST["txt_search"];
+  $_SESSION["rg_filter"]=$rg_filter;
+}
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <script src="assets/js/jquery-1.9.1.min.js"></script>
@@ -11,15 +20,26 @@
 <div class="page-wrapper">
   <div class="content-wrapper">
     <?php
-      $user_id = @$user_data['id'];
-      $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
+    $user_id = @$user_data['id'];
+    $selected_year = isset($_SESSION["rg_filter"]) ? $_SESSION["rg_filter"]["year_no"] : 1;
+    $classroom_id = isset($_SESSION["rg_filter"]) ? $_SESSION["rg_filter"]["classroom_id"] : 0;
+    $register_status = isset($_SESSION["rg_filter"]) ? $_SESSION["rg_filter"]["register_status"] : 0;
+    $search_text = isset($_SESSION["rg_filter"]) ? $_SESSION["rg_filter"]["search_text"] : "";
+    $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
+    $student_data = array();
+    if(count($course_data)>0){
+      $course_id = isset($_SESSION["rg_filter"]) ? $_SESSION["rg_filter"]["course_id"] : $course_data[0]["course_id"];
+      $data = load_classroom($course_id, $selected_year)->fetchAll(PDO::FETCH_ASSOC);
+      $filter = " AND r.year_no='".$selected_year."' ";
+      $filter .=($classroom_id==0)?"":" AND r.classroom_id='".$classroom_id."' ";
+      $filter .=($register_status==1)?"":" AND r.register_status='".$register_status."' ";
+      $filter .=" AND s.course_id='".$course_id."' ";
+      $filter .=($search_text=="")?"":" AND (CONCAT(s.name_la,' ',s.surname_la) LIKE '%".$search_text."%' OR r.student_code LIKE '%".$search_text."%' ) ";
+      $student_data = load_student($filter)->fetchAll(PDO::FETCH_ASSOC);
+      // print_r(load_student($filter));
+    }else{
       $course_id = 0;
-      $selected_year = 1;
-      if(count( $course_data)!=0){
-        $course_id = isset($_GET['course_id'])?$_GET['course_id']:$course_data[0]['course_id'];
-        $selected_year = isset($_GET['selected_year'])?$_GET['selected_year']:1;
-      }
-      $data = load_classroom($course_id,$selected_year)->fetchAll(PDO::FETCH_ASSOC);
+    }
     ?>
     <div class="row">
       <div class="col-lg-12 grid-margin stretch-card">
@@ -27,49 +47,52 @@
           <div class="card-body">
             <h4 class="card-title notosans">ແຈ້ງລົງທະບຽນປະຈໍາສົກຮຽນ <?= date("Y") . "-" . (date("Y") + 1) ?></h4>
             <div class="top-contents">
-              <div style="padding-left:10px;padding-right:10px;" class="filter row">
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-4 col-sm-6 mb-2">
-                  <select onChange="course_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_course" id="cb_course">
-                    <?php
-                      foreach($course_data as $course){
+              <form action="" method="POST">
+                <div style="padding-left:10px;padding-right:10px;" class="filter row">
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-4 col-sm-6 mb-2">
+                    <select onChange="course_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_course" id="cb_course">
+                      <?php
+                      foreach ($course_data as $course) {
                         $checked = "";
-                        if($course['course_id']==$course_id){
+                        if ($course['course_id'] == $course_id) {
                           $checked = "selected";
                         }
-                        ?>
-                        <option value="<?=$course['course_id'].','.$course['duration_year']?>" <?=$checked?>><?=$course['course_des']."-".$course['scheme_des']?></option>
-                        <?php
+                      ?>
+                        <option 
+                          value="<?= $course['course_id'] . ',' . $course['duration_year'] ?>" <?= $checked ?>
+                          <?=($course_id==$course['course_id'])?"selected":""?>
+                          >
+                          <?= $course['course_des'] . "-" . $course['scheme_des'] ?>
+                        </option>
+                      <?php
                       }
-                    ?>
-                  </select>
+                      ?>
+                    </select>
+                  </div>
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-2 col-sm-2 mb-2">
+                    <select onChange="year_selected(this.value)" class="form-select notosans" aria-label="Default select" name="year_no" id="year_no">
+                    </select>
+                  </div>
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
+                    <select class="form-select notosans" aria-label="Default select" name="cb_class" id="cb_class">
+                    </select>
+                  </div>
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
+                    <select class="form-select notosans" aria-label="Default select" name="status" id="status">
+                      <option value="0" <?=($register_status=="0")?"selected":""?>>ສະແດງສະເພາະທີ່ບໍ່ທັນລົງທະບຽນ</option>
+                      <option value="1" <?=($register_status=="1")?"selected":""?>>ສະແດງທັງໝົດ</option>
+                    </select>
+                  </div>
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
+                    <input value="<?=$search_text?>" name="txt_search" style="padding: .375rem 2.25rem .375rem .75rem !important;line-height:1.5 !important; height:38px !important;" id="search" type="text" class="form-control notosans" placeholder="Search..." />
+                  </div>
+                  <div style="padding-left:5px;padding-right:5px;" class="col-lg-2">
+                    <button name="search" type="submit" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline notosans">
+                      <i class="ti-search btn-icon-prepend"></i> ຄົ້ນຫາ
+                    </button>
+                  </div>
                 </div>
-                <div style="padding-left:5px;padding-right:5px;"  class="col-lg-2 col-sm-2 mb-2">
-                  <select class="form-select notosans" aria-label="Default select" 
-                  name="year_no" id="year_no">
-                  </select>
-                </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
-                  <select class="form-select notosans" aria-label="Default select" name="status" id="status">
-                    <option value="0">ສະແດງສະເພາະທີ່ບໍ່ທັນລົງທະບຽນ</option>
-                    <option value="1">ສະແດງທັງໝົດ</option>
-                  </select>
-                </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
-                  <select class="form-select notosans" aria-label="Default select" name="status" id="status">
-                    <option value="0">ສະແດງສະເພາະທີ່ບໍ່ທັນລົງທະບຽນ</option>
-                    <option value="1">ສະແດງທັງໝົດ</option>
-                  </select>
-                </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-4 mb-2">
-                    <input style="padding: .375rem 2.25rem .375rem .75rem !important;line-height:1.5 !important; height:38px !important;" 
-                    id="search" type="text" class="form-control notosans" placeholder="Search..."/>
-                </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-2">
-                  <button onclick="showdata()" type="button" class="btn-newclass btn btn-primary btn-icon-text none-select none-outline notosans">
-                    <i class="ti-search btn-icon-prepend"></i> ຄົ້ນຫາ
-                  </button>
-                </div>
-              </div>
+              </form>
             </div>
             <div class="table-responsive">
               <table class="table">
@@ -83,6 +106,39 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <?php
+                    $index = 0;
+                    foreach($student_data as $student){
+                      $index++;
+                      ?>
+                      <tr>
+                        <td class="notosans f12"><?=$index?></td>
+                        <td class="notosans f12"><?=$student["student_code"]?></td>
+                        <td class="notosans f12">
+                          <?=$student["gender"]." ".$student["name_la"]." ".$student["surname_la"]?>
+                        </td>
+                        <td class="notosans f12"><?=$student["classroom_des"]?></td>
+                        <td class="notosans f12">
+                          <?php
+                            if($student["register_status"]==0){
+                              ?>
+                              <button type="button" class="btn btn-success btn-icon-text btn-rounded none-select none-outline">
+                                ລົງທະບຽນ
+                              </button>
+                              <?php
+                            }else{
+                              ?>
+                              <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
+                                ຍົກເລີກການລົງທະບຽນ
+                              </button>
+                              <?php
+                            }
+                          ?>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  ?>
                 </tbody>
               </table>
 
@@ -93,15 +149,17 @@
     </div>
   </div>
 </div>
-<?php 
-  include_once("modals/confirm_dialog.php");
+<?php
+include_once("modals/confirm_dialog.php");
 ?>
 <script>
-  var course_id = <?=$course_id?>;
-  var selected_course_id = <?=$course_id?>;
-  var selected_year = <?=$selected_year?>;
+  var course_id = <?= $course_id ?>;
+  var selected_course_id = <?= $course_id ?>;
+  var selected_year = <?= $selected_year ?>;
+  var classroom_id = <?=$classroom_id?>;
   var year_no = 0;
   var cb_year = document.getElementById('year_no');
   var add_classroom = document.getElementById('addclass');
+  var cb_class = document.getElementById('cb_class');
 </script>
-<script src="assets/js/custom_js/classroom.js"></script>
+<script src="assets/js/custom_js/register.js"></script>

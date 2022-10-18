@@ -24,8 +24,8 @@
                 '".$student->surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$student->remark."');";
                 for($i=0;$i < $duration_year; $i++){
                     $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
-                    $sql .="INSERT INTO tb_student_register(student_code, school_year,create_date, user_update) 
-                    VALUES ('".$student->student_code."','".$school_year."',now(),'".$username."');";
+                    $sql .="INSERT INTO tb_student_register(student_code, school_year,year_no,create_date, user_update) 
+                    VALUES ('".$student->student_code."','".$school_year."','"+($i+1)+"',now(),'".$username."');";
                 }
                 // echo $sql;
                 $query = $dbcon->prepare($sql);
