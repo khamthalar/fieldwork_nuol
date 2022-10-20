@@ -29,7 +29,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="template?page=class_member">
           <i class="ti-write menu-icon"></i>
           <span class="menu-title notosans f12">ຈັດຫ້ອງຮຽນ</span>
         </a>

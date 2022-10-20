@@ -51,12 +51,61 @@ function load_class(_course_id, _year_no){
                 classroom_str +=`<option value='`+classroom.classroom_id+`' `+selected+`>`+classroom.classroom_des+`</option>`;
             });
             cb_class.innerHTML = classroom_str;
-            console.log(class_data);
+            // console.log(class_data);
         }
     }
     var _param = encode( JSON.stringify( param ) );
     http.send( "class_data=" + _param );
 
+}
+function change_register_status(_register_id, student_name,_register_status){
+    // console.log(register_id);
+    var _title = '<strong class="notosans">ຢັ້ງຢືນການລົງທະບຽນ '+student_name+'</strong>';
+    var _message = '<strong class="notosans">ຢັ້ງຢືນການລົງທະບຽນສໍາເລັດ</strong>';
+    var _err_message = '<strong class="notosans">ຢັ້ງຢືນການລົງທະບຽນບໍ່ສໍາເລັດ! <br> ເກີດຂໍ້ຜິດພາດລະຫວ່າງການລົງທະບຽນ</strong>';
+    if(_register_status==0){
+        _title = '<strong class="notosans">ຍົກເລິກການລົງທະບຽນ '+student_name+'</strong>';
+        _message = '<strong class="notosans">ຍົກເລິກການລົງທະບຽນສໍາເລັດ</strong>';
+        _err_message = '<strong class="notosans">ຍົກເລິກການລົງທະບຽນບໍ່ສໍາເລັດ! <br> ເກີດຂໍ້ຜິດພາດລະຫວ່າງຍົກເລິກການລົງທະບຽນ</strong>';
+    } 
+    Swal.fire({
+        title: _title,
+        icon: 'question',
+        // html:_title,
+        allowOutsideClick: false,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '<div class="phetsarath">ຕົກລົງ</div>',
+        cancelButtonText:'<div class="phetsarath">ຍົກເລີກ</div>'
+    }).then((result) => {
+        if (result.isConfirmed) {
+        //   console.log("confirm");
+            var param = {
+                register_id: _register_id,
+                username:_username,
+                register_status:_register_status
+            }
+            var http = new XMLHttpRequest();
+            http.open( "POST", 'controller/register_controller.php', true );
+            http.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+            http.onreadystatechange = function () {
+                if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
+                    // console.log(this.responseText);
+                    var status = JSON.parse( this.responseText );
+                    if(status.success){
+                        Swal.fire({icon:'success',html:_message}).then(() => {
+                            window.location.reload();
+                        });
+                    }else{
+                        Swal.fire({icon:'error',html:_err_message});
+                    }
+                }
+            }
+            var _param = encode( JSON.stringify( param ) );
+            http.send( "register_status=" + _param );
+        }
+    });
 }
 function year_selected(value){
     selected_year = value;

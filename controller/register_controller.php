@@ -16,10 +16,26 @@
             echo "[]";
         }
     }
+    if(isset($_POST["register_status"])){
+        require "../config.php";
+        include_once("app_module.php");
+        $data = json_decode(decode($_POST['register_status']));
+        $register_id = $data->register_id;
+        $username = $data->username;
+        $regster_status = $data->register_status;
+        $sql = "UPDATE tb_student_register SET register_status = ?, user_update = ?, last_update=now() WHERE register_id = ?";
+        $query = $dbcon->prepare($sql);
+        $query->execute(array($regster_status,$username,$register_id));
+        if($query){
+            echo json_encode(array("success"=>true));
+        }else{
+            echo json_encode(array("success"=>false));
+        }
+    }
     function load_student($filter){
         require "config.php";
         $school_year = date('Y').'-'.(date('Y')+1);
-        $sql = "SELECT s.student_id,s.student_code,s.gender,s.name_la,s.surname_la,school_year,c.classroom_des,register_status
+        $sql = "SELECT r.register_id,s.student_id,s.student_code,s.gender,s.name_la,s.surname_la,school_year,c.classroom_des,register_status
         FROM tb_student_register r INNER JOIN tb_student s ON r.student_code = s.student_code LEFT JOIN tb_classroom c ON 
         r.classroom_id = c.classroom_id WHERE r.school_year='".$school_year."' AND s.student_status=1 ".$filter." ORDER BY c.classroom_des";
         // return $sql;

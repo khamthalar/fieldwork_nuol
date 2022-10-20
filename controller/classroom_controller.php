@@ -2,20 +2,32 @@
     date_default_timezone_set("Asia/Vientiane");
     function add_new_classroom($course_id,$full_classroom_des,$year_no){
         require "config.php";
-        $sql = "INSERT INTO `tb_classroom`(`classroom_des`, `year_no`, `course_id`) VALUES ";
-        for ($i=1; $i <= $year_no; $i++) { 
-            $classroom_des = str_replace('[year_no]',$i,$full_classroom_des);
-            $sql .="('".$classroom_des."','".$i."','".$course_id."'),";
-        }
-        $sql = substr($sql,0,(strlen($sql)-1)).";";
+        $sql = "SELECT (COUNT(*)+1)'class_no' FROM tb_classroom cr WHERE cr.course_id=? AND cr.year_no=1";
         $query = $dbcon->prepare($sql);
-        $query->execute();
+        $query->execute(array($course_id));
         if($query){
-            ?>
-                <script>
-                    Swal.fire('<span class=phetsarath>ບັນທຶກສໍາເລັດ!</span>', '', 'success')
-                </script>
-            <?php
+            $class_no = $query->fetch(PDO::FETCH_ASSOC)["class_no"];
+            $sql = "INSERT INTO `tb_classroom`(`classroom_des`, `year_no`,`class_no`, `course_id`) VALUES ";
+            for ($i=1; $i <= $year_no; $i++) { 
+                $classroom_des = str_replace('[year_no]',$i,$full_classroom_des);
+                $sql .="('".$classroom_des."','".$i."','".$class_no."','".$course_id."'),";
+            }
+            $sql = substr($sql,0,(strlen($sql)-1)).";";
+            $query = $dbcon->prepare($sql);
+            $query->execute();
+            if($query){
+                ?>
+                    <script>
+                        Swal.fire('<span class=phetsarath>ບັນທຶກສໍາເລັດ!</span>', '', 'success')
+                    </script>
+                <?php
+            }else{
+                ?>
+                    <script>
+                        Swal.fire('<span class=phetsarath>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>', '', 'error')
+                    </script>
+                <?php 
+            }
         }else{
             ?>
                 <script>
@@ -23,6 +35,7 @@
                 </script>
             <?php 
         }
+        
     }
     function change_classroom_status($classroom_id,$current_status){
         require "config.php";

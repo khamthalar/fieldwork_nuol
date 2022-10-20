@@ -122,14 +122,14 @@ if(isset($_POST["search"])){
                           <?php
                             if($student["register_status"]==0){
                               ?>
-                              <button type="button" class="btn btn-success btn-icon-text btn-rounded none-select none-outline">
+                              <button onclick="change_register_status('<?=$student['register_id']?>','<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',1)" type="button" class="btn btn-success btn-icon-text btn-rounded none-select none-outline">
                                 ລົງທະບຽນ
                               </button>
                               <?php
                             }else{
                               ?>
-                              <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
-                                ຍົກເລີກການລົງທະບຽນ
+                              <button onclick="change_register_status('<?=$student['register_id']?>','<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',0)" type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
+                              &nbsp;&nbsp;ຍົກເລີກ&nbsp;&nbsp;
                               </button>
                               <?php
                             }
@@ -153,6 +153,7 @@ if(isset($_POST["search"])){
 include_once("modals/confirm_dialog.php");
 ?>
 <script>
+  var _username = '<?=$user_data["username"]?>';
   var course_id = <?= $course_id ?>;
   var selected_course_id = <?= $course_id ?>;
   var selected_year = <?= $selected_year ?>;
