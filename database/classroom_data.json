@@ -1,0 +1,30 @@
+{
+    "new_student":[
+        {
+            "student_id":"",
+            "student_code":"",
+            "gender":"",
+            "name_la":"",
+            "surname_la":"",
+            "name_en":"",
+            "surname_en":""
+        }
+    ],
+    "classroom_data":[
+        {
+            "classroom_id":"",
+            "classroom_des":"",
+            "member":[
+                {
+                    "student_id":"",
+                    "student_code":"",
+                    "gender":"",
+                    "name_la":"",
+                    "surname_la":"",
+                    "name_en":"",
+                    "surname_en":""
+                }
+            ]
+        }
+    ]
+}
