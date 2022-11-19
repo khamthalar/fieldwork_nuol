@@ -4,6 +4,8 @@ $school_year = date("Y") . "-" . (date("Y") + 1);
 $course = load_course();
 $course_data = $course->fetchAll(PDO::FETCH_ASSOC);
 $course_id = isset($_GET["course_id"])?$_GET["course_id"]:(($course->rowCount()>0)?$course_data[0]['course_id']:0);
+$classroom = load_class_data($course_id);
+$classroom_data = $classroom->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/class-member-style.css">
@@ -43,7 +45,30 @@ $course_id = isset($_GET["course_id"])?$_GET["course_id"]:(($course->rowCount()>
             </div>
             <section class="body-content">
               <section class="classroom">
-
+                <div class="row px-3">
+                  <?php 
+                    foreach($classroom_data as $class_item){
+                  ?>
+                  <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12 mb-2 px-1 stretch-card transparent">
+                    <div class="classroom-card card card-dark-blue pointer">
+                      <div class="card-body">
+                        <h4 class="card-title notosans col-white">ຫ້ອງຮຽນ <?=$class_item['classroom_des']?></h4>
+                          <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="display-5 text-info">
+                              <img src="assets/svg/classroom.svg" width="70">
+                            </span>
+                          <a class="link display-5 ml-auto notosans col-white">ນັກຮຽນ <?= $class_item['std_count'] ?> ຄົນ</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php } ?>
+                </div>
+                <pre>
+                <?php 
+                  print_r($classroom_data);
+                ?>
+                </pre>
               </section>
             </section>
           </div>

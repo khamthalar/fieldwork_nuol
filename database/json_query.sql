@@ -38,3 +38,31 @@ SELECT CONCAT('"users_num":"',
              )
              
              )
+
+
+
+
+
+
+SELECT classroom_id, classroom_des, year_no, class_no, course_id, classroom_status, (SELECT count(*) FROM tb_student_register WHERE classroom_id = c.classroom_id)'std_count',
+
+
+SELECT CONCAT('[', better_result, ']') AS best_result FROM
+(
+SELECT GROUP_CONCAT('{', student, '}' SEPARATOR ',') AS better_result FROM
+(
+SELECT 
+    CONCAT
+    (
+      '"student_id":"', s.student_id, '",', 
+      '"student_code":"', sr.student_code, '",',
+      '"gender":"', s.gender,'",',
+      '"name_la":"', s.name_la,'",',
+      '"surname_la":"', s.surname_la,'"' 
+    ) AS student, s.course_id
+  FROM tb_student_register sr INNER JOIN tb_student s ON sr.student_code = s.student_code
+) AS student_json
+) AS final_student_json;
+
+
+FROM tb_classroom c WHERE year_no=1 AND course_id = 1;

@@ -84,7 +84,7 @@
     }
     function load_student($course_id,$start_year){
         require "config.php";
-        $sql="SELECT*FROM tb_student WHERE classroom_id IS null AND course_id = ? AND start_year = ?;";
+        $sql="SELECT*FROM tb_student WHERE course_id = ? AND start_year = ?;";
         $query = $dbcon->prepare($sql);
         $query->execute(array($course_id,$start_year));
         return $query;
