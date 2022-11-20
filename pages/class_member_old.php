@@ -4,7 +4,8 @@ $school_year = date("Y") . "-" . (date("Y") + 1);
 $course = load_course();
 $course_data = $course->fetchAll(PDO::FETCH_ASSOC);
 $course_id = isset($_GET["course_id"])?$_GET["course_id"]:(($course->rowCount()>0)?$course_data[0]['course_id']:0);
-$show_status = isset($_GET["status"])?$_GET["status"]:1;
+$classroom = load_class_data($course_id);
+$classroom_data = $classroom->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/class-member-style.css">
@@ -40,33 +41,35 @@ $show_status = isset($_GET["status"])?$_GET["status"]:1;
                     ?>
                   </select>
                 </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-2 col-sm-4 mb-2">
-                    <select class="form-select notosans" aria-label="Default select" name="cb_class" id="cb_class">
-                    </select>
-                </div>
-                <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-5  mb-2">
-                  <select onchange="status_change(this.value)" name="cb_status" id="cb_status" class="form-select notosans" aria-label="Default select">
-                    <option value="1" <?=($show_status==1)?"selected":""?>>ສະແດງສະເພາະຜູ້ທີ່ບໍ່ທັນໄດ້ຈັດຫ້ອງ</option>
-                    <option value="2" <?=($show_status==2)?"selected":""?>>ສະແດງສະເພາະຜູ້ທີ່ຈັດຫ້ອງແລ້ວ</option>
-                    <option value="3" <?=($show_status==3)?"selected":""?>>ສະແດງທັງໝົດ</option>
-                  </select>
-                </div>
               </div>
             </div>
             <section class="body-content">
-              <div class="">
-              <table class="table">
-                <thead>
-                    <tr>
-                        <th class="col-id notosans f12" width="30">ລ/ດ</th>
-                        <th class="notosans">ລະຫັດນັກສຶກສາ</th>
-                        <th class="notosans">ຊື່ ແລະ ນາມສະກຸນ</th>
-                        <th class="notosans">ຫ້ອງຮຽນ</th>
-                    </tr>
-                </thead>
-                <tbody id="student-data"></tbody>
-            </table>
-              </div>
+              <section class="classroom">
+                <div class="row px-3">
+                  <?php 
+                    foreach($classroom_data as $class_item){
+                  ?>
+                  <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12 mb-2 px-1 stretch-card transparent">
+                    <div class="classroom-card card card-dark-blue pointer">
+                      <div class="card-body">
+                        <h4 class="card-title notosans col-white">ຫ້ອງຮຽນ <?=$class_item['classroom_des']?></h4>
+                          <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
+                            <span class="display-5 text-info">
+                              <img src="assets/svg/classroom.svg" width="70">
+                            </span>
+                          <a class="link display-5 ml-auto notosans col-white">ນັກຮຽນ <?= $class_item['std_count'] ?> ຄົນ</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <?php } ?>
+                </div>
+                <pre>
+                <?php 
+                  print_r($classroom_data);
+                ?>
+                </pre>
+              </section>
             </section>
           </div>
         </div>
@@ -75,11 +78,6 @@ $show_status = isset($_GET["status"])?$_GET["status"]:1;
   </div>
 </div>
 <?php
-include_once("modals/confirm_dialog.php"); 
+include_once("modals/confirm_dialog.php");
 ?>
-<script>
-  var school_year = '<?=$school_year?>';
-  var course_id = '<?=$course_id ?>';
-  var show_status = '<?=$show_status?>';
-</script>
 <script src="assets/js/custom_js/class_member.js"></script>

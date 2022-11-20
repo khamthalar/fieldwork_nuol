@@ -66,3 +66,16 @@ SELECT
 
 
 FROM tb_classroom c WHERE year_no=1 AND course_id = 1;
+
+
+
+
+SELECT course_id,CONCAT('[', json_child, ']') AS classroom_json_str FROM
+(
+SELECT GROUP_CONCAT('{', classroom_data, '}' SEPARATOR ',') AS json_child,course_id FROM
+(SELECT CONCAT
+    (
+      '"classroom_id":"', c.classroom_id, '",', 
+      '"classroom_des":"', c.classroom_des, '",',
+      '"class_no":"', c.class_no,'"'
+    ) AS classroom_data,course_id FROM tb_classroom c WHERE year_no=1 AND classroom_status = 1) AS classroom_json GROUP BY course_id) AS classroom_json_final;
