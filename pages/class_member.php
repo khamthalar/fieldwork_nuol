@@ -5,6 +5,7 @@ $course = load_course();
 $course_data = $course->fetchAll(PDO::FETCH_ASSOC);
 $course_id = isset($_GET["course_id"])?$_GET["course_id"]:(($course->rowCount()>0)?$course_data[0]['course_id']:0);
 $show_status = isset($_GET["status"])?$_GET["status"]:1;
+$classroom_id = isset($_GET["classroom_id"])?$_GET["classroom_id"]:0;
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/class-member-style.css">
@@ -41,7 +42,7 @@ $show_status = isset($_GET["status"])?$_GET["status"]:1;
                   </select>
                 </div>
                 <div style="padding-left:5px;padding-right:5px;" class="col-lg-2 col-sm-4 mb-2">
-                    <select class="form-select notosans" aria-label="Default select" name="cb_class" id="cb_class">
+                    <select onChange="classroom_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_class" id="cb_class">
                     </select>
                 </div>
                 <div style="padding-left:5px;padding-right:5px;" class="col-lg-3 col-sm-5  mb-2">
@@ -81,5 +82,6 @@ include_once("modals/confirm_dialog.php");
   var school_year = '<?=$school_year?>';
   var course_id = '<?=$course_id ?>';
   var show_status = '<?=$show_status?>';
+  var classroom_id = '<?=($classroom_id)?>'
 </script>
 <script src="assets/js/custom_js/class_member.js"></script>

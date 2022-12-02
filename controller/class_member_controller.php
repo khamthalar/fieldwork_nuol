@@ -31,6 +31,29 @@
         echo json_encode($response_data);
       }
     }
+    if(isset($_POST["classroom_data"])){
+      require "../config.php";
+      include_once("app_module.php");
+      $param = json_decode(decode($_POST['classroom_data']));
+      $course_id = $param->course_id;
+      $sql = "SELECT * FROM tb_classroom WHERE course_id = ? AND year_no = 1 AND classroom_status = 1;";
+      $query = $dbcon->prepare($sql);
+      $query->execute(array($course_id));
+      $result = $query->fetchAll(PDO::FETCH_ASSOC);
+      if($result){
+        $response_data=[
+          "success"=>true,
+          "body"=>$result
+        ];
+        echo json_encode($response_data);
+      }else{
+        $response_data = [
+          "success"=>false,
+          "body"=>[]
+        ];
+        echo json_encode($response_data);
+      }
+    }
     function load_course(){
         require "config.php";
         $sql = "SELECT `course_id`,c.`scheme_id`,s.scheme_des,s.duration_year,`course_des`,`class_pattern` FROM `tb_course` c 
