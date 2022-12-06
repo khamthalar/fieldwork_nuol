@@ -80,4 +80,4 @@ $classroom_data = $classroom->fetchAll(PDO::FETCH_ASSOC);
 <?php
 include_once("modals/confirm_dialog.php");
 ?>
-<script src="assets/js/custom_js/class_member.js"></script>
+<script src="assets/script/class_member.js"></script>

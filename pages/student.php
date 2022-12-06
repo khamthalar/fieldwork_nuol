@@ -43,4 +43,4 @@ require_once "controller/employee_controller.php";
 <?php 
   include_once("modals/confirm_dialog.php");
 ?>
-<script src="assets/js/custom_js/student.js"></script>
+<script src="assets/script/student.js"></script>

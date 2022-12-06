@@ -163,4 +163,4 @@ include_once("modals/confirm_dialog.php");
   var add_classroom = document.getElementById('addclass');
   var cb_class = document.getElementById('cb_class');
 </script>
-<script src="assets/js/custom_js/register.js"></script>
+<script src="assets/script/register.js"></script>

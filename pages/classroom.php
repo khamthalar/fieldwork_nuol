@@ -173,4 +173,4 @@
   //   document.getElementById('btn_yes').setAttribute("name","del_class");
   // });
 </script>
-<script src="assets/js/custom_js/classroom.js"></script>
+<script src="assets/script/classroom.js"></script>

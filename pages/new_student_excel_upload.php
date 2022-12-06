@@ -73,4 +73,4 @@
   var _duration_year = '<?=$course_data['duration_year']?>';
 </script>
 <script src="module/sheetJS/xlsx.full.min.js"></script>
-<script src="assets/js/custom_js/new_student_excel_upload.js"></script>
+<script src="assets/script/new_student_excel_upload.js"></script>

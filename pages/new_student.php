@@ -106,4 +106,4 @@ $course_id = '';
 <script>
     var course_id = '<?= $course_id ?>';
 </script>
-<script src="assets/js/custom_js/new_student.js"></script>
+<script src="assets/script/new_student.js"></script>

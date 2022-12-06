@@ -62,6 +62,49 @@
         $query->execute();
         return $query;
     }
+    if(isset($_POST["setClassroomData"])){
+      require "../config.php";
+      include_once("app_module.php");
+      $data = json_decode(decode($_POST['setClassroomData']));
+      $student_data = $data->student_data;
+      $class_no = $data->class_no;
+      $sql = "SELECT*from tb_student_register WHERE student_code = ?";
+      $query = $dbcon->prepare($sql);
+      $query->execute(array($student_data->student_code));
+      if($query){
+        $register_data = $query->fetchAll(PDO::FETCH_ASSOC);
+        $dbcon->beginTransaction();
+        try{
+          foreach($register_data as $item){
+            $sql = "UPDATE tb_student_register SET last_update = now() ,classroom_id=(SELECT classroom_id FROM tb_classroom WHERE classroom_des = 
+            (SELECT REPLACE(REPLACE(class_pattern,'[year_no]','".$item['year_no']."'),'[class_no]','".$class_no."') 
+            FROM tb_course WHERE course_id='".$student_data->course_id."')), classroom_des=(SELECT REPLACE(REPLACE(class_pattern,
+            '[year_no]','".$item['year_no']."'),'[class_no]','".$class_no."') FROM tb_course WHERE course_id='".$student_data->course_id."') 
+            WHERE student_code='".$student_data->student_code."' AND year_no=".$item['year_no'].";";
+            $query = $dbcon->prepare($sql);
+            $query->execute();
+          }
+          $dbcon->commit();
+          $response = [
+            "success"=>true,
+            "message"=>"update data success"
+          ];
+        }catch (PDOException $e){
+          $dbcon->rollBack();
+          $response = [
+            "success"=>false,
+            "message"=>"Internal Server Error"
+          ];
+        }
+      }else{
+        //error: can not found student data
+        $response = [
+          "success"=>false,
+          "message"=>"Data not found"
+        ];
+      }
+      echo json_encode($response);
+    }
     // function load_class_data($course_id){
     //     require "config.php";
     //     $sql = "SELECT classroom_id, classroom_des, year_no, class_no, course_id, classroom_status, (SELECT count(*) FROM tb_student_register WHERE classroom_id = c.classroom_id)'std_count',

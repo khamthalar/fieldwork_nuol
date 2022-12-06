@@ -84,4 +84,4 @@ include_once("modals/confirm_dialog.php");
   var show_status = '<?=$show_status?>';
   var classroom_id = '<?=($classroom_id)?>'
 </script>
-<script src="assets/js/custom_js/class_member.js"></script>
+<script src="assets/script/class_member.js"></script>
