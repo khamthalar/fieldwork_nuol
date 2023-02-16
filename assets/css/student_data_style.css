@@ -1,12 +1,16 @@
-.school_year_item{
+.filter-content{
+    padding-top: 5px;
     display: grid;
-    grid-template-columns: 100px 20px 100px;
-    align-items: center;
+    grid-template-columns: auto 1fr;
+
 }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    opacity: 1
+#st_search{
+    width: 100%;
+    max-width: 363px;
 }
-.year-inp{
-    width: 100px;
+.filter-string{
+    color: gray;
+}
+.std-filter-mark{
+    color: red;
 }

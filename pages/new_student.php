@@ -1,5 +1,4 @@
 <?php
-require_once "controller/new_student_controller.php";
 $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
 $course_id = '';
 ?>

@@ -50,6 +50,7 @@ $limit_row = 10;
 
   <!-- sweetalert -->
   <link rel="stylesheet" href="module/sweetalert2/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="assets/css/loading.css">
   <script src="module/sweetalert2/dist/sweetalert2.all.min.js"></script>
 
 </head>
@@ -72,7 +73,13 @@ $limit_row = 10;
       ?>
       <!-- partial -->
       <div class="main-panel">
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="position: relative;">
+            <div id="preload">
+                <div class="load-box">
+                    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    <div class="notosans load-lb">ກໍາລັງໂຫຼດ...</div>
+                </div>
+            </div>
           <?php
           $content_page = $_GET['page'];
           if(isset($_GET['sub_page'])){
@@ -125,6 +132,12 @@ $limit_row = 10;
 <script>
   if(window.history.replaceState){
     window.history.replaceState(null,null,window.location.href);
+  }
+  function hide(element){
+      element.style.display = "none";
+  }
+  function show(element){
+      element.style.display = "flex";
   }
 </script>
 

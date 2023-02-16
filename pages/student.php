@@ -1,6 +1,6 @@
 <?php
 require_once "controller/employee_controller.php";
-
+require_once "controller/student_controller.php";
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/student-style.css">
