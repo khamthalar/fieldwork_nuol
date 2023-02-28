@@ -18,10 +18,10 @@
     <button onclick="goto_excel_update()" type="button" class="btn-defualt btn btn-success btn-icon-text none-select none-outline notosans">
         <i class="fas fa-sharp fa-solid fa-file-excel btn-icon-prepend"></i> ແກ້ໄຂດ້ວຍ Excel
     </button>
-    <button type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
+    <button onclick="download_data()" type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
         <i class="ti-import btn-icon-prepend"></i> ດາວໂຫຼດຂໍ້ມູນ
     </button>
-    <button type="button" class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
+    <button onclick="print_data()" type="button" class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
         <i class="ti-printer btn-icon-prepend"></i> ພິມ
     </button>
 </div>
@@ -56,6 +56,9 @@
 <?php
 include_once("modals/filter_student_model.php");
 ?>
+<!-- <script src="module/sheetJS/xlsx.full.min.js"></script> -->
+<script src="module/xlsx-style/dist/xlsx.core.min.js"></script>
+<script src="module/file-saver/dist/FileSaver.min.js"></script>
 <script src="assets/script/student_data.js"></script>
 <script>
     let all_students = [];

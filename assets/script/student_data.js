@@ -30,6 +30,7 @@ $(document).ready(function(){
     data.then(data_str=>{
         all_students = JSON.parse(data_str);
         render_std(all_students);
+        student_data = all_students;
         console.log("response:",all_students);
         hide(loading);
     });
@@ -147,6 +148,7 @@ async function applyFilter(){
     let data_str = await loadStudentData(param);
     all_students = JSON.parse(data_str);
     await render_std(all_students);
+    student_data = all_students;
     console.log("response:",all_students);
     hide(loading);
 }
@@ -175,3 +177,106 @@ async function render_std(data){
     });
     std_data.innerHTML = data_str;
 }
+async function handlersearch(searchtext){
+
+}
+async function print_data(){
+
+}
+async function download_data(){
+    /* set up XMLHttpRequest */
+    var url = "assets/files/student_form_data_update.xlsx";
+    var oReq = new XMLHttpRequest();
+
+    oReq.open("GET", url, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = async function(e) {
+        var arraybuffer = oReq.response;
+
+        /* convert data to binary string */
+        var data = new Uint8Array(arraybuffer);
+        var arr = new Array();
+        for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+        var bstr = arr.join("");
+
+        /* Call XLSX */
+        let workbook = XLSX.read(bstr, {type:"binary"});
+        let worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        let border ={
+            top:{style:'thin',color:{rgb:'000000'}},
+            bottom:{style:'thin',color:{rgb:'000000'}},
+            left:{style:'thin',color:{rgb:'000000'}},
+            right:{style:'thin',color:{rgb:'000000'}},
+        }
+        let center = {
+            vertical:"center",
+            wrapText:true,
+            horizontal:"center"
+        }
+        
+        let style = {font: { name: 'Phetsarath OT'},border:border};   
+        let title_style = {
+            font: { 
+                name: 'Phetsarath OT',
+                sz:'16', 
+                bold:true,
+                color: { r: 139, g: 0, b: 0 } 
+            },
+            alignment:{
+                horizontal:"center"
+            }
+        }
+        let h_style = {
+            font: { 
+                name: 'Phetsarath OT',
+                sz:'12', 
+                bold:true,
+                color: { r: 139, g: 0, b: 0 } 
+            },
+            alignment:center,
+            border:border
+        }
+        console.log(student_data.length)
+        worksheet['A1'].s=title_style;
+        worksheet['A2'].s=h_style;
+        worksheet['B2'].s=h_style;
+        worksheet['C2'].s=h_style;
+        worksheet['D2'].s=h_style;
+        worksheet['E2'].s=h_style;
+        worksheet['F2'].s=h_style;
+        worksheet['G2'].s=h_style;
+        worksheet['H2'].s=h_style;
+        worksheet['I2'].s=h_style;
+        worksheet['J2'].s=h_style;
+        worksheet['K2'].s=h_style;
+        if(student_data.length>0){
+            student_data.forEach((item,index)=>{
+                worksheet['A'+(index+3)] = {v: String(index+1), s: {font: { name: 'Phetsarath OT'},alignment:center,border:border}};
+                worksheet['B'+(index+3)] = {v: String(item.student_code), s: style};
+                worksheet['C'+(index+3)] = {v: String(item.gender), s: style};
+                worksheet['D'+(index+3)] = {v: String(item.name_la), s: style};
+                worksheet['E'+(index+3)] = {v: String(item.surname_la), s: style};
+                worksheet['F'+(index+3)] = {v: String(item.name_en), s: style};
+                worksheet['G'+(index+3)] = {v: String(item.surname_en), s: style};
+                worksheet['H'+(index+3)] = {v: String(item.date_of_birthday), s: style};
+                worksheet['I'+(index+3)] = {v: String(item.birth_address_la), s: style};
+                worksheet['J'+(index+3)] = {v: String(item.birth_address_en), s: style};
+                worksheet['K'+(index+3)] = {v: String(item.remark), s: style};
+            })
+        }
+        console.log(workbook);
+        var wopts = { bookType:'xlsx', bookSST:true, type:'binary' };
+        var wbout = XLSX.write(workbook,wopts);
+        saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx")
+        
+    }
+    oReq.send();
+}
+
+function s2ab(s) {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  }

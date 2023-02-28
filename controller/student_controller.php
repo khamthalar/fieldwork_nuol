@@ -9,15 +9,17 @@
         $year_no = $data->selected_year;
         $school_year = $data->school_year;
         if($classroom_id==0) {
-            $sql = "SELECT s.student_id,s.student_code,s.gender,s.name_la,s.name_en,s.surname_la,s.surname_en,s.start_year,
-            s.end_year,s.course_id,s.current_year,s.student_status ,r.school_year,r.classroom_id,c.classroom_des,r.year_no 
+            $sql = "SELECT s.student_id,s.student_code,s.gender,ifnull(s.name_la,'')name_la,ifnull(s.name_en,'')name_en,ifnull(s.surname_la,'')surname_la,
+            ifnull(s.surname_en,'')surname_en,s.start_year,s.end_year,s.course_id,s.current_year,s.student_status ,r.school_year,r.classroom_id,
+            c.classroom_des,r.year_no,ifnull(date_of_birthday,'')date_of_birthday,birth_address_la,birth_address_en,'',remark 
             FROM tb_student s INNER JOIN tb_student_register r ON s.student_code=r.student_code INNER JOIN tb_classroom c 
             ON r.classroom_id=c.classroom_id WHERE r.school_year=? AND s.course_id=? AND r.year_no=?";
             $query = $dbcon->prepare($sql);
             $query->execute(array($school_year,$course_id,$year_no));
         }else{
-            $sql = "SELECT s.student_id,s.student_code,s.gender,s.name_la,s.name_en,s.surname_la,s.surname_en,s.start_year,
-            s.end_year,s.course_id,s.current_year,s.student_status ,r.school_year,r.classroom_id,c.classroom_des,r.year_no 
+            $sql = "SELECT s.student_id,s.student_code,s.gender,ifnull(s.name_la,'')name_la,ifnull(s.name_en,'')name_en,ifnull(s.surname_la,'')surname_la,
+            ifnull(s.surname_en,'')surname_en,s.start_year,s.end_year,s.course_id,s.current_year,s.student_status ,r.school_year,r.classroom_id,
+            c.classroom_des,r.year_no,ifnull(date_of_birthday,'')date_of_birthday,birth_address_la,birth_address_en,'',remark 
             FROM tb_student s INNER JOIN tb_student_register r ON s.student_code=r.student_code INNER JOIN tb_classroom c 
             ON r.classroom_id=c.classroom_id WHERE r.school_year=? AND s.course_id=? AND r.year_no=? AND r.classroom_id=?";
             $query = $dbcon->prepare($sql);
