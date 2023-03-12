@@ -5,6 +5,7 @@ $(document).ready(function(){
     if(!filter_data){
         if(course_data.length>0){
             filter_label.innerHTML = "*ນັກສຶກສາ"+course_data[0].scheme_des +"-"+course_data[0].course_des+", ປີ 1";
+            filter_str = "ຂໍ້ມູນນັກສຶກສາ"+course_data[0].scheme_des +"-"+course_data[0].course_des+", ປີ 1";
         }
         param={
             course_id:course_data[0].course_id,
@@ -17,6 +18,7 @@ $(document).ready(function(){
     }else {
         let lb_str = (Number(filter_data.classroom_id)==0)?(", ປີ "+filter_data.selected_year):(", ຫ້ອງ "+filter_data.classroom_des);
         filter_label.innerHTML = "*ນັກສຶກສາ"+filter_data.course_des +lb_str;
+        filter_str = "ຂໍ້ມູນນັກສຶກສາ"+filter_data.course_des +lb_str;
         param={
             course_id:filter_data.course_id,
             course_des:filter_data.course_des,
@@ -145,6 +147,7 @@ async function applyFilter(){
     filter_data = param;
     let lb_str = (Number(filter_data.classroom_id)==0)?(", ປີ "+filter_data.selected_year):(", ຫ້ອງ "+filter_data.classroom_des);
     filter_label.innerHTML = "*ນັກສຶກສາ"+filter_data.course_des +lb_str;
+    filter_str = "ຂໍ້ມູນນັກສຶກສາ"+filter_data.course_des +lb_str;
     let data_str = await loadStudentData(param);
     all_students = JSON.parse(data_str);
     await render_std(all_students);
@@ -167,13 +170,25 @@ async function render_std(data){
         data_str += `<td> <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
-                          <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline">
+                          <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
+                          data-student_code="`+std.student_code+`" 
+                          data-fullname_la="`+std.gender+` `+std.name_la+` `+std.surname_la+`" 
+                          data-fullname_en="`+std.name_en+` `+std.surname_en+`" 
+                          data-birthdate="`+std.date_of_birthday+`" 
+                          data-classroom_des="`+std.classroom_des+`" 
+                          data-address_la="`+std.birth_address_la+`" 
+                          data-address_en="`+std.birth_address_en+`"
+                          data-bs-toggle="modal" data-bs-target="#stdinfo" data-bs-backdrop="static">
                             <i class="fas fa-eye"></i>
                           </button>
                           <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline" >
-                          <i class="fas fa-trash-alt"></i> 
+                          <i class="ti-timer"></i>
                           </button>
-                        </td></tr>`;
+                          <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline">
+                          <i class="ti-menu"></i>
+                        </button>
+                        </td>`;
+        data_str +=`<td class="status notosans center">`+std.student_status+`</td></tr>`;
     });
     std_data.innerHTML = data_str;
 }
@@ -237,8 +252,10 @@ async function download_data(){
             alignment:center,
             border:border
         }
-        console.log(student_data.length)
+        // console.log(student_data.length)
+        console.log(filter_str);
         worksheet['A1'].s=title_style;
+        worksheet['A1'].v=filter_str;
         worksheet['A2'].s=h_style;
         worksheet['B2'].s=h_style;
         worksheet['C2'].s=h_style;
@@ -268,7 +285,9 @@ async function download_data(){
         console.log(workbook);
         var wopts = { bookType:'xlsx', bookSST:true, type:'binary' };
         var wbout = XLSX.write(workbook,wopts);
-        saveAs(new Blob([s2ab(wbout)],{type:""}), "test.xlsx")
+        let today = new Date();
+        let filename = "studentdata"+today.getFullYear()+today.getMonth()+today.getDate()+today.getHours()+today.getMinutes()+".xlsx";
+        saveAs(new Blob([s2ab(wbout)],{type:""}), filename);
         
     }
     oReq.send();
@@ -279,4 +298,4 @@ function s2ab(s) {
     var view = new Uint8Array(buf);
     for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
     return buf;
-  }
+}

@@ -6,7 +6,7 @@
       $student_data = json_decode(decode($_POST['student_data']));
       $course_id = $student_data->course_id;
       $school_year = $student_data->school_year;
-      $sql = "SELECT register_id,s.student_id,s.gender,s.name_la,s.surname_la, sr.student_code,s.course_id, school_year, year_no, classroom_id, create_date, last_update, user_update, register_status, (SELECT CONCAT('[', json_child, ']') AS classroom_json_str FROM(
+      $sql = "SELECT register_id,s.student_id,s.gender,s.name_la,s.surname_la, sr.student_code,s.course_id, school_year, year_no, classroom_id, create_date, sr.last_update, user_update, register_status, (SELECT CONCAT('[', json_child, ']') AS classroom_json_str FROM(
       SELECT GROUP_CONCAT('{', classroom_data, '}' SEPARATOR ',') AS json_child,course_id FROM
       (SELECT CONCAT(
               '\"classroom_id\":\"', c.classroom_id, '\",', 

@@ -41,7 +41,7 @@
                                 <th class="notosans f12 center">ວັນເດືອນປີເກີດ</th>
                                 <th class="notosans f12 center">ສະຖານທີ່ເກີດ</th>
                                 <th class="notosans f12 center">Address of birth</th>
-                                <th class="notosans f12" id="th-remark">ໝາຍເຫດ</th>
+                                <th class="notosans f12" id="th-remark" colspan="2">ໝາຍເຫດ</th>
                             </tr>
                         </thead>
                         <tbody id="tb_body">
@@ -67,5 +67,5 @@
   var st_data = [];
   var btn_upload = document.getElementById('btn-upload');
 </script>
-<!-- <script src="module/sheetJS/xlsx.full.min.js"></script>
-<script src="assets/script/new_student_excel_upload.js"></script> -->
+<script src="module/sheetJS/xlsx.full.min.js"></script>
+<script src="assets/script/student_data_excel_update.js"></script>

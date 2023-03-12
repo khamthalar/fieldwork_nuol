@@ -12,7 +12,7 @@
         $return_data = [];
         foreach($student_data as $student){
             // check data
-            $sql = "SELECT COUNT(*)'num' FROM tb_student WHERE student_code=?";
+            $sql = "SELECT COUNT(*)'num' FROM tb_student WHERE student_code=? AND student_status!='DELETED'";
             $query = $dbcon->prepare($sql);
             $query->execute(array($student->student_code));
             $num = $query->fetch(PDO::FETCH_ASSOC)["num"];
@@ -22,10 +22,12 @@
                 $sql = "INSERT INTO tb_student(student_code, gender, name_la, surname_la, start_year, end_year,course_id,remark) 
                 VALUES ('".$student->student_code."', '".$student->gender."', '".$student->name_la."', 
                 '".$student->surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$student->remark."');";
+                $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student->student_code."', 'created', '".$username."');";
                 for($i=0;$i < $duration_year; $i++){
                     $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
-                    $sql .="INSERT INTO tb_student_register(student_code, school_year,year_no,create_date, user_update) 
-                    VALUES ('".$student->student_code."','".$school_year."','"+($i+1)+"',now(),'".$username."');";
+                    $sql .="INSERT INTO `tb_student_register`(`student_code`, `school_year`, `year_no`, `create_date`, `user_update`)  
+                    VALUES ('".$student->student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
+            
                 }
                 // echo $sql;
                 $query = $dbcon->prepare($sql);
@@ -52,7 +54,6 @@
                     );
                 }
             }else{
-                //duplicate student_code
                 $item = array(
                     "student_code"=>$student->student_code,
                     "gender"=>$student->gender,
@@ -82,11 +83,11 @@
         $query->execute(array($course_id));
         return $query;
     }
-    function load_student($course_id,$start_year){
-        require "config.php";
-        $sql="SELECT*FROM tb_student WHERE course_id = ? AND start_year = ?;";
-        $query = $dbcon->prepare($sql);
-        $query->execute(array($course_id,$start_year));
-        return $query;
-    }
+    // function load_student_newstudent($course_id,$start_year){
+    //     require "config.php";
+    //     $sql="SELECT s.* FROM tb_student s INNER JOIN tb_student_register r ON s.student_code = r.student_code WHERE r.year_no=1 and r.register_status=0 AND s.course_id = ? AND s.start_year = ?;";
+    //     $query = $dbcon->prepare($sql);
+    //     $query->execute(array($course_id,$start_year));
+    //     return $query;
+    // }
 ?>

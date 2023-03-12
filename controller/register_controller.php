@@ -23,7 +23,8 @@
         $register_id = $data->register_id;
         $username = $data->username;
         $regster_status = $data->register_status;
-        $sql = "UPDATE tb_student_register SET register_status = ?, user_update = ?, last_update=now() WHERE register_id = ?";
+        $sql = "UPDATE tb_student_register SET register_status = ?, user_update = ?, last_update=now() WHERE register_id = ?;";
+        // $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student->student_code."', 'created', '".$username."');";
         $query = $dbcon->prepare($sql);
         $query->execute(array($regster_status,$username,$register_id));
         if($query){
@@ -37,7 +38,7 @@
         $school_year = date('Y').'-'.(date('Y')+1);
         $sql = "SELECT r.register_id,s.student_id,s.student_code,s.gender,s.name_la,s.surname_la,school_year,c.classroom_des,register_status
         FROM tb_student_register r INNER JOIN tb_student s ON r.student_code = s.student_code LEFT JOIN tb_classroom c ON 
-        r.classroom_id = c.classroom_id WHERE r.school_year='".$school_year."' AND s.student_status=1 ".$filter." ORDER BY c.classroom_des";
+        r.classroom_id = c.classroom_id WHERE r.school_year='".$school_year."' AND s.student_status='ACTIVE' ".$filter." ORDER BY c.classroom_des";
         // return $sql;
         $query = $dbcon->prepare($sql);
         $query->execute();

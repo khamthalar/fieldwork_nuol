@@ -42,5 +42,27 @@ require_once "controller/student_controller.php";
 </div>
 <?php 
   include_once("modals/confirm_dialog.php");
+  include_once("modals/student_info_modal.php");
 ?>
 <script src="assets/script/student.js"></script>
+<script>
+  var student_info = document.getElementById('stdinfo');
+  student_info.addEventListener('show.bs.modal',function(event){
+    var stddata = $(event.relatedTarget);
+    let student_code = stddata.data('student_code');
+    let fullname_la = stddata.data('fullname_la');
+    let fullname_en = stddata.data('fullname_en');
+    let birthdate = stddata.data('birthdate');
+    let classroom_des = stddata.data('classroom_des');
+    let address_la = stddata.data('address_la'); 
+    let address_en = stddata.data('address_en');
+    var modal = $(this);
+    modal.find('.modal-body #student_code')[0].innerHTML=student_code;
+    modal.find('.modal-body #fullname_la')[0].innerHTML=fullname_la;
+    modal.find('.modal-body #fullname_en')[0].innerHTML=fullname_en;
+    modal.find('.modal-body #dateofbirth')[0].innerHTML=birthdate;
+    modal.find('.modal-body #class_des')[0].innerHTML=classroom_des;
+    modal.find('.modal-body #address_la')[0].innerHTML=address_la;
+    modal.find('.modal-body #address_en')[0].innerHTML=address_en;
+  })
+</script>

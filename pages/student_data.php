@@ -12,9 +12,6 @@
         <i class="ti-filter btn-icon-prepend"></i> filter
         <span id="std_filter_mark" class="std-filter-mark">*</span>
     </button>
-    <!-- <button onclick="DownloadFile('Student_From_Data_update.xlsx')" type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
-        <i class="ti-import btn-icon-prepend"></i> ດາວໂຫຼດແບບຟອມ
-    </button> -->
     <button onclick="goto_excel_update()" type="button" class="btn-defualt btn btn-success btn-icon-text none-select none-outline notosans">
         <i class="fas fa-sharp fa-solid fa-file-excel btn-icon-prepend"></i> ແກ້ໄຂດ້ວຍ Excel
     </button>
@@ -44,6 +41,7 @@
                     <th class="notosans">ຊື່ ແລະ ນາມສະກຸນ</th>
                     <th class="notosans">ຫ້ອງຮຽນ</th>
                     <th></th>
+                    <th class="notosans center">ສະຖານະ</th>
                 </tr>
             </thead>
             <tbody id="std-data">
@@ -53,6 +51,7 @@
     </div>
 </div>
 
+
 <?php
 include_once("modals/filter_student_model.php");
 ?>
@@ -61,6 +60,7 @@ include_once("modals/filter_student_model.php");
 <script src="module/file-saver/dist/FileSaver.min.js"></script>
 <script src="assets/script/student_data.js"></script>
 <script>
+    let filter_str='';
     let all_students = [];
     let student_data = [];
     let school_year = '<?=$school_year?>';

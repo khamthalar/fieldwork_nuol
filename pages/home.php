@@ -1,7 +1,6 @@
 <?php
-// require_once "controller/daskboard_controller.php";
-// $_data = load_data()->fetchAll(PDO::FETCH_ASSOC)[0]['data'];
-// $data = json_decode($_data);
+require_once "controller/daskboard_controller.php";
+$data = load_data()->fetchAll(PDO::FETCH_ASSOC)[0];
 ?>
 <link rel="stylesheet" href="assets/css/home-style.css">
 <div class="header-page">
@@ -53,27 +52,27 @@
         <div class="col-md-6 grid-margin transparent">
             <div class="row">
                 <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="deskboard-card card card-dark-blue">
+                    <div class="deskboard-card card card-dark-blue pointer" onclick="location.href = 'template?page=classroom';">
                         <div class="card-body">
                             <h4 class="card-title notosans col-white">ຫ້ອງຮຽນ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-info">
                                     <img src="assets/svg/classroom.svg" width="70">
                                 </span>
-                                <a class="link display-5 ml-auto col-white"><?= "data->class_num" ?></a>
+                                <a class="link display-5 ml-auto col-white f20"><?= $data['classroom'] ?></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 mb-4 stretch-card transparent">
-                    <div class="deskboard-card card card-tale pointer" onclick="location.href = 'template?page=subject';">
+                    <div class="deskboard-card card card-tale pointer" onclick="location.href = 'template?page=course';">
                         <div class="card-body">
                             <h4 class="card-title notosans col-white">ຫຼັກສູດ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-info">
                                     <img src="assets/svg/file.svg" width="70">
                                 </span>
-                                <a class="link display-5 ml-auto col-white"><?= "data->subj_num" ?></a>
+                                <a class="link display-5 ml-auto col-white f20"><?=$data['course']?></a>
                             </div>
                         </div>
                     </div>
@@ -81,27 +80,27 @@
             </div>
             <div class="row">
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                    <div class="deskboard-card card card-light-blue">
+                    <div class="deskboard-card card card-light-blue pointer" onclick="location.href = 'template?page=student';">
                         <div class="card-body">
                             <h4 class="card-title notosans col-white">ນັກສຶກສາ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-purple">
                                     <img src="assets/svg/student.svg" width="90">
                                 </span>
-                                <a class="link display-5 ml-auto col-white"><?= "data->quiz_num" ?></a>
+                                <a class="link display-5 ml-auto col-white f20"><?=$data['student']?></a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 stretch-card transparent">
-                    <div class="deskboard-card card card-light-danger">
+                    <div class="deskboard-card card card-light-danger pointer" onclick="location.href = 'template?page=employee';">
                         <div class="card-body">
                             <h4 class="card-title notosans col-white">ຜູ້ໃຊ້ງານລະບົບ</h4>
                             <div class="d-flex m-t-30 m-b-20 no-block align-items-center">
                                 <span class="display-5 text-purple">
-                                    <img src="assets/svg/qa.svg" width="70">
+                                    <img src="assets/svg/employee.svg" width="110">
                                 </span>
-                                <a class="link display-5 ml-auto col-white"><?= "data->question_num" ?></a>
+                                <a class="link display-5 ml-auto col-white f20"><?=$data['user']?></a>
                             </div>
                         </div>
                     </div>
@@ -147,3 +146,15 @@
         </div>
     </div> -->
 </div>
+
+<style>
+    .f18{
+        font-size: 18pt !important;
+    }
+    .f20{
+        font-size: 20pt !important;
+    }
+    .pointer{
+        cursor: pointer !important;
+    }
+</style>

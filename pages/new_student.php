@@ -4,7 +4,8 @@ $course_id = '';
 ?>
 <link rel="stylesheet" href="assets/css/new_student_style.css">
 <section class="action">
-    <button type="button" class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
+    <button type="button" onclick="location.href = 'template?page=student&sub_page=new_student_form';"
+    class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
         <i class="ti-plus btn-icon-prepend"></i> ເພີ່ມໃໝ່
     </button>
     <button onclick="DownloadFile('Student_From_Data.xlsx')" type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
@@ -51,7 +52,7 @@ $course_id = '';
 <section class="body">
     <?php
     $start_year = date("Y");
-    $student_data = load_student($course_id, $start_year);
+    $student_data = load_student_newstudent($course_id, $start_year);
     $data = $student_data->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="table-responsive">
@@ -90,7 +91,25 @@ $course_id = '';
                         <td class="notosans f12">
                             <?= $data[$i]['gender'] . " " . $data[$i]['name_la'] . " " . $data[$i]["surname_la"] ?>
                         </td>
-                        <td class="notosans center"></td>
+                        <td class="notosans center">
+                            <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
+                            data-student_code="<?=$data[$i]['student_code']?>" 
+                            data-fullname_la="<?=$data[$i]['gender'] . " " . $data[$i]['name_la'] . " " . $data[$i]["surname_la"] ?>" 
+                            data-fullname_en="<?=$data[$i]['name_en'] . " " . $data[$i]["surname_en"]?>" 
+                            data-birthdate="<?=$data[$i]['date_of_birthday']?>" 
+                            data-classroom_des="-" 
+                            data-address_la="<?=$data[$i]['birth_address_la']?>" 
+                            data-address_en="<?=$data[$i]['birth_address_en']?>"
+                            data-bs-toggle="modal" data-bs-target="#stdinfo" data-bs-backdrop="static">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button onclick="delete_student('<?=$data[$i]['student_code']?>')" type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline" >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>
@@ -103,6 +122,7 @@ $course_id = '';
     </div>
 </section>
 <script>
+    var _username = '<?=$user_data['username']?>';
     var course_id = '<?= $course_id ?>';
 </script>
 <script src="assets/script/new_student.js"></script>

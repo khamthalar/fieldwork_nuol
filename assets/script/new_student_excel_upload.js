@@ -22,7 +22,7 @@ var ExcelToJSON = function () {
             var tb_body = document.getElementById( 'tb_body' );
             tb_body.innerHTML = ``;
             try {
-                // console.log(student_data[2]);
+                // console.log(student_data);
                 if ( student_data[ 2 ][ 0 ] == "ລ/ດ\nNo"
                     && student_data[ 2 ][ 1 ] == "ລະຫັດນັກສຶກສາ\nStudent ID"
                     && student_data[ 2 ][ 2 ] == ""
@@ -34,7 +34,7 @@ var ExcelToJSON = function () {
                     var row_str = ``;
                     st_data = [];
                     for ( let i = 3; i < student_data.length; i++ ) {
-                        if ( student_data[ i ][ 1 ] != "" && student_data[ i ][ 2 ] != "" ) {
+                        if ( student_data[ i ][ 1 ] != "" || student_data[ i ][ 2 ] != "" ) {
                             row_str += `
                             <tr>
                                 <td class='notosans f12 center'>`+ student_data[ i ][ 0 ] + `</td>
@@ -128,15 +128,6 @@ function upload_student() {
         btn_upload.hidden = true;
         st_data = [];
         Swal.fire( { icon: 'success', html: `<span class="notosans">ອັບໂຫຼດຂໍ້ມູນແລ້ວ</span>` } );
-        // if ( error ) {
-        //     load_exam_data();
-        //     Swal.fire( { icon: 'error', html: '<span class=notosans>ບໍ່ສາມາດບັນທຶກຄໍາຕອບ<br>ກະລຸນາຕິດຕໍ່ຫາຜູ້ຄຸມລະບົບ!</span>' } );
-        // } else {
-        //     var _exam_data = JSON.stringify( exam_data_update );
-        //     var exam_data_encoded = CryptoJS.AES.encrypt( _exam_data, "exam" ).toString();
-        //     sessionStorage.setItem( "exam_data", exam_data_encoded );
-        //     load_exam_data();
-        // }
     } );
     Swal.stopTimer();
     var http = new XMLHttpRequest();
@@ -145,6 +136,7 @@ function upload_student() {
     http.onreadystatechange = function () {
         if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
             st_data = JSON.parse( this.responseText );
+            console.log(st_data);
             Swal.resumeTimer();
         }
     }

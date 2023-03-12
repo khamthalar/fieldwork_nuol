@@ -34,12 +34,12 @@
           <span class="menu-title notosans f12">ຈັດຫ້ອງຮຽນ</span>
         </a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="ti-timer menu-icon"></i>
           <span class="menu-title notosans f12">ຢຸດຮຽນຊົ່ວຄາວ</span>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="#">
           <i class="ti-stamp menu-icon"></i>
