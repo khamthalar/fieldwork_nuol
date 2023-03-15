@@ -177,13 +177,6 @@ function render_datatable(){
         tb_std.innerHTML = row_str;
     }
 }
-function decode( text ) {
-    return text
-        .replaceAll( "#amp;",'&' )
-        .replaceAll( "#quot;",'"' )
-        .replaceAll( "#plus;",'+' )
-        .replaceAll( "#039;","'" )
-}
 function course_selected(value){
     window.location.href="template?page=class_member&course_id="+value+((show_status==="1")?"":("&status="+show_status));
 }

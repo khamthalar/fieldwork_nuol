@@ -22,14 +22,14 @@ var ExcelToJSON = function () {
             var tb_body = document.getElementById( 'tb_body' );
             tb_body.innerHTML = ``;
             try {
-                // console.log(student_data);
-                if ( student_data[ 2 ][ 0 ] == "ລ/ດ\nNo"
-                    && student_data[ 2 ][ 1 ] == "ລະຫັດນັກສຶກສາ\nStudent ID"
+                console.log(student_data);
+                if ( student_data[ 2 ][ 0 ].toLowerCase().replace("\r","") == ("ລ/ດ\nNo").toLowerCase()
+                    && student_data[ 2 ][ 1 ].toLowerCase().replace("\r","") == ("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
                     && student_data[ 2 ][ 2 ] == ""
                     && student_data[ 2 ][ 3 ] == "ເພດ"
                     && student_data[ 2 ][ 4 ] == "ຊື່ ແລະ ນາມສະກຸນ"
                     && student_data[ 2 ][ 5 ] == ""
-                    && student_data[ 2 ][ 6 ] == "REMARK"
+                    && student_data[ 2 ][ 6 ].toLowerCase() == ("REMARK").toLowerCase()
                 ) {
                     var row_str = ``;
                     st_data = [];
@@ -142,11 +142,4 @@ function upload_student() {
     }
     var _param = encode( JSON.stringify( param ) );
     http.send( "upload_student=" + _param );
-}
-function encode( text ) {
-    return text
-        .replace( /&/g, "#amp;" )
-        .replace( /"/g, "#quot;" )
-        .replace( /\+/g, "#plus;" )
-        .replace( /'/g, "#039;" );
 }

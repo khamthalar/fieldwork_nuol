@@ -4,30 +4,35 @@
         require "../config.php";
         include_once("app_module.php");
         $data_param = json_decode(decode($_POST['upload_student']));
-        $course_id = $data_param->course_id;
-        $duration_year = $data_param->duration_year;
-        $username = $data_param->username;
+        $course_id = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->course_id);
+        $duration_year = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->duration_year);
+        $username = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->username);
         $student_data = $data_param->data;
-        $username = $data_param->username;
+        $username = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->username);
+
         $return_data = [];
         foreach($student_data as $student){
             // check data
+            $student_code = preg_replace('/[^A-Za-z0-9\-]/', '',$student->student_code);
             $sql = "SELECT COUNT(*)'num' FROM tb_student WHERE student_code=? AND student_status!='DELETED'";
             $query = $dbcon->prepare($sql);
-            $query->execute(array($student->student_code));
+            $query->execute(array($student_code));
             $num = $query->fetch(PDO::FETCH_ASSOC)["num"];
             if($num==0){
+                $gender = input_data( $student->gender);
+                $name_la = input_data($student->name_la);
+                $surname_la = input_data($student->surname_la);
+                $remark = input_data($student->remark);
                 $start_year = date("Y");
                 $end_year = date("Y")+ $duration_year;
                 $sql = "INSERT INTO tb_student(student_code, gender, name_la, surname_la, start_year, end_year,course_id,remark) 
-                VALUES ('".$student->student_code."', '".$student->gender."', '".$student->name_la."', 
-                '".$student->surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$student->remark."');";
-                $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student->student_code."', 'created', '".$username."');";
+                VALUES ('".$student_code."', '".$gender."', '".$name_la."', 
+                '".$surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$remark."');";
+                $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student_code."', 'created', '".$username."');";
                 for($i=0;$i < $duration_year; $i++){
                     $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
                     $sql .="INSERT INTO `tb_student_register`(`student_code`, `school_year`, `year_no`, `create_date`, `user_update`)  
-                    VALUES ('".$student->student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
-            
+                    VALUES ('".$student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
                 }
                 // echo $sql;
                 $query = $dbcon->prepare($sql);

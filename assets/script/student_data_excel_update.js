@@ -24,8 +24,8 @@ var ExcelToJSON = function () {
             tb_body.innerHTML = ``;
             try {
                 console.log(student_data[1]);
-                if((student_data[1][0]).toLowerCase()==("ລ/ດ\nNo").toLowerCase()
-                && (student_data[1][1]).toLowerCase()==("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
+                if((student_data[1][0]).toLowerCase().replace("\r","")==("ລ/ດ\nNo").toLowerCase()
+                && (student_data[1][1]).toLowerCase().replace("\r","")==("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
                 && (student_data[1][2]).toLowerCase()==("ເພດ").toLowerCase()
                 && (student_data[1][3]).toLowerCase()==("ຊື່ ແລະ ນາມສະກຸນ").toLowerCase()
                 && (student_data[1][4]).toLowerCase()==("").toLowerCase()

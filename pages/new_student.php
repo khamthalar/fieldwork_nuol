@@ -1,10 +1,14 @@
 <?php
 $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
-$course_id = '';
+if (isset($_GET['course_id2'])) {
+    $course_id = $_GET['course_id2'];
+}else{
+    $course_id = @$course_data[0]['course_id'];
+}
 ?>
 <link rel="stylesheet" href="assets/css/new_student_style.css">
 <section class="action">
-    <button type="button" onclick="location.href = 'template?page=student&sub_page=new_student_form';"
+    <button type="button" onclick="location.href = 'template?page=student&sub_page=new_student_form&course_id=<?=$course_id?>';"
     class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
         <i class="ti-plus btn-icon-prepend"></i> ເພີ່ມໃໝ່
     </button>
@@ -92,7 +96,19 @@ $course_id = '';
                             <?= $data[$i]['gender'] . " " . $data[$i]['name_la'] . " " . $data[$i]["surname_la"] ?>
                         </td>
                         <td class="notosans center">
-                            <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
+                            <button
+                            onclick="openUpdateForm(
+                                '<?=encode($data[$i]['student_code'])?>',
+                                '<?=encode($data[$i]['gender'])?>',
+                                '<?=encode($data[$i]['name_la'])?>',
+                                '<?=encode($data[$i]['surname_la'])?>',
+                                '<?=encode($data[$i]['name_en'])?>',
+                                '<?=encode($data[$i]['surname_en'])?>',
+                                '<?=encode($data[$i]['date_of_birthday'])?>',
+                                '<?=encode($data[$i]['birth_address_la'])?>',
+                                '<?=encode($data[$i]['birth_address_en'])?>',
+                                '<?=encode($data[$i]['remark'])?>')"
+                            type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                             <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
@@ -122,7 +138,25 @@ $course_id = '';
     </div>
 </section>
 <script>
+    sessionStorage.removeItem('std_param');
     var _username = '<?=$user_data['username']?>';
     var course_id = '<?= $course_id ?>';
+    function openUpdateForm(student_code, gender, name_la, surname_la, name_en, surname_en, 
+    date_of_birthday, birth_address_la, birth_address_en, remark ){
+        let param = {
+            student_code,
+            gender,
+            name_la,
+            surname_la,
+            name_en,
+            surname_en,
+            date_of_birthday,
+            birth_address_la,
+            birth_address_en,
+            remark
+        }
+        sessionStorage.setItem('std_param',JSON.stringify(param));
+        location.href = 'template?page=student&sub_page=edit_student_form';
+    }
 </script>
 <script src="assets/script/new_student.js"></script>

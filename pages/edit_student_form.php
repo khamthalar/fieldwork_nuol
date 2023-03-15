@@ -1,14 +1,8 @@
 <?php
 require_once "controller/student_controller.php";
-if (isset($_GET['course_id'])) {
-  $course_id = $_GET['course_id'];
-}else{
-  echo"<script>location.href='template?page=student'</script>";
-}
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/student_form_style.css">
-<!-- <script src="assets/js/jquery-1.9.1.min.js"></script> -->
 <div class="header-page">
   <div class="page-title">
     <h5 class="notosans">
@@ -16,7 +10,7 @@ if (isset($_GET['course_id'])) {
       <i class="fas fa-chevron-right"></i>
       <a href="template?page=student" class="home-link">ຂໍ້ມູນນັກສືກສາ</a>
       <i class="fas fa-chevron-right"></i>
-      ເພີ່ມຂໍ້ມູນນັກສຶກສາໃໝ່
+      ແກ້ໄຂຂໍ້ມູນນັກສຶກສາໃໝ່
     </h5>
   </div>
 </div>
@@ -26,7 +20,7 @@ if (isset($_GET['course_id'])) {
       <div class="col-12 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title notosans">ເພີ່ມຂໍ້ມູນນັກສຶກສາ</h4>
+            <h4 class="card-title notosans">ແກ້ຂໍ້ມູນນັກສຶກສາ</h4>
             <div class="row">
               <div class="col-md-12">
                   <div class="col-sm-12">
@@ -132,8 +126,10 @@ if (isset($_GET['course_id'])) {
     const birthdate = document.getElementById('date_of_birth');
     const remark = document.getElementById('remark');
     var _username = '<?=$user_data['username']?>';
-    var course_id = '<?=$course_id?>';
-
+    var course_id = '';
+    let std_data = sessionStorage.getItem('std_param');
+    std_data = JSON.parse(std_data);
+    console.log(std_data);
     const englishRegex = /^[a-zA-Z]*$/;
     name_en.addEventListener("input",function(){
       if (!englishRegex.test(name_en.value)) {
@@ -211,7 +207,7 @@ if (isset($_GET['course_id'])) {
             }
           }
           var _param = encode(JSON.stringify(param));
-          http.send("new_student=" + _param);
+          http.send("update_student=" + _param);
         }
       }
     }

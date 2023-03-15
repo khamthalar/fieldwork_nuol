@@ -1,5 +1,6 @@
 <?php
 require_once "controller/main_controller.php";
+include_once("controller/app_module.php");
 date_default_timezone_set("Asia/Vientiane");
 $limit_row = 10;
   if (empty($_SESSION["user_login"])) {
@@ -130,6 +131,20 @@ $limit_row = 10;
 
 </body>
 <script>
+  function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }
   if(window.history.replaceState){
     window.history.replaceState(null,null,window.location.href);
   }
