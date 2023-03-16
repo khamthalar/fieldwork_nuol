@@ -119,3 +119,18 @@ function year_selected(value){
     classroom_id = 0;
     load_class(course_id, selected_year);
 }
+
+function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }

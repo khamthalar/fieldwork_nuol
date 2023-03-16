@@ -228,3 +228,18 @@ function set_classroom(selectedData,class_no,classroom_id,index){
     let _param = encode( JSON.stringify( param ) );
     http.send( "setClassroomData=" + _param );
 }
+
+function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }

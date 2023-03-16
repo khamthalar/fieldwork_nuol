@@ -55,3 +55,18 @@ function delete_student(student_code){
         }
     })
 }
+
+function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }

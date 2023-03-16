@@ -131,20 +131,7 @@ $limit_row = 10;
 
 </body>
 <script>
-  function decode( text ) {
-    return text
-        .replaceAll( "#amp;",'&' )
-        .replaceAll( "#quot;",'"' )
-        .replaceAll( "#plus;",'+' )
-        .replaceAll( "#039;","'" )
-  }
-  function encode( text ) {
-    return text
-        .replace( /&/g, "#amp;" )
-        .replace( /"/g, "#quot;" )
-        .replace( /\+/g, "#plus;" )
-        .replace( /'/g, "#039;" );
-  }
+  
   if(window.history.replaceState){
     window.history.replaceState(null,null,window.location.href);
   }

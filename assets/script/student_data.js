@@ -299,3 +299,18 @@ function s2ab(s) {
     for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
     return buf;
 }
+
+function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }

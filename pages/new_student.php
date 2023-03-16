@@ -98,6 +98,7 @@ if (isset($_GET['course_id2'])) {
                         <td class="notosans center">
                             <button
                             onclick="openUpdateForm(
+                                '<?=encode($data[$i]['student_id'])?>',
                                 '<?=encode($data[$i]['student_code'])?>',
                                 '<?=encode($data[$i]['gender'])?>',
                                 '<?=encode($data[$i]['name_la'])?>',
@@ -141,9 +142,10 @@ if (isset($_GET['course_id2'])) {
     sessionStorage.removeItem('std_param');
     var _username = '<?=$user_data['username']?>';
     var course_id = '<?= $course_id ?>';
-    function openUpdateForm(student_code, gender, name_la, surname_la, name_en, surname_en, 
+    function openUpdateForm(student_id,student_code, gender, name_la, surname_la, name_en, surname_en, 
     date_of_birthday, birth_address_la, birth_address_en, remark ){
         let param = {
+            student_id,
             student_code,
             gender,
             name_la,

@@ -53,9 +53,9 @@ require_once "controller/student_controller.php";
                 <label class="col-form-label notosans f12">ເພດ</label>
                 <div>
                   <select id="gender" onchange="gender_selected(this.value)" class="inp form-control notosans f12">
-                    <option value="ທ້າວ" selected>ທ້າວ</option>
-                    <option value="ນາງ">ນາງ</option>
-                    <option value="3">ອື່ນໆ</option>
+                    <option id='male' value="ທ້າວ">ທ້າວ</option>
+                    <option id='female' value="ນາງ">ນາງ</option>
+                    <option id='other' value="3">ອື່ນໆ</option>
                   </select>
                 </div>
               </div>
@@ -125,10 +125,39 @@ require_once "controller/student_controller.php";
     const address_en = document.getElementById('address_en');
     const birthdate = document.getElementById('date_of_birth');
     const remark = document.getElementById('remark');
+    const male = document.getElementById('male');
+    const female = document.getElementById('female');
+    const g_other = document.getElementById('other');
+
     var _username = '<?=$user_data['username']?>';
     var course_id = '';
     let std_data = sessionStorage.getItem('std_param');
     std_data = JSON.parse(std_data);
+    if(std_data){
+      student_code.value = decode(std_data.student_code);
+      name_la.value = decode(std_data.name_la);
+      surname_la.value = decode(std_data.surname_la);
+      name_en.value = decode(std_data.name_en);
+      surname_en.value = decode(std_data.surname_en);
+      let gender_str = decode(std_data.gender);
+      if(gender_str=="ທ້າວ"){
+        male.selected = true;
+      }else if(gender_str=="ນາງ"){
+        female.selected = true;
+      }else{
+        g_other.selected = true;
+        gender_inp.value = gender_str;
+      }
+      address_en.value = decode(std_data.birth_address_en);
+      address_la.value = decode(std_data.birth_address_la);
+      remark.value = decode(std_data.remark);
+      let _birthdate = decode(std_data.date_of_birthday);
+      if(_birthdate){
+        birthdate.value = _birthdate;
+        var _date = new Date( _birthdate );
+        document.getElementById( "date-of-birth-lb" ).innerHTML = _date.getDate().toString().padStart( 2, "0" ) + "/" + ( _date.getMonth() + 1 ).toString().padStart( 2, "0" ) + "/" + _date.getFullYear();
+      }
+    }
     console.log(std_data);
     const englishRegex = /^[a-zA-Z]*$/;
     name_en.addEventListener("input",function(){
@@ -184,6 +213,8 @@ require_once "controller/student_controller.php";
           });
         }else{
           let param = {
+            student_id:std_data?.student_id,
+            old_student_code:decode(std_data.student_code),
             student_code:student_code.value,
             name_la:name_la.value,
             surname_la:surname_la.value,
@@ -211,4 +242,18 @@ require_once "controller/student_controller.php";
         }
       }
     }
+  function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }
   </script>

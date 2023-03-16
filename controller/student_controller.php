@@ -52,7 +52,7 @@
         require "../config.php";
         include_once("app_module.php");
         $data = json_decode(decode($_POST['new_student']));
-        $student_code = $data->student_code;
+        $student_code = preg_replace('/[^A-Za-z0-9\/]/', '',$data->student_code);
         $student_code = str_replace(" ","",strtoupper(trim($student_code," \n\r\t\v\x00")));
         $name_la = input_data($data->name_la);
         $surname_la = input_data($data->surname_la);
@@ -129,75 +129,93 @@
             echo "Swal.fire({icon:'error',html:'<span class=notosans>ລະຫັດນັກສຶກສາຊໍ້າກັນ !</span>'})";
         }
     }
-    // if(isset($_POST["upload_student"])){
-    //     require "../config.php";
-    //     include_once("app_module.php");
-    //     $data_param = json_decode(decode($_POST['upload_student']));
-    //     $course_id = $data_param->course_id;
-    //     $duration_year = $data_param->duration_year;
-    //     $username = $data_param->username;
-    //     $student_data = $data_param->data;
-    //     $username = $data_param->username;
-    //     $return_data = [];
-    //     foreach($student_data as $student){
-    //         // check data
-    //         $sql = "SELECT COUNT(*)'num' FROM tb_student WHERE student_code=? AND student_status!='DELETED'";
-    //         $query = $dbcon->prepare($sql);
-    //         $query->execute(array($student->student_code));
-    //         $num = $query->fetch(PDO::FETCH_ASSOC)["num"];
-    //         if($num==0){
-    //             $start_year = date("Y");
-    //             $end_year = date("Y")+ $duration_year;
-    //             $sql = "INSERT INTO tb_student(student_code, gender, name_la, surname_la, start_year, end_year,course_id,remark) 
-    //             VALUES ('".$student->student_code."', '".$student->gender."', '".$student->name_la."', 
-    //             '".$student->surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$student->remark."');";
-    //             for($i=0;$i < $duration_year; $i++){
-    //                 $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
-    //                 $sql .="INSERT INTO tb_student_register(student_code, school_year,year_no,create_date, user_update) 
-    //                 VALUES ('".$student->student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
-    //             }
-    //             // echo $sql;
-    //             $query = $dbcon->prepare($sql);
-    //             $query->execute();
-    //             if($query){
-    //                 //success
-    //                 $item = array(
-    //                     "student_code"=>$student->student_code,
-    //                     "gender"=>$student->gender,
-    //                     "name_la"=>$student->name_la,
-    //                     "surname_la"=>$student->surname_la,
-    //                     "remake"=>$student->remark,
-    //                     "status"=>"success",
-    //                     "duplicate"=>$num
-    //                 );
-    //             }else{
-    //                 //error
-    //                 $item = array(
-    //                     "student_code"=>$student->student_code,
-    //                     "gender"=>$student->gender,
-    //                     "name_la"=>$student->name_la,
-    //                     "surname_la"=>$student->surname_la,
-    //                     "remake"=>$student->remark,
-    //                     "status"=>"error !",
-    //                     "duplicate"=>$num
-    //                 );
-    //             }
-    //         }else{
-    //             //duplicate student_code
-    //             $item = array(
-    //                 "student_code"=>$student->student_code,
-    //                 "gender"=>$student->gender,
-    //                 "name_la"=>$student->name_la,
-    //                 "surname_la"=>$student->surname_la,
-    //                 "remake"=>$student->remark,
-    //                 "status"=>"ລະຫັດນັກສຶກສາຊໍ້າກັນ",
-    //                 "duplicate"=>$num
-    //             );
-    //         }
-    //         array_push($return_data,$item);
-    //     }
-    //     echo json_encode($return_data);
-    // }
+    if(isset($_POST['update_student'])){
+        require "../config.php";
+        include_once("app_module.php");
+        $data = json_decode(decode($_POST['update_student']));
+        $student_id = $data->student_id;
+        $old_student_code = $data->old_student_code;
+        $student_code = $data->student_code;
+        $name_la = $data->name_la;
+        $surname_la = $data->surname_la;
+        $name_en = $data->name_en;
+        $surname_en = $data->surname_en;
+        $gender = $data->gender;
+        $address_la = $data->address_la;
+        $address_en = $data->address_en;
+        $birthdate = $data->birthdate;
+        $remark = $data->remark;
+        $course_id = $data->course_id;
+        $username = $data->username;
+        // check data
+        $sql = "SELECT COUNT(*)'num',(SELECT s.duration_year FROM tb_course c INNER JOIN tb_scheme s ON c.scheme_id = s.scheme_id WHERE course_id=?)'duration_year' FROM tb_student WHERE student_code=? AND student_id!=? AND student_status!='DELETED';";
+        $query = $dbcon->prepare($sql);
+        $query->execute(array($course_id,$student_code,$student_id));
+        $query_data = $query->fetch(PDO::FETCH_ASSOC);
+        $num = $query_data["num"];
+        $duration_year = $query_data["duration_year"];
+
+        if($num==0){
+            //insert data here
+            // $start_year = date("Y");
+            // $end_year = date("Y")+ $duration_year;
+            // if($birthdate){
+            // $sql = "update tb_student set student_code, gender, name_la, name_en, surname_la, surname_en, date_of_birthday, birth_address_la, birth_address_en, start_year, end_year, course_id, remark) 
+            // VALUES (
+            //     '".$student_code."',
+            //     '".$gender."', 
+            //     '".$name_la."', 
+            //     '".$name_en."', 
+            //     '".$surname_la."', 
+            //     '".$surname_en."', 
+            //     '".$birthdate."', 
+            //     '".$address_la."', 
+            //     '".$address_en."', 
+            //     '".$start_year."', 
+            //     '".$end_year."', 
+            //     '".$course_id."', 
+            //     '".$remark."');";
+            // }else{
+            //     $sql = "INSERT INTO tb_student(student_code, gender, name_la, name_en, surname_la, surname_en, birth_address_la, birth_address_en, start_year, end_year, course_id, remark) 
+            //     VALUES (
+            //     '".$student_code."',
+            //     '".$gender."', 
+            //     '".$name_la."', 
+            //     '".$name_en."', 
+            //     '".$surname_la."', 
+            //     '".$surname_en."', 
+            //     '".$address_la."', 
+            //     '".$address_en."', 
+            //     '".$start_year."', 
+            //     '".$end_year."', 
+            //     '".$course_id."', 
+            //     '".$remark."');";
+            // }
+            // $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student_code."', 'created', '".$username."');";
+            // for($i=0;$i < $duration_year; $i++){
+            //     $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
+            //     $sql .="INSERT INTO `tb_student_register`(`student_code`, `school_year`, `year_no`, `create_date`, `user_update`)  
+            //     VALUES ('".$student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
+            // }
+            // $query = $dbcon->prepare($sql);
+            // $query->execute();
+            // if($query){
+            //     echo "Swal.fire({icon:'success',html:'<span class=notosans>ບັນທຶກຂໍ້ມູນສໍາເລັດ!</span>',allowOutsideClick: false}).then((result) => {if (result.isConfirmed) {window.location.href='template?page=student'}});";
+            // }else{
+            //     echo "Swal.fire({icon:'error',html:'<span class=notosans>ບັນທຶກຂໍ້ມູນບໍ່ສໍາເລັດ<br>ເກີດຂໍ້ຜິດພາດລະຫວ່າງການບັນທຶກ!</span>'})";
+            // }
+        
+
+        }else{
+            //duplicate data
+            echo "Swal.fire({icon:'error',html:'<span class=notosans>ລະຫັດນັກສຶກສາຊໍ້າກັນ !</span>'})";
+        }
+
+
+
+
+
+    }
     if(isset($_POST['delete_student'])){
         require "../config.php";
         include_once("app_module.php");

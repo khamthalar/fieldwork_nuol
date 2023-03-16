@@ -13,7 +13,7 @@
         $return_data = [];
         foreach($student_data as $student){
             // check data
-            $student_code = preg_replace('/[^A-Za-z0-9\-]/', '',$student->student_code);
+            $student_code = preg_replace('/[^A-Za-z0-9\/]/', '',$student->student_code);
             $sql = "SELECT COUNT(*)'num' FROM tb_student WHERE student_code=? AND student_status!='DELETED'";
             $query = $dbcon->prepare($sql);
             $query->execute(array($student_code));

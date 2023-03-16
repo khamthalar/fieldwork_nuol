@@ -48,3 +48,18 @@ function showdata(){
     var selected_year = document.getElementById('year_no').value;
     window.location.href="template?page=classroom&course_id="+course_id+"&selected_year="+selected_year;
 }
+
+function decode( text ) {
+    return text
+        .replaceAll( "#amp;",'&' )
+        .replaceAll( "#quot;",'"' )
+        .replaceAll( "#plus;",'+' )
+        .replaceAll( "#039;","'" )
+  }
+  function encode( text ) {
+    return text
+        .replace( /&/g, "#amp;" )
+        .replace( /"/g, "#quot;" )
+        .replace( /\+/g, "#plus;" )
+        .replace( /'/g, "#039;" );
+  }
