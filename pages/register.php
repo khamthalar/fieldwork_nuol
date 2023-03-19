@@ -122,13 +122,23 @@ if(isset($_POST["search"])){
                           <?php
                             if($student["register_status"]==0){
                               ?>
-                              <button onclick="change_register_status('<?=$student['register_id']?>','<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',1)" type="button" class="btn btn-success btn-icon-text btn-rounded none-select none-outline">
+                              <button onclick="change_register_status(
+                                '<?=$student['register_id']?>',
+                                '<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',
+                                1,
+                                '<?=$student['student_code']?>',
+                               )" type="button" class="btn btn-success btn-icon-text btn-rounded none-select none-outline">
                                 ລົງທະບຽນ
                               </button>
                               <?php
                             }else{
                               ?>
-                              <button onclick="change_register_status('<?=$student['register_id']?>','<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',0)" type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
+                              <button onclick="change_register_status(
+                                '<?=$student['register_id']?>',
+                                '<?=$student['gender'].' '.$student['name_la'].' '.$student['surname_la']?>',
+                                0,
+                                '<?=$student['student_code']?>',
+                                )" type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
                               &nbsp;&nbsp;ຍົກເລີກ&nbsp;&nbsp;
                               </button>
                               <?php

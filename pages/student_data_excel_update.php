@@ -1,5 +1,10 @@
 <?php
     require_once "controller/student_controller.php";
+    if(isset($_GET['course_id'])){
+      $course_id = $_GET['course_id'];
+    }else{
+      echo "<script>window.location.href='template?page=student'</script>";
+    }
 ?>
 <link rel="stylesheet" href="assets/css/student-style.css">
 <link rel="stylesheet" href="assets/css/student-excel-upload-style.css">
@@ -48,7 +53,7 @@
                         </tbody>
                     </table>
                     <div class="center pt-2">
-                        <button onclick="upload_student()" id="btn-upload" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans" hidden>
+                        <button onclick="update_student_data()" id="btn-upload" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans" hidden>
                             <i class="ti-export btn-icon-prepend"></i> ອັບໂຫຼດ
                         </button>
                     </div>
@@ -64,6 +69,7 @@
 ?>
 <script>
   var _username = '<?=$user_data['username']?>';
+  var _course_id = '<?=$course_id?>';
   var st_data = [];
   var btn_upload = document.getElementById('btn-upload');
 </script>

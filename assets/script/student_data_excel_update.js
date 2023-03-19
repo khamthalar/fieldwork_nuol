@@ -23,21 +23,31 @@ var ExcelToJSON = function () {
             var tb_body = document.getElementById( 'tb_body' );
             tb_body.innerHTML = ``;
             try {
-                console.log(student_data[1]);
-                if((student_data[1][0]).toLowerCase().replace("\r","")==("ລ/ດ\nNo").toLowerCase()
-                && (student_data[1][1]).toLowerCase().replace("\r","")==("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
-                && (student_data[1][2]).toLowerCase()==("ເພດ").toLowerCase()
-                && (student_data[1][3]).toLowerCase()==("ຊື່ ແລະ ນາມສະກຸນ").toLowerCase()
-                && (student_data[1][4]).toLowerCase()==("").toLowerCase()
-                && (student_data[1][5]).toLowerCase()==("Name and Surname").toLowerCase()
-                && (student_data[1][6]).toLowerCase()==("").toLowerCase()
-                && (student_data[1][7]).toLowerCase()==("ວັນເດືອນປີເກີດ").toLowerCase()
-                && (student_data[1][8]).toLowerCase()==("ສະຖານທີ່ເກີດ (ແຂວງ)").toLowerCase()
-                && (student_data[1][9]).toLowerCase()==("address of birth (province)").toLowerCase()
-                && (student_data[1][10]).toLowerCase()==("REMARK").toLowerCase()){
+                // console.log(student_data);
+                if((student_data[2][0]).toLowerCase().replace("\r","")==("ລ/ດ\nNo").toLowerCase()
+                && (student_data[2][1]).toLowerCase().replace("\r","")==("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
+                && (student_data[2][2]).toLowerCase()==("ເພດ").toLowerCase()
+                && (student_data[2][3]).toLowerCase()==("ຊື່ ແລະ ນາມສະກຸນ").toLowerCase()
+                && (student_data[2][4]).toLowerCase()==("").toLowerCase()
+                && (student_data[2][5]).toLowerCase()==("Name and Surname").toLowerCase()
+                && (student_data[2][6]).toLowerCase()==("").toLowerCase()
+                && (student_data[2][7]).toLowerCase()==("ວັນເດືອນປີເກີດ").toLowerCase()
+                && (student_data[2][8]).toLowerCase()==("ສະຖານທີ່ເກີດ (ແຂວງ)").toLowerCase()
+                && (student_data[2][9]).toLowerCase()==("address of birth (province)").toLowerCase()
+                && (student_data[2][10]).toLowerCase()==("REMARK").toLowerCase()){
                     var row_str = ``;
                     st_data = [];
-                    for ( let i = 2; i < student_data.length; i++ ) {
+                    for ( let i = 3; i < student_data.length; i++ ) {
+                        let birthdate_obj = XLSX.SSF.parse_date_code(student_data[ i ][ 7 ], { date1904: false });;
+                        let birthdate = '';
+                        if(birthdate_obj?.y!=1900){
+                            try{
+                                birthdate = birthdate_obj.y+"-"+birthdate_obj.m+"-"+birthdate_obj.d;
+                            }catch(e){
+                                console.log(e);
+                                birthdate = '';
+                            }
+                        }
                         if ( student_data[ i ][ 1 ] != "" && student_data[ i ][ 2 ] != "" ) {
                             row_str += `
                             <tr>
@@ -48,17 +58,24 @@ var ExcelToJSON = function () {
                                 <td class='notosans f12'>`+ student_data[ i ][ 4 ] + `</td>
                                 <td class='notosans f12'>`+ student_data[ i ][ 5 ] + `</td>
                                 <td class='notosans f12'>`+ student_data[ i ][ 6 ] + `</td>
-                                <td class='notosans f12'>`+ student_data[ i ][ 7 ] + `</td>
+                                <td class='notosans f12'>`+ birthdate + `</td>
                                 <td class='notosans f12'>`+ student_data[ i ][ 8 ] + `</td>
                                 <td class='notosans f12'>`+ student_data[ i ][ 9 ] + `</td>
                                 <td class='notosans f12' colspan='2'>`+ student_data[ i ][ 10 ] + `</td>
                             </tr>`;
                             var item = {
-                                student_code: student_data[ i ][ 1 ] + student_data[ i ][ 2 ],
-                                gender: student_data[ i ][ 3 ],
-                                name_la: student_data[ i ][ 4 ],
-                                surname_la: student_data[ i ][ 5 ],
-                                remark: student_data[ i ][ 6 ]
+                                course_id : _course_id,
+                                student_code : student_data[i][1],
+                                name_la : student_data[i][3],
+                                surname_la : student_data[i][4],
+                                name_en : student_data[i][5],
+                                surname_en : student_data[i][6],
+                                gender : student_data[i][2],
+                                address_la : student_data[i][8],
+                                address_en : student_data[i][9],
+                                birthdate : birthdate,
+                                remark : student_data[i][10],
+                                
                             };
                             st_data.push( item );
                         }
@@ -89,6 +106,67 @@ var ExcelToJSON = function () {
         };
         reader.readAsBinaryString( file );
     };
+}
+
+function update_student_data(){
+    var param={
+        username:_username,
+        data:st_data
+    }
+    Swal.fire( {
+        html: '<h2 class="notosans">ກະລຸນາລໍຖ້າ !</h2><h4 class="notosans">ກໍາລັງອັບໂຫຼດຂໍ້ມູນ</h4>',
+        timer: 300,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+    } ).then( () => {
+        console.log(st_data);
+        var row_str = ``;
+        st_data.forEach( (student,index) => {
+            var style=``;
+            if(student.status=="ລະຫັດນັກສຶກສາບໍ່ຖຶກຕ້ອງ"){
+                style = `style="background-color:yellow;"`;
+            }else if(student.status=="success"){
+                style = `style="color:green;"`;
+            }else{
+                style = `style="color:red;"`;
+            }
+            row_str += `
+                <tr `+style+` >
+                    <td class='notosans f12 center'>`+ index+1 + `</td>
+                    <td class='notosans f12'>`+ student.student_code + `</td>
+                    <td class='notosans f12 center'>`+ student.gender + `</td>
+                    <td class='notosans f12'>`+ student.name_la + `</td>
+                    <td class='notosans f12'>`+ student.surname_la + `</td>
+                    <td class='notosans f12'>`+ student.name_en + `</td>
+                    <td class='notosans f12'>`+ student.surname_en + `</td>
+                    <td class='notosans f12'>`+ student.birthdate + `</td>
+                    <td class='notosans f12'>`+ student.address_la + `</td>
+                    <td class='notosans f12'>`+ student.address_en + `</td>
+                    <td class='notosans f12' colspan='2'>`+ student.remark + `</td>
+                    <td class='notosans f12' colspan='2'>`+ student.status + `</td>
+                </tr>`;
+        })
+        tb_body.innerHTML = row_str;
+        btn_upload.hidden = true;
+        st_data = [];
+        Swal.fire( { icon: 'success', html: `<span class="notosans">ອັບໂຫຼດຂໍ້ມູນແລ້ວ</span>` } );
+    })
+    Swal.stopTimer();
+    var http = new XMLHttpRequest();
+    http.open( "POST", 'controller/student_controller.php', true );
+    http.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+    http.onreadystatechange = function () {
+        if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
+            st_data = JSON.parse( this.responseText );
+            console.log(st_data);
+            Swal.resumeTimer();
+        }
+    }
+    console.log(param);
+    var _param = encode( JSON.stringify( param ) );
+    http.send( "upload_student_update=" + _param );
 }
 
 function decode( text ) {

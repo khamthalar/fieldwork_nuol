@@ -198,7 +198,8 @@ function set_classroom(selectedData,class_no,classroom_id,index){
     let data = JSON.parse(decode(selectedData));
     let param = {
         student_data:data,
-        class_no:class_no
+        class_no:class_no,
+        username:_username
     }
     let http = new XMLHttpRequest();
     http.open( "POST", 'controller/class_member_controller.php', true );

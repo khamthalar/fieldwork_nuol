@@ -8,7 +8,6 @@
         $duration_year = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->duration_year);
         $username = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->username);
         $student_data = $data_param->data;
-        $username = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->username);
 
         $return_data = [];
         foreach($student_data as $student){

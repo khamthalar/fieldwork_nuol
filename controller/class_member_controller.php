@@ -68,6 +68,11 @@
       $data = json_decode(decode($_POST['setClassroomData']));
       $student_data = $data->student_data;
       $class_no = $data->class_no;
+      $username = $data->username;
+      $sql = "INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student_data->student_code."', 
+      CONCAT('set classroom to ',(SELECT REPLACE(REPLACE(class_pattern,'[year_no]','1'),'[class_no]','".$class_no."') FROM tb_course WHERE course_id='".$student_data->course_id."')), '".$username."');";
+      $query = $dbcon->prepare($sql);
+      $query->execute();
       $sql = "SELECT*from tb_student_register WHERE student_code = ?";
       $query = $dbcon->prepare($sql);
       $query->execute(array($student_data->student_code));

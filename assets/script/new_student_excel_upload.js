@@ -22,15 +22,15 @@ var ExcelToJSON = function () {
             var tb_body = document.getElementById( 'tb_body' );
             tb_body.innerHTML = ``;
             try {
-                console.log(student_data);
-                if ( student_data[ 2 ][ 0 ].toLowerCase().replace("\r","") == ("ລ/ດ\nNo").toLowerCase()
+                if ( (student_data[ 2 ][ 0 ].toLowerCase().replace("\r","") == ("ລ/ດ\nNo").toLowerCase()
                     && student_data[ 2 ][ 1 ].toLowerCase().replace("\r","") == ("ລະຫັດນັກສຶກສາ\nStudent ID").toLowerCase()
                     && student_data[ 2 ][ 2 ] == ""
                     && student_data[ 2 ][ 3 ] == "ເພດ"
                     && student_data[ 2 ][ 4 ] == "ຊື່ ແລະ ນາມສະກຸນ"
                     && student_data[ 2 ][ 5 ] == ""
-                    && student_data[ 2 ][ 6 ].toLowerCase() == ("REMARK").toLowerCase()
+                    && student_data[ 2 ][ 6 ].toLowerCase() == ("REMARK").toLowerCase())
                 ) {
+                    console.log(1);
                     var row_str = ``;
                     st_data = [];
                     for ( let i = 3; i < student_data.length; i++ ) {
@@ -51,6 +51,49 @@ var ExcelToJSON = function () {
                                 name_la: student_data[ i ][ 4 ],
                                 surname_la: student_data[ i ][ 5 ],
                                 remark: student_data[ i ][ 6 ]
+                            };
+                            st_data.push( item );
+                        }
+                    }
+                    tb_body.innerHTML = row_str;
+                    if ( st_data.length != 0 ) {
+                        btn_upload.hidden = false;
+                    } else {
+                        btn_upload.hidden = true;
+                    }
+                }else if(
+                    student_data[ 2 ][ 0 ].toLowerCase().replace("\r","")=="ລ/ດ\nno" &&
+                    student_data[ 2 ][ 1 ].toLowerCase().replace("\r","")=="ລະຫັດນັກສຶກສາ\nstudent id" &&
+                    student_data[ 2 ][ 2 ]=="ເພດ" &&
+                    student_data[ 2 ][ 3 ]=="ຊື່ ແລະ ນາມສະກຸນ" &&
+                    student_data[ 2 ][ 4 ]=="" &&
+                    student_data[ 2 ][ 5 ].toLowerCase()=="name and surname" &&
+                    student_data[ 2 ][ 6 ]=="" &&
+                    student_data[ 2 ][ 7 ]=="ວັນເດືອນປີເກີດ" &&
+                    student_data[ 2 ][ 8 ]=="ສະຖານທີ່ເກີດ (ແຂວງ)" &&
+                    student_data[ 2 ][ 9 ].toLowerCase().replace("\r","")=="address of birth (province)" &&
+                    student_data[ 2 ][ 10 ].toLowerCase().replace("\r","")=="remark"
+                ){
+                    var row_str = ``;
+                    st_data = [];
+                    for ( let i = 3; i < student_data.length; i++ ) {
+                        if ( student_data[ i ][ 1 ] != "") {
+                            row_str += `
+                            <tr>
+                                <td class='notosans f12 center'>`+ student_data[ i ][ 0 ] + `</td>
+                                <td class='notosans f12'>`+ student_data[ i ][ 1 ] + `</td>
+                                <td class='notosans f12'></td>
+                                <td class='notosans f12 center'>`+ student_data[ i ][ 2 ] + `</td>
+                                <td class='notosans f12'>`+ student_data[ i ][ 3 ] + `</td>
+                                <td class='notosans f12'>`+ student_data[ i ][ 4 ] + `</td>
+                                <td class='notosans f12' colspan='2'>`+ student_data[ i ][ 10 ] + `</td>
+                            </tr>`;
+                            var item = {
+                                student_code: student_data[ i ][ 1 ],
+                                gender: student_data[ i ][ 2 ],
+                                name_la: student_data[ i ][ 3 ],
+                                surname_la: student_data[ i ][ 4 ],
+                                remark: student_data[ i ][ 10 ]
                             };
                             st_data.push( item );
                         }

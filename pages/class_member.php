@@ -83,5 +83,6 @@ include_once("modals/confirm_dialog.php");
   var course_id = '<?=$course_id ?>';
   var show_status = '<?=$show_status?>';
   var classroom_id = '<?=($classroom_id)?>'
+  var _username = '<?=$user_data['username']?>';
 </script>
 <script src="assets/script/class_member.js"></script>

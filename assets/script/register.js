@@ -58,7 +58,7 @@ function load_class(_course_id, _year_no){
     http.send( "class_data=" + _param );
 
 }
-function change_register_status(_register_id, student_name,_register_status){
+function change_register_status(_register_id, student_name,_register_status,student_code){
     // console.log(register_id);
     var _title = '<strong class="notosans">ຢັ້ງຢືນການລົງທະບຽນ '+student_name+'</strong>';
     var _message = '<strong class="notosans">ລົງທະບຽນສໍາເລັດ</strong>';
@@ -84,6 +84,8 @@ function change_register_status(_register_id, student_name,_register_status){
             var param = {
                 register_id: _register_id,
                 username:_username,
+                year_no:selected_year,
+                student_code:student_code,
                 register_status:_register_status
             }
             var http = new XMLHttpRequest();

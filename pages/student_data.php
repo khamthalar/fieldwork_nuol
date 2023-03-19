@@ -53,9 +53,9 @@
 
 
 <?php
-include_once("modals/filter_student_model.php");
+    include_once("modals/filter_student_model.php");
+    include_once("modals/student_log_modal.php");
 ?>
-<!-- <script src="module/sheetJS/xlsx.full.min.js"></script> -->
 <script src="module/xlsx-style/dist/xlsx.core.min.js"></script>
 <script src="module/file-saver/dist/FileSaver.min.js"></script>
 <script src="assets/script/student_data.js"></script>
@@ -74,7 +74,40 @@ include_once("modals/filter_student_model.php");
     let std_filter_mark = document.getElementById("std_filter_mark");
     let filter_label = document.getElementById("filter_label");
     let std_data = document.getElementById('std-data');
+    let std_log = document.getElementById('student_log');
     std_filter_dialog.addEventListener('show.bs.modal',function(event){
         setCourseOption(course_data);
+    })
+    std_log.addEventListener('show.bs.modal',function(event){
+        var student_info = $(event.relatedTarget);
+        let student_code = student_info.data('student_code');
+        let http = new XMLHttpRequest();
+        http.open( "POST", 'controller/student_controller.php', true );
+        http.setRequestHeader( 'Content-type', 'application/x-www-form-urlencoded' );
+        http.onreadystatechange = function () {
+            if ( this.readyState === XMLHttpRequest.DONE && this.status === 200 ) {
+                try{
+                    let body_content = document.getElementById('log_body_content');
+                    let html_str = ``;
+                    let log_data = [];
+                    log_data = JSON.parse(this.responseText);
+                    if(log_data){
+                        log_data.forEach((item)=>{
+                            html_str+=`
+                            <div class="log_item">
+                                <div class="notosans">`+item.issue_date+`</div>
+                                <div class="notosans">`+item.desc+`</div>
+                                <div class="notosans">`+item.userparse+`</div>
+                            </div>`;
+                        });
+                    }
+                    body_content.innerHTML = html_str;
+                }catch(e){
+                    console.log(e);
+                }
+            }
+        }
+        var _param = encode( JSON.stringify( {student_code} ) );
+        http.send( "student_log=" + _param );
     })
 </script>

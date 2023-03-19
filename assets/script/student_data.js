@@ -7,6 +7,7 @@ $(document).ready(function(){
             filter_label.innerHTML = "*ນັກສຶກສາ"+course_data[0].scheme_des +"-"+course_data[0].course_des+", ປີ 1";
             filter_str = "ຂໍ້ມູນນັກສຶກສາ"+course_data[0].scheme_des +"-"+course_data[0].course_des+", ປີ 1";
         }
+        courseId = course_data[0].course_id;
         param={
             course_id:course_data[0].course_id,
             course_des:course_data[0].course_des,
@@ -19,6 +20,7 @@ $(document).ready(function(){
         let lb_str = (Number(filter_data.classroom_id)==0)?(", ປີ "+filter_data.selected_year):(", ຫ້ອງ "+filter_data.classroom_des);
         filter_label.innerHTML = "*ນັກສຶກສາ"+filter_data.course_des +lb_str;
         filter_str = "ຂໍ້ມູນນັກສຶກສາ"+filter_data.course_des +lb_str;
+        courseId = filter_data.course_id;
         param={
             course_id:filter_data.course_id,
             course_des:filter_data.course_des,
@@ -133,6 +135,7 @@ async function applyFilter(){
     let cb_year = document.getElementById('cb_st_year').value;
     let cb_classroom = document.getElementById('cb_st_classroom').value;
     let courseid = cb_course.split(',')[0];
+    courseId = courseid;
     let course_des = $("#st_course option:selected").text();
     let classroom_des = $("#cb_st_classroom option:selected").text();
     let param = {
@@ -156,7 +159,7 @@ async function applyFilter(){
     hide(loading);
 }
 function goto_excel_update(){
-    window.location.href='template?page=student&sub_page=student_data_excel_update';
+    window.location.href='template?page=student&sub_page=student_data_excel_update&course_id='+courseId;
 }
 
 async function render_std(data){
@@ -167,7 +170,19 @@ async function render_std(data){
         data_str += std.student_code+`</td><td class="notosans f12">`;
         data_str += std.gender+` `+std.name_la+` `+std.surname_la+`</td>`;
         data_str +=`<td> `+std.classroom_des+` </td>`;
-        data_str += `<td> <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline">
+        data_str += `<td> <button type="button" class="btn btn-warning btn-icon-text btn-rounded none-select none-outline"
+                            onclick="openUpdateForm(
+                                '`+encode(std.student_id)+`',
+                                '`+encode(std.student_code)+`',
+                                '`+encode(std.gender)+`',
+                                '`+encode(std.name_la)+`',
+                                '`+encode(std.surname_la)+`',
+                                '`+encode(std.name_en)+`',
+                                '`+encode(std.surname_en)+`',
+                                '`+encode(std.date_of_birthday)+`',
+                                '`+encode(std.birth_address_la)+`',
+                                '`+encode(std.birth_address_en)+`',
+                                '`+encode(std.remark)+`')">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
@@ -181,16 +196,36 @@ async function render_std(data){
                           data-bs-toggle="modal" data-bs-target="#stdinfo" data-bs-backdrop="static">
                             <i class="fas fa-eye"></i>
                           </button>
-                          <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline" >
+                          <button type="button" class="btn btn-danger btn-icon-text btn-rounded none-select none-outline">
                           <i class="ti-timer"></i>
                           </button>
-                          <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline">
+                          <button type="button" class="btn btn-primary btn-icon-text btn-rounded none-select none-outline"
+                          data-student_code = "`+std.student_code+`"
+                          data-bs-toggle="modal" data-bs-target="#student_log">
                           <i class="ti-menu"></i>
                         </button>
                         </td>`;
         data_str +=`<td class="status notosans center">`+std.student_status+`</td></tr>`;
     });
     std_data.innerHTML = data_str;
+}
+function openUpdateForm(student_id,student_code, gender, name_la, surname_la, name_en, surname_en, 
+    date_of_birthday, birth_address_la, birth_address_en, remark ){
+        let param = {
+            student_id,
+            student_code,
+            gender,
+            name_la,
+            surname_la,
+            name_en,
+            surname_en,
+            date_of_birthday,
+            birth_address_la,
+            birth_address_en,
+            remark
+        }
+    sessionStorage.setItem('std_param',JSON.stringify(param));
+    location.href = 'template?page=student&sub_page=edit_student_form';
 }
 async function handlersearch(searchtext){
 
@@ -254,32 +289,42 @@ async function download_data(){
         }
         // console.log(student_data.length)
         console.log(filter_str);
-        worksheet['A1'].s=title_style;
-        worksheet['A1'].v=filter_str;
-        worksheet['A2'].s=h_style;
-        worksheet['B2'].s=h_style;
-        worksheet['C2'].s=h_style;
-        worksheet['D2'].s=h_style;
-        worksheet['E2'].s=h_style;
-        worksheet['F2'].s=h_style;
-        worksheet['G2'].s=h_style;
-        worksheet['H2'].s=h_style;
-        worksheet['I2'].s=h_style;
-        worksheet['J2'].s=h_style;
-        worksheet['K2'].s=h_style;
+        worksheet['A2'].s=title_style;
+        worksheet['A2'].v=filter_str;
+        worksheet['A3'].s=h_style;
+        worksheet['B3'].s=h_style;
+        worksheet['C3'].s=h_style;
+        worksheet['D3'].s=h_style;
+        worksheet['E3'].s=h_style;
+        worksheet['F3'].s=h_style;
+        worksheet['G3'].s=h_style;
+        worksheet['H3'].s=h_style;
+        worksheet['I3'].s=h_style;
+        worksheet['J3'].s=h_style;
+        worksheet['K3'].s=h_style;
         if(student_data.length>0){
             student_data.forEach((item,index)=>{
-                worksheet['A'+(index+3)] = {v: String(index+1), s: {font: { name: 'Phetsarath OT'},alignment:center,border:border}};
-                worksheet['B'+(index+3)] = {v: String(item.student_code), s: style};
-                worksheet['C'+(index+3)] = {v: String(item.gender), s: style};
-                worksheet['D'+(index+3)] = {v: String(item.name_la), s: style};
-                worksheet['E'+(index+3)] = {v: String(item.surname_la), s: style};
-                worksheet['F'+(index+3)] = {v: String(item.name_en), s: style};
-                worksheet['G'+(index+3)] = {v: String(item.surname_en), s: style};
-                worksheet['H'+(index+3)] = {v: String(item.date_of_birthday), s: style};
-                worksheet['I'+(index+3)] = {v: String(item.birth_address_la), s: style};
-                worksheet['J'+(index+3)] = {v: String(item.birth_address_en), s: style};
-                worksheet['K'+(index+3)] = {v: String(item.remark), s: style};
+                let date_cell;
+                if(item.date_of_birthday){
+                    let birthdate = new Date(item.date_of_birthday);
+                    let date_val = birthdate.getTime() / (24 * 60 * 60 * 1000) + 25569;
+                    date_cell = {v: date_val, s: style, t: 'n', z: 'd/m/yyyy'};
+                }else{
+                    date_cell = {v: '', s: style}
+                }
+
+                
+                worksheet['A'+(index+4)] = {v: String(index+1), s: {font: { name: 'Phetsarath OT'},alignment:center,border:border}};
+                worksheet['B'+(index+4)] = {v: String(item.student_code), s: style};
+                worksheet['C'+(index+4)] = {v: String(item.gender), s: style};
+                worksheet['D'+(index+4)] = {v: String(item.name_la), s: style};
+                worksheet['E'+(index+4)] = {v: String(item.surname_la), s: style};
+                worksheet['F'+(index+4)] = {v: String(item.name_en), s: style};
+                worksheet['G'+(index+4)] = {v: String(item.surname_en), s: style};
+                worksheet['H'+(index+4)] = date_cell;
+                worksheet['I'+(index+4)] = {v: String(item.birth_address_la), s: style};
+                worksheet['J'+(index+4)] = {v: String(item.birth_address_en), s: style};
+                worksheet['K'+(index+4)] = {v: String(item.remark), s: style};
             })
         }
         console.log(workbook);

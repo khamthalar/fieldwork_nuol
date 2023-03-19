@@ -22,11 +22,18 @@
         $data = json_decode(decode($_POST['register_status']));
         $register_id = $data->register_id;
         $username = $data->username;
+        $year_no = $data->year_no;
+        $student_code = $data->student_code;
         $regster_status = $data->register_status;
-        $sql = "UPDATE tb_student_register SET register_status = ?, user_update = ?, last_update=now() WHERE register_id = ?;";
-        // $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student->student_code."', 'created', '".$username."');";
+        $desc = "Register year ".$year_no;
+        if($regster_status==0){
+            $desc = "Unregister year ".$year_no;
+        }
+
+        $sql = "UPDATE tb_student_register SET register_status = ".$regster_status.", user_update = '".$username."', last_update=now() WHERE register_id = ".$register_id.";";
+        $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student_code."', '".$desc."', '".$username."');";
         $query = $dbcon->prepare($sql);
-        $query->execute(array($regster_status,$username,$register_id));
+        $query->execute();
         if($query){
             echo json_encode(array("success"=>true));
         }else{
