@@ -1,10 +1,12 @@
 <?php
-$course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
-if (isset($_GET['course_id2'])) {
-    $course_id = $_GET['course_id2'];
-}else{
-    $course_id = @$course_data[0]['course_id'];
-}
+    $course_data = load_course()->fetchAll(PDO::FETCH_ASSOC);
+    if (isset($_GET['course_id2'])) {
+        $course_id = $_GET['course_id2'];
+    }else{
+        $course_id = @$course_data[0]['course_id'];
+    }
+    $start_year = date('Y');
+    $end_year = (date('Y')+1);
 ?>
 <link rel="stylesheet" href="assets/css/new_student_style.css">
 <section class="action">
@@ -20,34 +22,48 @@ if (isset($_GET['course_id2'])) {
     </button>
 </section>
 <section class="row">
-    <div class="form-group filter" style="margin-bottom: 5px !important;">
-        <div class="notosans f12">ສົກຮຽນ: <?= date("Y") . "-" . (date("Y") + 1) ?></div>
-        <select onchange="course_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_course" id="cb_course">
-            <?php
-            $checked = "selected";
-            foreach ($course_data as $course) {
-                if (isset($_GET['course_id2'])) {
-                    $course_id = $_GET['course_id2'];
-                    if ($course['course_id'] == $course_id) {
-                        $checked = "selected";
+    <div class="form-group" style="margin-bottom: 5px !important;">
+        <div class="notosans f12">ສົກຮຽນ: </div>
+        <div class="filter">
+            <div class="notosans f12 school-year">
+                <input 
+                    onchange="year_changed(true)"
+                    onkeydown="input_keydown(event)" 
+                    id="newst_start_year" type="number" class=" notosans f12" value="<?=$start_year?>">
+                <div class="connector">-</div>
+                <input 
+                    onchange="year_changed(false)"
+                    onkeydown="input_keydown(event)"
+                    id="newst_end_year" type="number" class="notosans f12" value="<?=$end_year?>">
+                <!-- <?= date("Y") . "-" . (date("Y") + 1) ?> -->
+            </div>
+            <select onchange="course_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_course" id="cb_course">
+                <?php
+                $checked = "selected";
+                foreach ($course_data as $course) {
+                    if (isset($_GET['course_id2'])) {
+                        $course_id = $_GET['course_id2'];
+                        if ($course['course_id'] == $course_id) {
+                            $checked = "selected";
+                        } else {
+                            $checked = "";
+                        }
+                ?>
+                        <option value="<?= $course['course_id'] ?>" <?= $checked ?>><?= $course['course_des'] . "-" . $course['scheme_des'] ?></option>
+                    <?php
                     } else {
+                        if ($checked == "selected") {
+                            $course_id = $course['course_id'];
+                        }
+                    ?>
+                        <option value="<?= $course['course_id'] ?>" <?= $checked ?>><?= $course['course_des'] . "-" . $course['scheme_des'] ?></option>
+                <?php
                         $checked = "";
                     }
-            ?>
-                    <option value="<?= $course['course_id'] ?>" <?= $checked ?>><?= $course['course_des'] . "-" . $course['scheme_des'] ?></option>
-                <?php
-                } else {
-                    if ($checked == "selected") {
-                        $course_id = $course['course_id'];
-                    }
-                ?>
-                    <option value="<?= $course['course_id'] ?>" <?= $checked ?>><?= $course['course_des'] . "-" . $course['scheme_des'] ?></option>
-            <?php
-                    $checked = "";
                 }
-            }
-            ?>
-        </select>
+                ?>
+            </select>
+        </div>
         <!-- <button type="button" class="btn-defualt btn btn-primary btn-icon-text none-select none-outline notosans">
             <i class="ti-search btn-icon-prepend"></i> ຄົ້ນຫາ
         </button> -->
@@ -142,6 +158,8 @@ if (isset($_GET['course_id2'])) {
     sessionStorage.removeItem('std_param');
     var _username = '<?=$user_data['username']?>';
     var course_id = '<?= $course_id ?>';
+    const st_start_year = document.getElementById('newst_start_year');
+    const st_end_year = document.getElementById('newst_end_year');
     function openUpdateForm(student_id,student_code, gender, name_la, surname_la, name_en, surname_en, 
     date_of_birthday, birth_address_la, birth_address_en, remark ){
         let param = {
@@ -159,6 +177,17 @@ if (isset($_GET['course_id2'])) {
         }
         sessionStorage.setItem('std_param',JSON.stringify(param));
         location.href = 'template?page=student&sub_page=edit_student_form';
+    }
+    function input_keydown(e){
+        e.preventDefault();
+    }
+    function year_changed(isStartYear){
+        if(isStartYear)
+            st_end_year.value = Number(st_start_year.value)+1;
+        else
+            st_start_year.value = Number(st_end_year.value)-1;
+            
+        location.href = 'template?page=student<?=isset($_GET['course_id2'])?('&course_id2='.$_GET['course_id2']):''?>&school_year='+st_start_year.value+'-'+st_end_year.value;
     }
 </script>
 <script src="assets/script/new_student.js"></script>
