@@ -5,6 +5,15 @@
     }else{
       echo "<script>window.location.href='template?page=student'</script>";
     }
+    $start_year = date('Y');
+    $end_year = (date('Y')+1);
+    $schoolyear_param = '';
+    if(isset($_GET['schoolyear'])){
+      $schoolyear_param = "&n_schoolyear=".$_GET['schoolyear'];
+      $schoolyear = explode("-",$_GET['schoolyear']);
+      $start_year = $schoolyear[0];
+      $end_year = $schoolyear[1];
+    }
     $course_data = get_course_data($course_id)->fetch(PDO::FETCH_ASSOC);
 ?>
 <link rel="stylesheet" href="assets/css/student-style.css">
@@ -15,7 +24,7 @@
     <h5 class="notosans">
         <a href="template?page=home" class="home-link">ໜ້າຫຼັກ</a> 
         <i class="fas fa-chevron-right"></i> 
-        <a href="template?page=student" class="home-link">ຂໍ້ມູນນັກສືກສາ</a>
+        <a href="template?page=student<?=$schoolyear_param?>" class="home-link">ຂໍ້ມູນນັກສືກສາ</a>
         <i class="fas fa-chevron-right"></i> ອັບໂຫຼດຂໍ້ມູນນັກສຶກສາ
     </h5>
   </div>
@@ -27,7 +36,7 @@
         <div class="cus-card card">
             <div class="card-body">
                 <h4 class="card-title notosans">ອັບໂຫຼດຂໍ້ມູນນັກສຶກສາ <?="(".$course_data["course_des"]."-".$course_data["scheme_des"].")"?>,
-                    ສົກຮຽນ: <?= date("Y") . "-" . (date("Y") + 1) ?>
+                    ສົກຮຽນ: <?= $start_year . "-" . $end_year ?>
                 </h4>
                 <section class="file-upload">
                     <button onclick="open_file()" type="button" class="btn-file btn btn-primary btn-icon-text none-select none-outline notosans">
@@ -70,6 +79,7 @@
   var st_data = [];
   var btn_upload = document.getElementById('btn-upload');
   var _course_id = '<?=$course_id?>';
+  var start_year = '<?=$start_year?>';
   var _duration_year = '<?=$course_data['duration_year']?>';
 </script>
 <script src="module/sheetJS/xlsx.full.min.js"></script>

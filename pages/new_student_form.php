@@ -8,7 +8,6 @@ if (isset($_GET['course_id'])) {
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/student_form_style.css">
-<!-- <script src="assets/js/jquery-1.9.1.min.js"></script> -->
 <div class="header-page">
   <div class="page-title">
     <h5 class="notosans">

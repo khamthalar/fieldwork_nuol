@@ -7,8 +7,8 @@
         $course_id = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->course_id);
         $duration_year = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->duration_year);
         $username = preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->username);
+        $start_year = (int)preg_replace('/[^A-Za-z0-9\-]/', '', $data_param->start_year);
         $student_data = $data_param->data;
-
         $return_data = [];
         foreach($student_data as $student){
             // check data
@@ -22,14 +22,13 @@
                 $name_la = input_data($student->name_la);
                 $surname_la = input_data($student->surname_la);
                 $remark = input_data($student->remark);
-                $start_year = date("Y");
-                $end_year = date("Y")+ $duration_year;
+                $end_year = $start_year + $duration_year;
                 $sql = "INSERT INTO tb_student(student_code, gender, name_la, surname_la, start_year, end_year,course_id,remark) 
                 VALUES ('".$student_code."', '".$gender."', '".$name_la."', 
                 '".$surname_la."', '".$start_year."', '".$end_year."','".$course_id."','".$remark."');";
                 $sql .="INSERT INTO `tb_student_log`(`student_code`, `desc`, `userparse`) VALUES ('".$student_code."', 'created', '".$username."');";
                 for($i=0;$i < $duration_year; $i++){
-                    $school_year = (date("Y")+$i) . "-" . (date("Y") + ($i+1));
+                    $school_year = ($start_year+$i) . "-" . ($start_year + ($i+1));
                     $sql .="INSERT INTO `tb_student_register`(`student_code`, `school_year`, `year_no`, `create_date`, `user_update`)  
                     VALUES ('".$student_code."','".$school_year."','".($i+1)."',now(),'".$username."');";
                 }

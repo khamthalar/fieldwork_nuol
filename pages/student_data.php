@@ -1,8 +1,15 @@
 <?php
-    $school_year = date('Y')."-".(date('Y')+1);
     $course_data  = load_course()->fetchAll(PDO::FETCH_ASSOC);
     $classroom = load_classroom_data()->fetchAll(PDO::FETCH_ASSOC);
     $select_course = "";
+    $start_year = date('Y');
+    $end_year = (date('Y')+1);
+    if(isset($_GET['schoolyear'])){
+        $schoolyear = explode("-",$_GET['schoolyear']);
+        $start_year = $schoolyear[0];
+        $end_year = $schoolyear[1];
+    }
+    $school_year = $start_year."-".$end_year;
 ?>
 <link rel="stylesheet" href="assets/css/student_data_style.css">
 <div class="action-section">

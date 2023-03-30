@@ -5,8 +5,14 @@
     }else{
         $course_id = @$course_data[0]['course_id'];
     }
-    $start_year = date('Y');
-    $end_year = (date('Y')+1);
+    $n_start_year = date('Y');
+    $n_end_year = (date('Y')+1);
+    if(isset($_GET['n_schoolyear'])){
+        $n_schoolyear = explode("-",$_GET['n_schoolyear']);
+        $n_start_year = $n_schoolyear[0];
+        $n_end_year = $n_schoolyear[1];
+    }
+    $n_schoolyear = $n_start_year."-".$n_end_year;
 ?>
 <link rel="stylesheet" href="assets/css/new_student_style.css">
 <section class="action">
@@ -17,25 +23,22 @@
     <button onclick="DownloadFile('Student_From_Data.xlsx')" type="button" class="btn-defualt btn btn-secondary btn-icon-text none-select none-outline notosans">
         <i class="ti-import btn-icon-prepend"></i> ດາວໂຫຼດແບບຟອມ
     </button>
+    <?php 
+        if($n_start_year >= date('Y')){
+    ?>
     <button onclick="goto_excel_upload()" type="button" class="btn-defualt btn btn-success btn-icon-text none-select none-outline notosans">
         <i class="fas fa-sharp fa-solid fa-file-excel btn-icon-prepend"></i> ອັບໂຫຼດ Excel
     </button>
+    <?php } ?>
 </section>
 <section class="row">
     <div class="form-group" style="margin-bottom: 5px !important;">
         <div class="notosans f12">ສົກຮຽນ: </div>
         <div class="filter">
             <div class="notosans f12 school-year">
-                <input 
-                    onchange="year_changed(true)"
-                    onkeydown="input_keydown(event)" 
-                    id="newst_start_year" type="number" class=" notosans f12" value="<?=$start_year?>">
-                <div class="connector">-</div>
-                <input 
-                    onchange="year_changed(false)"
-                    onkeydown="input_keydown(event)"
-                    id="newst_end_year" type="number" class="notosans f12" value="<?=$end_year?>">
-                <!-- <?= date("Y") . "-" . (date("Y") + 1) ?> -->
+                <button onclick="openSchoolyearModal(true)" class="btn-nst-schoolyear">
+                    <?=$n_start_year.'-'.$n_end_year?>
+                </button>
             </div>
             <select onchange="course_selected(this.value)" class="form-select notosans" aria-label="Default select" name="cb_course" id="cb_course">
                 <?php
@@ -71,8 +74,7 @@
 </section>
 <section class="body">
     <?php
-    $start_year = date("Y");
-    $student_data = load_student_newstudent($course_id, $start_year);
+    $student_data = load_student_newstudent($course_id, $n_start_year);
     $data = $student_data->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <div class="table-responsive">

@@ -129,6 +129,7 @@ function upload_student() {
     var param = {
         username: _username,
         course_id: _course_id,
+        start_year:start_year,
         duration_year: _duration_year,
         data: st_data
     }

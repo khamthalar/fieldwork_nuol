@@ -8,7 +8,11 @@ function DownloadFile(fileName) {
     document.body.removeChild(a);
 };
 function goto_excel_upload(){
-    window.location.href='template?page=student&sub_page=new_student_excel_upload&course_id='+course_id;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const schoolyear = urlParams.get("n_schoolyear");
+    let schoolyear_param = schoolyear?('&schoolyear='+schoolyear):'';
+    window.location.href='template?page=student&sub_page=new_student_excel_upload&course_id='+course_id+schoolyear_param;
 }
 function course_selected(value){
     window.location.href = 'template?page=student&course_id2='+value;

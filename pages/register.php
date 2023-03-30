@@ -11,6 +11,7 @@ if(isset($_POST["search"])){
 }
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
+<link rel="stylesheet" href="assets/css/register-style.css">
 <script src="assets/js/jquery-1.9.1.min.js"></script>
 <div class="header-page">
   <div class="page-title">
@@ -45,7 +46,10 @@ if(isset($_POST["search"])){
       <div class="col-lg-12 grid-margin stretch-card">
         <div class="cus-card card">
           <div class="card-body">
-            <h4 class="card-title notosans">ແຈ້ງລົງທະບຽນປະຈໍາສົກຮຽນ <?= date("Y") . "-" . (date("Y") + 1) ?></h4>
+            <div class="register-schoolyear">
+              <h4 class="card-title notosans" style="margin:0;">ແຈ້ງລົງທະບຽນປະຈໍາສົກຮຽນ</h4>
+              <button class="btn-schoolyear"><?= date("Y") . "-" . (date("Y") + 1) ?></button>
+            </div>
             <div class="top-contents">
               <form action="" method="POST">
                 <div style="padding-left:10px;padding-right:10px;" class="filter row">

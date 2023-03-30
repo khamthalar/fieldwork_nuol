@@ -1,0 +1,13 @@
+.register-schoolyear{
+    display: flex;
+    align-items:center;
+    padding-bottom: 10px;
+    gap: 5px;
+}
+.btn-schoolyear{
+    border-radius: 5px;
+    border: 0.5px solid lightgray;
+    line-height: 34px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
