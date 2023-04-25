@@ -2,7 +2,7 @@ $(document).ready(function() {
     var data = (document.getElementById('cb_course').value).split(",");
     course_id = data[0];
     year_no = data[1];
-    set_year();
+    // set_year();
 });
 function course_selected(value){
     var data = value.split(",");
@@ -10,21 +10,21 @@ function course_selected(value){
     year_no = data[1];
     selected_year = 1;
     classroom_id = 0;
-    set_year();
+    // set_year();
 }
-function set_year(){
-    cb_year.innerHTML = ``;
-    var options = ``;
-    for(let i=1;i<=year_no;i++){
-        var checked = ``;
-        if(selected_year==i){
-            checked = `selected`;
-        }
-        options +=` <option value="`+i+`" `+checked+`>ປີ `+i+`</option>`;
-    }
-    cb_year.innerHTML = options;
-    load_class(course_id, selected_year)
-}
+// function set_year(){
+//     cb_year.innerHTML = ``;
+//     var options = ``;
+//     for(let i=1;i<=year_no;i++){
+//         var checked = ``;
+//         if(selected_year==i){
+//             checked = `selected`;
+//         }
+//         options +=` <option value="`+i+`" `+checked+`>ປີ `+i+`</option>`;
+//     }
+//     cb_year.innerHTML = options;
+//     load_class(course_id, selected_year)
+// }
 function load_class(_course_id, _year_no){
     var param = {
         course_id:_course_id,

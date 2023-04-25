@@ -9,6 +9,9 @@ if(isset($_POST["search"])){
   $rg_filter["search_text"]=$_POST["txt_search"];
   $_SESSION["rg_filter"]=$rg_filter;
 }
+$start_year = date('Y');
+$end_year = date('Y')+1;
+
 ?>
 <link rel="stylesheet" href="assets/css/classroom-style.css">
 <link rel="stylesheet" href="assets/css/register-style.css">
@@ -48,7 +51,7 @@ if(isset($_POST["search"])){
           <div class="card-body">
             <div class="register-schoolyear">
               <h4 class="card-title notosans" style="margin:0;">ແຈ້ງລົງທະບຽນປະຈໍາສົກຮຽນ</h4>
-              <button class="btn-schoolyear"><?= date("Y") . "-" . (date("Y") + 1) ?></button>
+              <button onclick="openSchoolyearModal(false)" class="btn-schoolyear"><?= date("Y") . "-" . (date("Y") + 1) ?></button>
             </div>
             <div class="top-contents">
               <form action="" method="POST">
@@ -164,7 +167,8 @@ if(isset($_POST["search"])){
   </div>
 </div>
 <?php
-include_once("modals/confirm_dialog.php");
+  include_once("modals/confirm_dialog.php");
+  include_once("modals/schoolyear_modal.php");
 ?>
 <script>
   var _username = '<?=$user_data["username"]?>';
@@ -176,5 +180,23 @@ include_once("modals/confirm_dialog.php");
   var cb_year = document.getElementById('year_no');
   var add_classroom = document.getElementById('addclass');
   var cb_class = document.getElementById('cb_class');
+  var shcoolyear_modal = document.getElementById('schoolyear');
+  const btn_schoolyear = document.getElementById('btn_shcoolyear');
+  // var el_start_year = document.getElementById('start_year');
+  // var el_end_year = document.getElementById('end_year');
+  shcoolyear_modal.addEventListener('show.bs.modal',function(event){
+    btn_schoolyear.name = "schoolyear";
+  });
+  function openSchoolyearModal(isNewStudent){
+    $(shcoolyear_modal).modal("show");
+  }
+  function submit_schoolyear(e){
+    let today = new date();
+    let schoolyear_param = '';
+    if(el_start_year.value!=today.getFullYear()){
+      schoolyear_param = '&schoolyear='+el_start_year.value+'-'+el_end_year.value;
+    }
+    location.href = 'template?page=register'+schoolyear_param;
+  }
 </script>
 <script src="assets/script/register.js"></script>

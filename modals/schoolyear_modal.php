@@ -46,3 +46,44 @@
             el_start_year.value = Number(el_end_year.value)-1;
     }
 </script>
+
+<style>
+    .school-year{
+        display: grid;
+        grid-template-columns: auto 1fr;
+        column-gap: 4px;
+        max-width: 200px;
+    }
+    .btn-nst-schoolyear{
+        border-radius: 5px;
+        border: 0.5px solid lightgray;
+        line-height: 34px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .school-year-el{
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        column-gap: 4px;
+    }
+    .school-year-el input{
+        width: 100%;
+        line-height: 34px;
+        border:1px solid lightgray;
+        border-radius: 3px;
+        text-align: center;
+    }
+    .school-year-el .connector{
+        line-height: 34px;
+    }
+    .school-year-el input::-webkit-inner-spin-button,
+    .school-year-el input::-webkit-outer-spin-button{
+        display: block;
+        opacity: 1;
+        height: auto;
+    }
+    .school-year-el input{
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+</style>
